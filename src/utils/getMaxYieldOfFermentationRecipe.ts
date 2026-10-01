@@ -12,8 +12,8 @@ export const getMaxYieldOfFermentationRecipe = (
 ): number => {
   const {
     [fermentationRecipe.id]: itemQuantityInInventory = 0,
-    [(itemsMap as Record<string, farmhand.item>).salt.id]:
-      saltQuantityInInventory = 0,
+    [(itemsMap as Record<string, farmhand.item>).salt
+      .id]: saltQuantityInInventory = 0,
   } = getInventoryQuantityMap(inventory)
 
   const maxSaltYieldPotential = Math.floor(

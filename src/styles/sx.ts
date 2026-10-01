@@ -85,17 +85,16 @@ export const quickSelectSx = (theme: Theme, isMenuOpen: boolean) => ({
       display: isMenuOpen ? 'none' : undefined,
     },
   },
-  [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]:
-    {
-      left: 'auto',
-      maxHeight: 'calc(100vh - 20em)',
-      minWidth: '4em',
-      overflow: 'auto',
-      right: '0.75em',
-      top: '9em',
-      transform: 'none',
-      bottom: '8em',
-    },
+  [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+    left: 'auto',
+    maxHeight: 'calc(100vh - 20em)',
+    minWidth: '4em',
+    overflow: 'auto',
+    right: '0.75em',
+    top: '9em',
+    transform: 'none',
+    bottom: '8em',
+  },
   '@media (orientation: portrait)': {
     display: isMenuOpen ? 'none' : undefined,
   },
@@ -105,17 +104,15 @@ export const quickSelectSx = (theme: Theme, isMenuOpen: boolean) => ({
     overflowY: 'hidden',
     padding: '0.5em',
     position: 'relative',
-    [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]:
-      {
-        overflowX: 'hidden',
-        flexDirection: 'column',
-      },
+    [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+      overflowX: 'hidden',
+      flexDirection: 'column',
+    },
     '& > *': {
-      [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]:
-        {
-          alignItems: 'center',
-          width: '3em',
-        },
+      [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+        alignItems: 'center',
+        width: '3em',
+      },
     },
   },
   '& .Toolbelt': {
@@ -125,13 +122,12 @@ export const quickSelectSx = (theme: Theme, isMenuOpen: boolean) => ({
   },
   '& .MuiDivider-root': {
     margin: '0 0.5em',
-    [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]:
-      {
-        margin: '0.5em 0',
-        height: '1px',
-        width: '100%',
-        borderRightWidth: 0,
-        borderBottomWidth: 'thin',
-      },
+    [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+      margin: '0.5em 0',
+      height: '1px',
+      width: '100%',
+      borderRightWidth: 0,
+      borderBottomWidth: 'thin',
+    },
   },
 })

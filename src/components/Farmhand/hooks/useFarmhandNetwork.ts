@@ -83,8 +83,12 @@ export const useFarmhandNetwork = (
   const tradeForPeerCow = useCallback(
     (peerPlayerCow: farmhand.cow) => {
       const latestState = instanceProxyRef.current?.state ?? state
-      const { cowIdOfferedForTrade, cowInventory, peers, sendCowTradeRequest } =
-        latestState
+      const {
+        cowIdOfferedForTrade,
+        cowInventory,
+        peers,
+        sendCowTradeRequest,
+      } = latestState
 
       if (!sendCowTradeRequest) return
 
@@ -135,7 +139,7 @@ export const useFarmhandNetwork = (
 
       setState(previous => ({
         ...previous,
-        cowTradeTimeoutId: cowTradeTimeoutId as unknown as number,
+        cowTradeTimeoutId: (cowTradeTimeoutId as unknown) as number,
         isAwaitingCowTradeRequest: true,
       }))
     },
@@ -149,20 +153,26 @@ export const useFarmhandNetwork = (
       return previous
     })
 
-    const timeoutId = window.setTimeout(() => {
+    const timeoutId = (window.setTimeout(() => {
       setState((previous: farmhand.state) => ({
         ...previous,
         money: moneyTotal(previous.money, previous.activePlayers ?? 0),
       }))
       scheduleHeartbeat()
-    }, HEARTBEAT_INTERVAL_PERIOD) as unknown as number
+    }, HEARTBEAT_INTERVAL_PERIOD) as unknown) as number
 
     setState(previous => ({ ...previous, heartbeatTimeoutId: timeoutId }))
   }, [setState])
 
   const syncToRoom = useCallback(async () => {
-    const { isOnline, priceCrashes, priceSurges, room, playerId, peerRoom } =
-      instanceProxyRef.current.state
+    const {
+      isOnline,
+      priceCrashes,
+      priceSurges,
+      room,
+      playerId,
+      peerRoom,
+    } = instanceProxyRef.current.state
 
     if (!isOnline) return
 
@@ -298,22 +308,27 @@ export const useFarmhandNetwork = (
           boundReducersRef.current.removePeer(id)
         )
 
-        const [sendPeerMetadata, getPeerMetadataFunc] =
-          statePeerRoom.makeAction('peerMetadata')
+        const [
+          sendPeerMetadata,
+          getPeerMetadataFunc,
+        ] = statePeerRoom.makeAction('peerMetadata')
 
         getPeerMetadataFunc((...args: any[]) =>
           handlePeerMetadataRequest(instanceProxyRef.current, args[0], args[1])
         )
 
-        const [sendCowTradeRequest, getCowTradeRequest] =
-          statePeerRoom.makeAction('cowTrade')
+        const [
+          sendCowTradeRequest,
+          getCowTradeRequest,
+        ] = statePeerRoom.makeAction('cowTrade')
 
         getCowTradeRequest((...args: any[]) =>
           handleCowTradeRequest(instanceProxyRef.current, args[0], args[1])
         )
 
-        const [sendCowAccept, getCowAccept] =
-          statePeerRoom.makeAction('cowAccept')
+        const [sendCowAccept, getCowAccept] = statePeerRoom.makeAction(
+          'cowAccept'
+        )
 
         getCowAccept((...args: any[]) =>
           handleCowTradeRequestAccept(
@@ -323,8 +338,9 @@ export const useFarmhandNetwork = (
           )
         )
 
-        const [sendCowReject, getCowReject] =
-          statePeerRoom.makeAction('cowReject')
+        const [sendCowReject, getCowReject] = statePeerRoom.makeAction(
+          'cowReject'
+        )
 
         getCowReject((...args: any[]) =>
           handleCowTradeRequestReject(instanceProxyRef.current, args[0])

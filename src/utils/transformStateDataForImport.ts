@@ -37,8 +37,10 @@ export const transformStateDataForImport = (
     // TODO: Add defensive check safeguards for sanitizedState.cowBreedingPen
     // and sanitizedState.cowInventory to prevent TypeError crashes during
     // corrupt/legacy state imports.
-    const { cowId1, cowId2 } =
-      sanitizedState.cowBreedingPen as farmhand.state['cowBreedingPen']
+    const {
+      cowId1,
+      cowId2,
+    } = sanitizedState.cowBreedingPen as farmhand.state['cowBreedingPen']
 
     const cowPenIdMap = (sanitizedState.cowInventory as farmhand.cow[]).reduce(
       (acc: Record<string, farmhand.cow>, cow: farmhand.cow) => {
@@ -106,5 +108,5 @@ export const transformStateDataForImport = (
     }
   }
 
-  return sanitizedState as unknown as farmhand.state
+  return (sanitizedState as unknown) as farmhand.state
 }

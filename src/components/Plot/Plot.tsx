@@ -165,9 +165,9 @@ export const Plot = ({
 
   const showPlotImage = Boolean(
     image &&
-    (wasJustShoveled ||
-      plotContent?.itemId ||
-      (plotContent && getPlotContentType(plotContent) === itemType.CROP))
+      (wasJustShoveled ||
+        plotContent?.itemId ||
+        (plotContent && getPlotContentType(plotContent) === itemType.CROP))
   )
 
   let plotLabelText: string | null = null

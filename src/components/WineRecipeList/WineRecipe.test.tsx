@@ -56,14 +56,14 @@ const WineRecipeStub = (
   return (
     <FarmhandContext.Provider
       value={
-        {
+        ({
           gameState: { ...stubGameState, ...state },
           handlers: {
             ...stubHandlers,
             ...handlers,
             debounced: { ...stubHandlers, ...handlers },
           },
-        } as unknown as React.ContextType<typeof FarmhandContext>
+        } as unknown) as React.ContextType<typeof FarmhandContext>
       }
     >
       <WineRecipe

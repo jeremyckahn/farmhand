@@ -58,14 +58,14 @@ const setup = () => {
   const sendCowTradeRequest = vitest.fn()
   const showNotification = vitest.fn()
 
-  const fakeState = {
+  const fakeState = ({
     peers: {
       [peerId]: { playerId: ownerId } as farmhand.peerMetadata,
     },
     sendCowTradeRequest,
     cowInventory: [cowOfferedForTrade],
     cowIdOfferedForTrade: cowOfferedForTrade.id,
-  } as unknown as farmhand.state
+  } as unknown) as farmhand.state
 
   const instanceProxyRef: React.MutableRefObject<any> = {
     current: { state: { ...fakeState } },

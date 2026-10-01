@@ -4,18 +4,20 @@ import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNex
 
 describe('updateInventoryRecordsForNextDay', () => {
   test('records inventory records for next day', () => {
-    const { todaysPurchases, todaysStartingInventory } =
-      updateInventoryRecordsForNextDay(
-        testState({
-          inventory: [
-            { id: 'sample-item-1', quantity: 2 },
-            { id: 'sample-item-2', quantity: 5 },
-          ],
-          todaysPurchases: {
-            'sample-item-3': 3,
-          },
-        })
-      )
+    const {
+      todaysPurchases,
+      todaysStartingInventory,
+    } = updateInventoryRecordsForNextDay(
+      testState({
+        inventory: [
+          { id: 'sample-item-1', quantity: 2 },
+          { id: 'sample-item-2', quantity: 5 },
+        ],
+        todaysPurchases: {
+          'sample-item-3': 3,
+        },
+      })
+    )
 
     expect(todaysPurchases).toEqual({})
     expect(todaysStartingInventory).toEqual({

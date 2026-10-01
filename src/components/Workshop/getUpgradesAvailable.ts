@@ -17,7 +17,7 @@ export function getUpgradesAvailable({
 }: GetUpgradesAvailableArgs): farmhand.upgradesMetadatum[] {
   let upgradesAvailable: farmhand.upgradesMetadatum[] = []
 
-  const typedToolUpgrades = toolUpgrades as unknown as Record<
+  const typedToolUpgrades = (toolUpgrades as unknown) as Record<
     string,
     Record<string, farmhand.upgradesMetadatum>
   >

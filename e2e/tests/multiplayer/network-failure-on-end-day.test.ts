@@ -19,7 +19,9 @@ test('shows network error when attempting to end day in multiplayer while offlin
   await page.getByRole('button', { name: 'End the day to save your' }).click()
   await page.getByRole('button', { name: "Open Farmer's Log (l)" }).click()
 
-  await expect(page.locator('#root')).toContainText(
+  await expect(
+    page.locator('#root')
+  ).toContainText(
     'There was an issue connecting to the server. Please try again in a moment.',
     { timeout: 10_000 }
   )

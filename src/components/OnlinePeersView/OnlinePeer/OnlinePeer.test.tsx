@@ -71,7 +71,7 @@ test('does not render CowCard when no cow is offered for trade', () => {
 test('renders CowCard when cow is offered for trade', () => {
   const peerWithCow = {
     ...defaultPeer,
-    cowOfferedForTrade: {
+    cowOfferedForTrade: ({
       id: 'test-cow',
       name: 'Test Cow',
       color: 'BROWN',
@@ -82,7 +82,7 @@ test('renders CowCard when cow is offered for trade', () => {
       gender: 'FEMALE',
       colorsInBloodline: { BROWN: true },
       originalOwnerId: 'peer-123',
-    } as unknown as farmhand.cow,
+    } as unknown) as farmhand.cow,
   }
 
   render(<OnlinePeer peer={peerWithCow} />)

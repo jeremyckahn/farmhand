@@ -10,7 +10,7 @@ const randomInt = (min: number, max: number) => {
 
 // Taken from:
 // https://github.com/alampros/react-confetti/blob/484bad0a0aaddbcfcc2fb4c1a4a7eeceaa6d4879/stories/snow.story.jsx#L7-L24
-const drawSnowflake = function (
+const drawSnowflake = function(
   this: { numPoints?: number; radius: number },
   ctx: CanvasRenderingContext2D
 ) {

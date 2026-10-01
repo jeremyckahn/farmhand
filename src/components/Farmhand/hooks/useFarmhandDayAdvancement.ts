@@ -50,8 +50,12 @@ export const useFarmhandDayAdvancement = (
     let serverValueAdjustments: Record<string, number> | undefined
 
     if (stateRef.current.isOnline) {
-      const { inventory, room, todaysPurchases, todaysStartingInventory } =
-        stateRef.current
+      const {
+        inventory,
+        room,
+        todaysPurchases,
+        todaysStartingInventory,
+      } = stateRef.current
 
       const positions = computeMarketPositions(
         todaysStartingInventory,

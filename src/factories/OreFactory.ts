@@ -9,8 +9,7 @@ const SPAWNABLE_ORES = [goldOre, ironOre, bronzeOre, silverOre]
  * @constructor
  */
 export default class OreFactory extends Factory {
-  oreOptions: Array<{ ore: (typeof SPAWNABLE_ORES)[number]; weight: number }> =
-    []
+  oreOptions: Array<{ ore: typeof SPAWNABLE_ORES[number]; weight: number }> = []
 
   constructor() {
     super()

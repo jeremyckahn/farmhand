@@ -11,9 +11,9 @@ describe('minePlot', () => {
 
   beforeAll(() => {
     vitest.spyOn(randomNumberService, 'generateRandomNumber').mockReturnValue(1)
-    vitest.spyOn(ResourceFactory, 'instance').mockReturnValue({
+    vitest.spyOn(ResourceFactory, 'instance').mockReturnValue(({
       generateResources: () => [goldOre],
-    } as unknown as typeof ResourceFactory.prototype)
+    } as unknown) as typeof ResourceFactory.prototype)
 
     gameState = minePlot(
       testState({

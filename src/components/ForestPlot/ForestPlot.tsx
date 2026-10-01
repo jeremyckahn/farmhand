@@ -42,8 +42,8 @@ const getForestPlotBackgroundImage = (
     fertilizerType === STANDARD
       ? plotStates['mulched-plot']
       : fertilizerType === RAINBOW
-        ? plotStates['rainbow-mulched-plot']
-        : null
+      ? plotStates['rainbow-mulched-plot']
+      : null
 
   return [
     ...(overlay ? [`url(${overlay})`] : []),
@@ -70,8 +70,8 @@ const getTreeTooltipText = (
     treeLifeStage !== GROWN
       ? 'Growing...'
       : fruitLifeStage === GROWN
-        ? `Ready to pick! (${fruitYield} ${fruitItemName ?? 'fruit'})`
-        : 'Fruiting...'
+      ? `Ready to pick! (${fruitYield} ${fruitItemName ?? 'fruit'})`
+      : 'Fruiting...'
 
   if (!fertilizerType || fertilizerType === NONE) {
     return growthText
@@ -310,7 +310,7 @@ export const ForestPlot = ({
                   <Typography>
                     {getChopYieldText(
                       chopWoodRange,
-                      isFruitRipe ? (item?.name ?? null) : null
+                      isFruitRipe ? item?.name ?? null : null
                     )}
                   </Typography>
                 </>

@@ -83,13 +83,13 @@ export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
         message: anyRodWasDestroyed
           ? LIGHTNING_ROD_DESTROYED_MESSAGE
           : anyRodWasReplanted
-            ? LIGHTNING_ROD_REPLANTED_MESSAGE
-            : LIGHTNING_ROD_STRUCK_MESSAGE,
+          ? LIGHTNING_ROD_REPLANTED_MESSAGE
+          : LIGHTNING_ROD_STRUCK_MESSAGE,
         severity: anyRodWasDestroyed
           ? 'error'
           : anyRodWasReplanted
-            ? 'success'
-            : 'info',
+          ? 'success'
+          : 'info',
       }
     } else if (fieldHasScarecrow(field)) {
       notification = {

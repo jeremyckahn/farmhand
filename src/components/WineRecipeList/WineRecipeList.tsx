@@ -15,8 +15,9 @@ export const WineRecipeList = () => {
     gameState: { itemsSold },
   } = useContext(FarmhandContext)
 
-  const wineVarietiesAvailableToMake =
-    getWineVarietiesAvailableToMake(itemsSold)
+  const wineVarietiesAvailableToMake = getWineVarietiesAvailableToMake(
+    itemsSold
+  )
 
   const [searchQuery, setSearchQuery] = useState('')
 

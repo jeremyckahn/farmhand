@@ -27,22 +27,18 @@ export const usePrefersReducedMotion = (): boolean => {
       mediaQueryList.addEventListener('change', listener)
     } else if ('addListener' in mediaQueryList) {
       // Compatibility for legacy mediaQueryList implementations
-      ;(
-        mediaQueryList as unknown as {
-          addListener: (cb: (e: MediaQueryListEvent) => void) => void
-        }
-      ).addListener(listener)
+      ;((mediaQueryList as unknown) as {
+        addListener: (cb: (e: MediaQueryListEvent) => void) => void
+      }).addListener(listener)
     }
 
     return () => {
       if (mediaQueryList.removeEventListener) {
         mediaQueryList.removeEventListener('change', listener)
       } else if ('removeListener' in mediaQueryList) {
-        ;(
-          mediaQueryList as unknown as {
-            removeListener: (cb: (e: MediaQueryListEvent) => void) => void
-          }
-        ).removeListener(listener)
+        ;((mediaQueryList as unknown) as {
+          removeListener: (cb: (e: MediaQueryListEvent) => void) => void
+        }).removeListener(listener)
       }
     }
   }, [])

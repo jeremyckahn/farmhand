@@ -198,16 +198,18 @@ export const grapeNebbiolo: farmhand.grape = grape({
   wineId: 'wine-nebbiolo',
 })
 
-export const grapeVarietyToGrapeItemMap: Record<grapeVariety, farmhand.grape> =
-  {
-    [grapeVariety.CHARDONNAY]: grapeChardonnay,
-    [grapeVariety.SAUVIGNON_BLANC]: grapeSauvignonBlanc,
-    //[grapeVariety.PINOT_BLANC]: grapePinotBlanc,
-    //[grapeVariety.MUSCAT]: grapeMuscat,
-    //[grapeVariety.RIESLING]: grapeRiesling,
-    //[grapeVariety.MERLOT]: grapeMerlot,
-    [grapeVariety.CABERNET_SAUVIGNON]: grapeCabernetSauvignon,
-    //[grapeVariety.SYRAH]: grapeSyrah,
-    [grapeVariety.TEMPRANILLO]: grapeTempranillo,
-    [grapeVariety.NEBBIOLO]: grapeNebbiolo,
-  }
+export const grapeVarietyToGrapeItemMap: Record<
+  grapeVariety,
+  farmhand.grape
+> = {
+  [grapeVariety.CHARDONNAY]: grapeChardonnay,
+  [grapeVariety.SAUVIGNON_BLANC]: grapeSauvignonBlanc,
+  //[grapeVariety.PINOT_BLANC]: grapePinotBlanc,
+  //[grapeVariety.MUSCAT]: grapeMuscat,
+  //[grapeVariety.RIESLING]: grapeRiesling,
+  //[grapeVariety.MERLOT]: grapeMerlot,
+  [grapeVariety.CABERNET_SAUVIGNON]: grapeCabernetSauvignon,
+  //[grapeVariety.SYRAH]: grapeSyrah,
+  [grapeVariety.TEMPRANILLO]: grapeTempranillo,
+  [grapeVariety.NEBBIOLO]: grapeNebbiolo,
+}

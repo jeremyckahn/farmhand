@@ -256,8 +256,12 @@ export const useFarmhand = (props: FarmhandProps) => {
   const instanceProxyRef = useRef<any>(null)
 
   // Call sub-hooks
-  const { openDialogView, closeDialogView, focusNextView, focusPreviousView } =
-    useFarmhandNavigation(setState, viewList)
+  const {
+    openDialogView,
+    closeDialogView,
+    focusNextView,
+    focusPreviousView,
+  } = useFarmhandNavigation(setState, viewList)
 
   // Mirrors the current view into the URL hash's `view` query param, using
   // pushState (not replaceState) so each in-app view change is a real,
@@ -351,8 +355,10 @@ export const useFarmhand = (props: FarmhandProps) => {
     nextDayStateRef
   )
 
-  const { showInventoryFullNotifications, showRecipeLearnedNotifications } =
-    useFarmhandNotifications(state, boundReducersRef)
+  const {
+    showInventoryFullNotifications,
+    showRecipeLearnedNotifications,
+  } = useFarmhandNotifications(state, boundReducersRef)
 
   // Instance proxy to mimic the legacy class "this" so ui-events.tsx can run unmodified
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -582,8 +588,9 @@ export const useFarmhand = (props: FarmhandProps) => {
           ...persistedState,
         })
         const { isCombineEnabled, newDayNotifications } = sanitizedState
-        const restoredStageFocus =
-          getValidatedStageFocusFromHash(sanitizedState)
+        const restoredStageFocus = getValidatedStageFocusFromHash(
+          sanitizedState
+        )
 
         setState(previous => ({
           ...previous,

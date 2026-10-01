@@ -47,7 +47,7 @@ export const recipeCategories: Record<
 export const recipesMap: Record<string, farmhand.recipe> = {}
 
 for (const recipeId of Object.keys(recipes)) {
-  const recipe = (recipes as unknown as Record<string, farmhand.recipe>)[
+  const recipe = ((recipes as unknown) as Record<string, farmhand.recipe>)[
     recipeId
   ]
 
@@ -59,12 +59,10 @@ export const upgradesMap: Record<string, farmhand.upgradesMetadatum> = {}
 
 for (let toolType of Object.keys(upgrades)) {
   for (let upgrade of Object.values(
-    (
-      upgrades as unknown as Record<
-        string,
-        Record<string, farmhand.upgradesMetadatum>
-      >
-    )[toolType]
+    ((upgrades as unknown) as Record<
+      string,
+      Record<string, farmhand.upgradesMetadatum>
+    >)[toolType]
   )) {
     upgradesMap[upgrade.id] = upgrade
   }
@@ -76,32 +74,36 @@ export const itemsMap: Record<string, farmhand.item> = {
   ...upgradesMap,
 }
 
-export const fermentableItemsMap: Record<string, farmhand.item> =
-  Object.fromEntries(
-    Object.entries(itemsMap).filter(([itemId]) => {
-      const item = itemsMap[itemId]
+export const fermentableItemsMap: Record<
+  string,
+  farmhand.item
+> = Object.fromEntries(
+  Object.entries(itemsMap).filter(([itemId]) => {
+    const item = itemsMap[itemId]
 
-      return 'daysToFerment' in item
-    })
-  )
+    return 'daysToFerment' in item
+  })
+)
 
-export const cropItemIdToSeedItemMap: Record<string, farmhand.seedItem> =
-  Object.entries(baseItemsMap).reduce<Record<string, farmhand.seedItem>>(
-    (acc, [itemId, item]) => {
-      const { growsInto } = item as { growsInto?: string | string[] }
+export const cropItemIdToSeedItemMap: Record<
+  string,
+  farmhand.seedItem
+> = Object.entries(baseItemsMap).reduce<Record<string, farmhand.seedItem>>(
+  (acc, [itemId, item]) => {
+    const { growsInto } = item as { growsInto?: string | string[] }
 
-      if (growsInto) {
-        const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
+    if (growsInto) {
+      const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
 
-        for (const variantId of variants) {
-          acc[variantId] = baseItemsMap[itemId] as farmhand.seedItem
-        }
+      for (const variantId of variants) {
+        acc[variantId] = baseItemsMap[itemId] as farmhand.seedItem
       }
+    }
 
-      return acc
-    },
-    {}
-  )
+    return acc
+  },
+  {}
+)
 
 export const cropTypeToIdMap: Record<string, string | Array<string>> = {
   [ASPARAGUS]: 'asparagus',

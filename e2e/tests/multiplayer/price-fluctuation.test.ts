@@ -19,7 +19,10 @@ test('uses server-based price values', async ({ page }) => {
   await page
     .getByRole('button', { name: 'A scythe for crop harvesting' })
     .click()
-  await page.locator('.Plot').first().click()
+  await page
+    .locator('.Plot')
+    .first()
+    .click()
   await expect(page.getByRole('complementary')).toContainText(
     'CarrotSell price: $28.72Total: $28.72'
   )

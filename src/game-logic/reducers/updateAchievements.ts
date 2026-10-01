@@ -10,7 +10,7 @@ export const updateAchievements = (
   achievements.reduce(
     (
       reducerState: farmhand.state,
-      achievement: Omit<(typeof achievements)[number], 'condition'> & {
+      achievement: Omit<typeof achievements[number], 'condition'> & {
         condition: (s: farmhand.state, ps: farmhand.state) => boolean
       }
     ) => {

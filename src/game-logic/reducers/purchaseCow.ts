@@ -9,8 +9,13 @@ export const purchaseCow = (
   state: farmhand.state,
   cow: farmhand.cow
 ): farmhand.state => {
-  const { cowInventory, cowColorsPurchased, playerId, money, purchasedCowPen } =
-    state
+  const {
+    cowInventory,
+    cowColorsPurchased,
+    playerId,
+    money,
+    purchasedCowPen,
+  } = state
   const { color } = cow
   const cowValue = getCowValue(cow, false)
 

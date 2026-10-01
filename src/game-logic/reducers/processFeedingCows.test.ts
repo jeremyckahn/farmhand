@@ -74,8 +74,11 @@ describe('processFeedingCows', () => {
     describe('there are more cows to feed than feed units', () => {
       test('units are distributed to cows and remainder goes hungry', () => {
         state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 1 }]
-        const { cowInventory, inventory, newDayNotifications } =
-          processFeedingCows(state)
+        const {
+          cowInventory,
+          inventory,
+          newDayNotifications,
+        } = processFeedingCows(state)
 
         expect(cowInventory[0].weightMultiplier).toEqual(
           1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT

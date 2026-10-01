@@ -29,7 +29,9 @@ test('should fluctuate crop prices', async ({ page }) => {
   // synchronously. Without this, Playwright's web-first assertion retry
   // behavior would mask a reintroduced animation by waiting for the tween to
   // finish before re-checking the text.
-  await expect(page.locator('#shop-tabpanel-0')).toContainText(
+  await expect(
+    page.locator('#shop-tabpanel-0')
+  ).toContainText(
     'Carrot SeedPrice: $21.00Total: $21.00In inventory: 0Days to mature: 5',
     { timeout: 200 }
   )

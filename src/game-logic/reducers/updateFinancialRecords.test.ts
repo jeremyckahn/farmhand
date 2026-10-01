@@ -37,15 +37,17 @@ describe('updateFinancialRecords', () => {
   })
 
   test('truncates logs', () => {
-    const { historicalDailyLosses, historicalDailyRevenue } =
-      updateFinancialRecords(
-        testState({
-          historicalDailyLosses: [-1, -2, -3, -4, -5, -6, -7],
-          historicalDailyRevenue: [1, 2, 3, 4, 5, 6, 7],
-          todaysLosses: -5,
-          todaysRevenue: 10,
-        })
-      )
+    const {
+      historicalDailyLosses,
+      historicalDailyRevenue,
+    } = updateFinancialRecords(
+      testState({
+        historicalDailyLosses: [-1, -2, -3, -4, -5, -6, -7],
+        historicalDailyRevenue: [1, 2, 3, 4, 5, 6, 7],
+        todaysLosses: -5,
+        todaysRevenue: 10,
+      })
+    )
 
     expect(historicalDailyLosses).toEqual([-5, -1, -2, -3, -4, -5, -6])
     expect(historicalDailyRevenue).toEqual([10, 1, 2, 3, 4, 5, 6])
@@ -53,18 +55,20 @@ describe('updateFinancialRecords', () => {
 
   describe('profitabilityStreak', () => {
     test('unprofitable day resets streak', () => {
-      const { profitabilityStreak, recordProfitabilityStreak } =
-        updateFinancialRecords(
-          testState({
-            historicalDailyLosses: [],
-            historicalDailyRevenue: [],
-            profitabilityStreak: 10,
-            record7dayProfitAverage: 0,
-            recordProfitabilityStreak: 10,
-            todaysLosses: -10,
-            todaysRevenue: 10,
-          })
-        )
+      const {
+        profitabilityStreak,
+        recordProfitabilityStreak,
+      } = updateFinancialRecords(
+        testState({
+          historicalDailyLosses: [],
+          historicalDailyRevenue: [],
+          profitabilityStreak: 10,
+          record7dayProfitAverage: 0,
+          recordProfitabilityStreak: 10,
+          todaysLosses: -10,
+          todaysRevenue: 10,
+        })
+      )
 
       expect(profitabilityStreak).toEqual(0)
       expect(recordProfitabilityStreak).toEqual(10)
