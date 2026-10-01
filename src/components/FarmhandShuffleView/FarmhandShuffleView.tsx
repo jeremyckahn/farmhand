@@ -26,7 +26,8 @@ import farmhandShufflePackageJson from '@jeremyckahn/farmhand-shuffle/package.js
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { breakpoints } from '../../styles/tokens.js'
-import { Div, P } from '../Elements/index.js'
+import { Div, H2, P } from '../Elements/index.js'
+import { Markdown } from '../Markdown/index.js'
 import { moneyString } from '../../utils/moneyString.js'
 
 // The installed @jeremyckahn/farmhand-shuffle version, used to tag every
@@ -272,66 +273,148 @@ export const FarmhandShuffleView = () => {
   return (
     <Div
       className="FarmhandShuffleView"
-      sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+      sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        // The Stage doesn't scroll for this view (Match scrolls itself), so
+        // the wager screen - now taller than a phone screen with the intro
+        // text - scrolls here instead, with the scrollbar hidden like
+        // Match's. The bottom padding keeps the last card clear of
+        // Farmhand's fixed bottom nav buttons.
+        ...(matchPhase === 'wager' && {
+          overflowX: 'hidden',
+          overflowY: 'auto',
+          paddingBottom: '8em',
+          scrollbarWidth: 'none',
+          '&::-webkit-scrollbar': { display: 'none' },
+        }),
+      }}
     >
       {matchPhase === 'wager' && (
-        <Card
+        // Like the view title Stage shows above the other views' panels (the
+        // Cellar's, for one) on narrow screens, where the AppBar has no room
+        // for it. Stage hides that one for this view, since the match itself
+        // needs the space, so it's rendered here for the wager screen only.
+        <H2
           sx={{
-            maxWidth: '30em',
-            // Farmhand's fixed End Day button (`.end-day` in Farmhand.tsx)
-            // sits at the top right of the Stage and would cover this card's
-            // corner, so the card starts below it, with the same gap under
-            // the button as there is above it (between the AppBar and the
-            // button). Measured in the browser: 4.75em below `sm` (56px
-            // AppBar, button at 70-126px) and 4.625em from `sm` up (64px
-            // AppBar, button at 77-133px), net of the Stage's own 0.5rem top
-            // padding (see Stage.tsx).
-            margin: '4.75em auto 2em',
-            [`@media (min-width: ${breakpoints.sm}px)`]: {
-              marginTop: '4.625em',
+            // `&&` so this beats Stage's own `& h2` font size.
+            '&&': {
+              fontSize: '2.5em',
+              marginBottom: '0.6em',
+              textAlign: 'center',
+              // Farmhand's fixed End Day button (`.end-day` in Farmhand.tsx)
+              // sits at the top right of the Stage and would cover the
+              // content, so it starts below the button, with the same gap
+              // under the button as there is above it (between the AppBar
+              // and the button). Measured in the browser: 4.75rem below `sm`
+              // (56px AppBar, button at 70-126px) and 4.625rem from `sm` up
+              // (64px AppBar, button at 77-133px), net of the Stage's own
+              // 0.5rem top padding (see Stage.tsx).
+              // rem, not em: em would resolve against this heading's own
+              // 2.5em font size.
+              marginTop: '4.75rem',
+              flexShrink: 0,
+              [`@media (min-width: ${breakpoints.largePhone}px)`]: {
+                display: 'none',
+              },
             },
           }}
         >
-          <CardHeader
-            {...{
-              title: 'Farmhand Shuffle',
-              subheader: 'Wager money on a match against a bot opponent.',
-            }}
-          />
-          <CardContent>
-            <P>You have {moneyString(money)}.</P>
-            <TextField
+          Farmhand Shuffle
+        </H2>
+      )}
+      {matchPhase === 'wager' && (
+        // A translucent panel (like the Cellar and Workshop tab panels)
+        // holding the wager card and, below it, a card of flavor text.
+        <Div
+          sx={{
+            maxWidth: '30em',
+            // 1em narrower than the space available on each side, which with
+            // the Stage's own 0.5rem inset puts the panel 1.5em from the
+            // screen's edges, like the Cellar and Workshop panels.
+            width: 'calc(100% - 2em)',
+            // Don't let the flex column squash the panel when the page is
+            // taller than the screen.
+            flexShrink: 0,
+            // On wide screens (where the AppBar already shows the title, so
+            // the one above is hidden) the panel itself starts below
+            // Farmhand's fixed End Day button; see the title's own margin
+            // for how that offset is derived.
+            margin: '0 auto 2em',
+            [`@media (min-width: ${breakpoints.largePhone}px)`]: {
+              marginTop: '4.75em',
+            },
+            [`@media (min-width: ${breakpoints.sm}px)`]: {
+              marginTop: '4.625em',
+            },
+            padding: '0.5em',
+            background: 'rgba(255, 255, 255, 0.5)',
+            borderRadius: '0.5em',
+            '& > * + *': { marginTop: '1em' },
+            // card-list adds its own bottom margin (and its last item
+            // another) - drop it so the panel's padding is even all around.
+            '& .card-list': { marginBottom: 0 },
+            '& .card-list > li:last-child': { marginBottom: 0 },
+          }}
+        >
+          <Card>
+            <CardHeader
               {...{
-                variant: 'standard',
-                label: 'Wager',
-                value: wagerInputValue,
-                inputProps: {
-                  max: money,
-                  min: 0,
-                  pattern: '[0-9]*',
-                },
-                onChange: value => {
-                  setWagerInputValue(Number(value))
-                },
-                InputProps: {
-                  inputComponent: WagerNumberFormat,
-                },
+                subheader:
+                  'Wager money on a match. Winning gets you double your money back!',
               }}
             />
-            <Div sx={{ marginTop: '1em' }}>
-              <Button
+            <CardContent>
+              <P>You have {moneyString(money)}.</P>
+              <TextField
                 {...{
-                  color: 'primary',
-                  variant: 'contained',
-                  disabled: wagerInputValue < 0 || wagerInputValue > money,
-                  onClick: handleSubmitWager,
+                  variant: 'standard',
+                  label: 'Wager',
+                  value: wagerInputValue,
+                  inputProps: {
+                    max: money,
+                    min: 0,
+                    pattern: '[0-9]*',
+                  },
+                  onChange: value => {
+                    setWagerInputValue(Number(value))
+                  },
+                  InputProps: {
+                    inputComponent: WagerNumberFormat,
+                  },
                 }}
-              >
-                Start Match
-              </Button>
-            </Div>
-          </CardContent>
-        </Card>
+              />
+              <Div sx={{ marginTop: '1em' }}>
+                <Button
+                  {...{
+                    color: 'primary',
+                    variant: 'contained',
+                    disabled: wagerInputValue < 0 || wagerInputValue > money,
+                    onClick: handleSubmitWager,
+                  }}
+                >
+                  Start Match
+                </Button>
+              </Div>
+            </CardContent>
+          </Card>
+          <ul className="card-list">
+            <li>
+              <Card>
+                <CardContent>
+                  <Markdown
+                    {...{
+                      children: `Farmhand Shuffle is a card game for farmers! Just like the Field, the goal is to plant, water, and harvest crops for a profit. Some crop values rise and fall depending on the turn, so try to time your harvest to make the most of it.
+
+In Farmhand Shuffle you play against a bot opponent and pay money into a Community Fund at the start of every turn. Whoever avoids bankruptcy the longest wins!`,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </li>
+          </ul>
+        </Div>
       )}
       {matchPhase === 'playing' && initialMatch !== 'error' && (
         <Match

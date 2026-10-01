@@ -92,6 +92,22 @@ describe('<FarmhandShuffleView />', () => {
       expect(screen.queryByTestId('match')).not.toBeInTheDocument()
     })
 
+    test('explains the game and the payout', () => {
+      renderWithContext()
+
+      expect(
+        screen.getByText(
+          'Wager money on a match. Winning gets you double your money back!'
+        )
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(/Farmhand Shuffle is a card game for farmers!/)
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(/Whoever avoids bankruptcy the longest wins!/)
+      ).toBeInTheDocument()
+    })
+
     test('submitting the wager form calls handlePlaceFarmhandShuffleWager', async () => {
       const user = userEvent.setup()
 
