@@ -35,7 +35,9 @@ test('the wager form renders on the unlocked fixture', async ({ page }) => {
   // header, view title, and select combobox/option, so it's ambiguous in
   // strict mode. The wager card's subheader text is unique.
   await expect(
-    page.getByText('Wager money on a match against a bot opponent.')
+    page.getByText(
+      'Wager money on a match. Winning gets you double your money back!'
+    )
   ).toBeVisible()
   await expect(page.getByRole('button', { name: 'Start Match' })).toBeVisible()
 })
