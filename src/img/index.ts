@@ -273,6 +273,7 @@ import cowVariation4Blinking from './animals/cows/cow-variation-4-blinking.png?d
 import cowVariation5Blinking from './animals/cows/cow-variation-5-blinking.png?dataUri'
 import cowVariation6Blinking from './animals/cows/cow-variation-6-blinking.png?dataUri'
 import cowVariation7Blinking from './animals/cows/cow-variation-7-blinking.png?dataUri'
+import rainbowCowBlinking from './animals/cows/rainbow-cow-blinking.png'
 
 export { default as pixel } from './pixel.png?dataUri'
 
@@ -583,6 +584,8 @@ export const tools = {
 export const animals = {
   cow: {
     rainbow: rainbowCow,
+    rainbowBlinking: rainbowCowBlinking,
+
     variations: [
       cowVariation1,
       cowVariation2,
