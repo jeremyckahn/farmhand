@@ -69,7 +69,9 @@ export const spriteShadowSx = {
 // different inventories.
 export const quickSelectSx = (theme: Theme, isMenuOpen: boolean) => ({
   ...cardStyleSx(theme),
-  bottom: '7.5em',
+  // Clears the bottom-controls view-icon row above the prev/menu/next
+  // buttons; keep in sync with BottomControls.tsx's rendered height.
+  bottom: '8.5em',
   left: '50%',
   maxWidth: 'calc(100% - 2em)',
   position: 'fixed',
