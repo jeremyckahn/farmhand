@@ -5,7 +5,7 @@ import { withSnackbar } from 'notistack'
 
 import { Markdown } from '../Markdown/index.js'
 
-import { NOTIFICATION_DURATION } from '../../constants.js'
+import { getNotificationDuration } from '../../constants.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 export const getNotificationKey = ({
@@ -41,10 +41,12 @@ export const NotificationSystem = ({
   enqueueSnackbar,
   latestNotification,
   todaysNotifications = [],
+  notificationDuration,
 }: {
   enqueueSnackbar: (notification: farmhand.notification, options: any) => void
   latestNotification: farmhand.notification | null
   todaysNotifications?: farmhand.notification[]
+  notificationDuration: number
 }) => {
   const showNotification = (notification: farmhand.notification) => {
     // A stable, content-derived key (rather than a fresh object identity
@@ -55,7 +57,7 @@ export const NotificationSystem = ({
     // once autoHideDuration and a key are set - no onClose needed here.
     enqueueSnackbar(notification, {
       key: getNotificationKey(notification),
-      autoHideDuration: NOTIFICATION_DURATION,
+      autoHideDuration: getNotificationDuration(notificationDuration),
       preventDuplicate: true,
     })
   }
@@ -67,7 +69,7 @@ export const NotificationSystem = ({
 
     showNotification(latestNotification)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [enqueueSnackbar, latestNotification])
+  }, [enqueueSnackbar, latestNotification, notificationDuration])
 
   // latestNotification alone is lossy under React 18's automatic batching:
   // several showNotification reducer calls made synchronously (e.g. a

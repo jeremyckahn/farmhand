@@ -444,6 +444,7 @@ declare namespace farmhand {
     latestNotification?: notification | null
     newDayNotifications: notification[]
     notificationLog: notificationLogEntry[]
+    notificationDuration: number
     /**
      * Keys are (Trystero) peer ids, values are their respective metadata or null.
      */

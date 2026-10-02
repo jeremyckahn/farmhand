@@ -48,8 +48,10 @@ describe('UI Event Handlers', () => {
         isAwaitingCowTradeRequest: false,
         currentDialogView: dialogView.NONE,
         showHomeScreen: true,
+        notificationDuration: 6000,
       },
       setState: vi.fn(),
+      props: { localforage: { setItem: vi.fn().mockResolvedValue(undefined) } },
       purchaseItem: vi.fn(),
       makeRecipe: vi.fn(),
       makeFermentationRecipe: vi.fn(),
@@ -429,6 +431,19 @@ describe('UI Event Handlers', () => {
       expect(mockContext.focusNextView).toHaveBeenCalled()
       expect(mockContext.setState).toHaveBeenCalledWith({
         showHomeScreen: false,
+      })
+    })
+  })
+
+  describe('notification duration handlers', () => {
+    test('updates notification duration in milliseconds from slider seconds', () => {
+      const handler =
+        uiEventHandlers.handleNotificationDurationChange.bind(mockContext)
+
+      handler(new Event('change'), 8)
+
+      expect(mockContext.setState).toHaveBeenCalledWith({
+        notificationDuration: 8000,
       })
     })
   })

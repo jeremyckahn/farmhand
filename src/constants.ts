@@ -147,8 +147,15 @@ export const COW_MINIMUM_HAPPINESS_TO_BREED = 0.8
 // findBy*'s default polling/timeout window (assertions need the snackbar to
 // still be mounted when they check), and React 18's different effect/
 // batching timing narrows that window further than it was under React 17.
-export const NOTIFICATION_DURATION =
-  import.meta.env?.MODE === 'test' ? 5000 : 6000
+export const NOTIFICATION_DURATION_TEST = 5000
+export const NOTIFICATION_DURATION_MIN = 4000
+export const NOTIFICATION_DURATION_MAX = 12000
+export const NOTIFICATION_DURATION_DEFAULT = 6000
+export const getNotificationDuration = (duration: number) =>
+  import.meta.env?.MODE === 'test' ? NOTIFICATION_DURATION_TEST : duration
+export const NOTIFICATION_DURATION = getNotificationDuration(
+  NOTIFICATION_DURATION_DEFAULT
+)
 export const NOTIFICATION_LOG_SIZE = 14
 
 export const PRICE_EVENT_CHANCE = 0.2
@@ -206,6 +213,7 @@ export const PERSISTED_STATE_KEYS = [
   'mulchApplied',
   'newDayNotifications',
   'notificationLog',
+  'notificationDuration',
   'priceCrashes',
   'priceSurges',
   'profitabilityStreak',

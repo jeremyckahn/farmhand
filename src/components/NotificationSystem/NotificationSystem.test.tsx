@@ -2,13 +2,18 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { SnackbarProvider } from 'notistack'
 
-import { NOTIFICATION_DURATION } from '../../constants.js'
+import {
+  NOTIFICATION_DURATION,
+  NOTIFICATION_DURATION_DEFAULT,
+  NOTIFICATION_DURATION_TEST,
+} from '../../constants.js'
 
 import { NotificationSystem, getNotificationKey } from './NotificationSystem.js'
 
 const defaultProps = {
   enqueueSnackbar: vitest.fn(),
   latestNotification: null,
+  notificationDuration: NOTIFICATION_DURATION_DEFAULT,
 }
 
 const renderWithSnackbar = (component: React.ReactElement) => {
@@ -46,7 +51,7 @@ test('calls enqueueSnackbar with a content-derived key when latestNotification i
 
   expect(enqueueSnackbar).toHaveBeenCalledWith(latestNotification, {
     key: 'info:Test notification',
-    autoHideDuration: NOTIFICATION_DURATION,
+    autoHideDuration: NOTIFICATION_DURATION_TEST,
     preventDuplicate: true,
   })
 })
