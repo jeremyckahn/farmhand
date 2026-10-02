@@ -13,7 +13,15 @@ export const purchaseItem = (
   howMany: number = 1
 ): farmhand.state => {
   const { money, todaysPurchases, valueAdjustments } = state
-  const numberOfItemsToAdd = Math.min(howMany, inventorySpaceRemaining(state))
+
+  const getMaxPurchaseQuantity =
+    item.getMaxPurchaseQuantity?.(state) ?? Infinity
+
+  const numberOfItemsToAdd = Math.min(
+    howMany,
+    inventorySpaceRemaining(state),
+    getMaxPurchaseQuantity
+  )
 
   if (numberOfItemsToAdd === 0) {
     return state
