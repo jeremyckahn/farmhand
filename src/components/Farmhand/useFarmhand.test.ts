@@ -21,13 +21,15 @@ const setWindowHeight = (height: number) => {
 }
 
 const getIsMenuOpen = () =>
-  ((window as unknown) as { farmhand: { state: farmhand.state } }).farmhand
-    .state.isMenuOpen
+  (window as unknown as { farmhand: { state: farmhand.state } }).farmhand.state
+    .isMenuOpen
 
 const setIsMenuOpen = (isMenuOpen: boolean) =>
-  ((window as unknown) as {
-    farmhand: { setState: (state: Partial<farmhand.state>) => void }
-  }).farmhand.setState({ isMenuOpen })
+  (
+    window as unknown as {
+      farmhand: { setState: (state: Partial<farmhand.state>) => void }
+    }
+  ).farmhand.setState({ isMenuOpen })
 
 // Simulates a sidebar input having focus, e.g. mid-typing, without depending
 // on any particular Farmhand-rendered input existing in the current view.

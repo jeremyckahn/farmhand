@@ -13,11 +13,8 @@ export const updateFinancialRecords = (
     record7dayProfitAverage,
     recordProfitabilityStreak,
   } = state
-  let {
-    historicalDailyLosses,
-    historicalDailyRevenue,
-    recordSingleDayProfit,
-  } = state
+  let { historicalDailyLosses, historicalDailyRevenue, recordSingleDayProfit } =
+    state
 
   historicalDailyLosses = [todaysLosses, ...historicalDailyLosses].slice(
     0,

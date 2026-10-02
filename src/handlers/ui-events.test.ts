@@ -154,9 +154,8 @@ describe('UI Event Handlers', () => {
 
   describe('handleViewChangeButtonClick', () => {
     test('navigates to selected view', () => {
-      const handler = uiEventHandlers.handleViewChangeButtonClick.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleViewChangeButtonClick.bind(mockContext)
 
       handler(stageFocusType.SHOP)
 
@@ -174,7 +173,7 @@ describe('UI Event Handlers', () => {
         enablesFieldMode: fieldMode.PLANT,
       })
 
-      handler((mockItem as unknown) as Parameters<typeof handler>[0])
+      handler(mockItem as unknown as Parameters<typeof handler>[0])
 
       expect(mockContext.setState).toHaveBeenCalledWith({
         fieldMode: fieldMode.PLANT,
@@ -185,12 +184,11 @@ describe('UI Event Handlers', () => {
 
   describe('handleForestItemSelectClick', () => {
     test('selects the sapling and switches to PLANT mode', () => {
-      const handler = uiEventHandlers.handleForestItemSelectClick.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleForestItemSelectClick.bind(mockContext)
       const mockItem = testItem({ id: 'test-sapling' })
 
-      handler((mockItem as unknown) as Parameters<typeof handler>[0])
+      handler(mockItem as unknown as Parameters<typeof handler>[0])
 
       // Regression: selecting a sapling must back out of whatever field
       // mode (e.g. CHOP, FERTILIZE) was previously active, or clicking an
@@ -221,7 +219,7 @@ describe('UI Event Handlers', () => {
     test('opens menu when explicitly requested', () => {
       const handler = uiEventHandlers.handleMenuToggle.bind(mockContext)
 
-      handler((true as unknown) as Parameters<typeof handler>[0])
+      handler(true as unknown as Parameters<typeof handler>[0])
 
       const stateUpdater = mockContext.setState.mock.calls[0][0]
       const newState = stateUpdater({ isMenuOpen: false })
@@ -307,9 +305,8 @@ describe('UI Event Handlers', () => {
 
   describe('handleClickDialogViewButton', () => {
     test('displays requested dialog screen', () => {
-      const handler = uiEventHandlers.handleClickDialogViewButton.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleClickDialogViewButton.bind(mockContext)
 
       handler(dialogView.FARMERS_LOG)
 
@@ -352,9 +349,8 @@ describe('UI Event Handlers', () => {
 
   describe('handleFieldActionRangeChange', () => {
     test('adjusts tool range preview size', () => {
-      const handler = uiEventHandlers.handleFieldActionRangeChange.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleFieldActionRangeChange.bind(mockContext)
 
       handler(3)
 
@@ -415,9 +411,8 @@ describe('UI Event Handlers', () => {
 
   describe('handleShowHomeScreenChange', () => {
     test('enables home screen display', () => {
-      const handler = uiEventHandlers.handleShowHomeScreenChange.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleShowHomeScreenChange.bind(mockContext)
 
       handler(null, true)
 
@@ -428,9 +423,8 @@ describe('UI Event Handlers', () => {
 
     test('navigates away from home when disabling home screen while viewing it', () => {
       mockContext.state.stageFocus = stageFocusType.HOME
-      const handler = uiEventHandlers.handleShowHomeScreenChange.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleShowHomeScreenChange.bind(mockContext)
 
       handler(null, false)
 
@@ -443,9 +437,8 @@ describe('UI Event Handlers', () => {
 
   describe('notification duration handlers', () => {
     test('updates notification duration in milliseconds from slider seconds', () => {
-      const handler = uiEventHandlers.handleNotificationDurationChange.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleNotificationDurationChange.bind(mockContext)
 
       handler(new Event('change'), 8)
 
@@ -455,9 +448,10 @@ describe('UI Event Handlers', () => {
     })
 
     test('persists notification duration in milliseconds when slider interaction ends', async () => {
-      const handler = uiEventHandlers.handleNotificationDurationChangeCommitted.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleNotificationDurationChangeCommitted.bind(
+          mockContext
+        )
 
       await handler(new Event('change'), 8)
 
@@ -468,12 +462,12 @@ describe('UI Event Handlers', () => {
     })
 
     test('ignores array slider values', async () => {
-      const changeHandler = uiEventHandlers.handleNotificationDurationChange.bind(
-        mockContext
-      )
-      const committedHandler = uiEventHandlers.handleNotificationDurationChangeCommitted.bind(
-        mockContext
-      )
+      const changeHandler =
+        uiEventHandlers.handleNotificationDurationChange.bind(mockContext)
+      const committedHandler =
+        uiEventHandlers.handleNotificationDurationChangeCommitted.bind(
+          mockContext
+        )
 
       changeHandler(new Event('change'), [8])
       await committedHandler(new Event('change'), [8])
@@ -509,9 +503,8 @@ describe('UI Event Handlers', () => {
 
   describe('navigation handlers', () => {
     test('moves to next view', () => {
-      const handler = uiEventHandlers.handleClickNextMenuButton.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleClickNextMenuButton.bind(mockContext)
 
       handler()
 
@@ -519,9 +512,8 @@ describe('UI Event Handlers', () => {
     })
 
     test('moves to previous view', () => {
-      const handler = uiEventHandlers.handleClickPreviousMenuButton.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleClickPreviousMenuButton.bind(mockContext)
 
       handler()
 
@@ -547,9 +539,8 @@ describe('UI Event Handlers', () => {
     })
 
     test('increases inventory capacity', () => {
-      const handler = uiEventHandlers.handleStorageExpansionPurchase.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleStorageExpansionPurchase.bind(mockContext)
 
       handler()
 
@@ -559,9 +550,8 @@ describe('UI Event Handlers', () => {
 
   describe('loan handlers', () => {
     test('reduces debt by payment amount', () => {
-      const handler = uiEventHandlers.handleClickLoanPaydownButton.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleClickLoanPaydownButton.bind(mockContext)
 
       handler(500)
 
@@ -569,9 +559,8 @@ describe('UI Event Handlers', () => {
     })
 
     test('borrows money increasing debt', () => {
-      const handler = uiEventHandlers.handleClickTakeOutLoanButton.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleClickTakeOutLoanButton.bind(mockContext)
 
       handler(1000)
 
@@ -581,9 +570,8 @@ describe('UI Event Handlers', () => {
 
   describe('utility handlers', () => {
     test('resets all saved game data', () => {
-      const handler = uiEventHandlers.handleClearPersistedDataClick.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleClearPersistedDataClick.bind(mockContext)
 
       handler()
 
@@ -599,9 +587,8 @@ describe('UI Event Handlers', () => {
     })
 
     test('shows or hides chat window', () => {
-      const handler = uiEventHandlers.handleChatRoomOpenStateChange.bind(
-        mockContext
-      )
+      const handler =
+        uiEventHandlers.handleChatRoomOpenStateChange.bind(mockContext)
 
       handler(true)
 
