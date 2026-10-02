@@ -1,11 +1,19 @@
 import 'jest-extended'
 
+// Conditionally import DOM matchers and React cleanup only when running in a
+// browser/JSDOM environment. Keeping them out of Node-based test runners avoids
+// loading heavy React and DOM libraries into pure logic test workers.
 if (typeof window !== 'undefined') {
   await import('@testing-library/jest-dom')
   const { cleanup } = await import('@testing-library/react')
 
   afterEach(() => {
     cleanup()
+    // Farmhand mirrors navigation state (current view, tabbed screens' active
+    // tab) into the real window.location.hash (see src/utils/hashQueryParams.ts),
+    // which - unlike React/component state - isn't reset between tests on its
+    // own and would otherwise leak into whichever test runs next in the same
+    // file.
     window.history.replaceState({}, '', window.location.pathname)
   })
 }

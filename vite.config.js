@@ -89,6 +89,29 @@ const viteConfig = defineConfig({
   },
 })
 
+// Test file globs that require a browser DOM (jsdom) environment. All other
+// unit tests run in the lightweight Node environment to avoid JSDOM startup overhead.
+const domTestGlobs = [
+  // React component tests rendering JSX:
+  '**/*.test.tsx',
+  // Custom hooks rendering TestHarness or using renderHook:
+  '**/components/Farmhand/useFarmhand.test.ts',
+  '**/components/Farmhand/hooks/useFarmhandNetwork.test.ts',
+  // Shell integration tests rendering the app via farmhandStub:
+  '**/shell/**/*.test.ts',
+  // Handlers interacting with document.activeElement:
+  '**/handlers/**/*.test.ts',
+  // Game logic UI integration tests using farmhandStub:
+  '**/game-logic/*.test.ts',
+  // Reducer test importing the Farmhand React component:
+  '**/game-logic/reducers/updatePeer.test.ts',
+  // Navigation utilities directly manipulating window.location and window.history:
+  '**/utils/hashQueryParams.test.ts',
+  '**/utils/getValidatedStageFocusFromHash.test.ts',
+  // Tests Jimp cow image snapshot matching jsdom-specific Buffer behavior:
+  '**/utils/getCowImage.test.ts',
+]
+
 const vitestConfig = vitestDefineConfig({
   test: {
     watch: false,
@@ -106,18 +129,7 @@ const vitestConfig = vitestDefineConfig({
         test: {
           name: 'dom',
           environment: 'jsdom',
-          include: [
-            '**/*.test.tsx',
-            '**/components/Farmhand/useFarmhand.test.ts',
-            '**/components/Farmhand/hooks/useFarmhandNetwork.test.ts',
-            '**/shell/**/*.test.ts',
-            '**/handlers/**/*.test.ts',
-            '**/game-logic/*.test.ts',
-            '**/game-logic/reducers/updatePeer.test.ts',
-            '**/utils/hashQueryParams.test.ts',
-            '**/utils/getValidatedStageFocusFromHash.test.ts',
-            '**/utils/getCowImage.test.ts',
-          ],
+          include: domTestGlobs,
         },
       },
       {
@@ -125,18 +137,8 @@ const vitestConfig = vitestDefineConfig({
         test: {
           name: 'node',
           environment: 'node',
-          include: ['**/*.test.ts'],
-          exclude: [
-            '**/components/Farmhand/useFarmhand.test.ts',
-            '**/components/Farmhand/hooks/useFarmhandNetwork.test.ts',
-            '**/shell/**/*.test.ts',
-            '**/handlers/**/*.test.ts',
-            '**/game-logic/*.test.ts',
-            '**/game-logic/reducers/updatePeer.test.ts',
-            '**/utils/hashQueryParams.test.ts',
-            '**/utils/getValidatedStageFocusFromHash.test.ts',
-            '**/utils/getCowImage.test.ts',
-          ],
+          include: ['**/*.test.{js,ts}'],
+          exclude: domTestGlobs,
         },
       },
     ],
