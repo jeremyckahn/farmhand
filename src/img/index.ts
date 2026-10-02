@@ -269,6 +269,15 @@ import cowVariation5 from './animals/cows/cow-variation-5.png?dataUri'
 import cowVariation6 from './animals/cows/cow-variation-6.png?dataUri'
 import cowVariation7 from './animals/cows/cow-variation-7.png?dataUri'
 
+import cowVariation1Blinking from './animals/cows/cow-variation-1-blinking.png?dataUri'
+import cowVariation2Blinking from './animals/cows/cow-variation-2-blinking.png?dataUri'
+import cowVariation3Blinking from './animals/cows/cow-variation-3-blinking.png?dataUri'
+import cowVariation4Blinking from './animals/cows/cow-variation-4-blinking.png?dataUri'
+import cowVariation5Blinking from './animals/cows/cow-variation-5-blinking.png?dataUri'
+import cowVariation6Blinking from './animals/cows/cow-variation-6-blinking.png?dataUri'
+import cowVariation7Blinking from './animals/cows/cow-variation-7-blinking.png?dataUri'
+import rainbowCowBlinking from './animals/cows/rainbow-cow-blinking.png'
+
 export { default as pixel } from './pixel.png?dataUri'
 
 export const plotStates = {
@@ -581,6 +590,8 @@ export const tools = {
 export const animals = {
   cow: {
     rainbow: rainbowCow,
+    rainbowBlinking: rainbowCowBlinking,
+
     variations: [
       cowVariation1,
       cowVariation2,
@@ -589,6 +600,16 @@ export const animals = {
       cowVariation5,
       cowVariation6,
       cowVariation7,
+    ],
+
+    blinkingVariations: [
+      cowVariation1Blinking,
+      cowVariation2Blinking,
+      cowVariation3Blinking,
+      cowVariation4Blinking,
+      cowVariation5Blinking,
+      cowVariation6Blinking,
+      cowVariation7Blinking,
     ],
   },
 }
