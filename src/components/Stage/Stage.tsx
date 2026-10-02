@@ -21,6 +21,7 @@ import { breakpoints, layout } from '../../styles/tokens.js'
 
 import brownDotBg from '../../img/ui/brown-dot-bg.png'
 import floorboardBg from '../../img/ui/floorboard.png'
+import hayBg from '../../img/ui/hay-bg.png'
 import jackOLanternBg from '../../img/ui/jack-o-lantern-bg.png'
 import winterBg from '../../img/ui/winter-bg.png'
 import yellowDotBg from '../../img/ui/yellow-dot-bg.png'
@@ -77,7 +78,7 @@ export const Stage = ({
     // No dedicated art yet - reuse the floorboard texture as a placeholder
     // (see the Farmhand Shuffle integration plan's "Visual asset" decision).
     // Commissioning real art is a follow-up, not a blocker for the unlock.
-    [stageFocusType.FARMHAND_SHUFFLE]: floorboardBg,
+    [stageFocusType.FARMHAND_SHUFFLE]: hayBg,
   }[stageFocus as string]
 
   // The Field, Cow Pen, and Forest screens get a season-specific visual
