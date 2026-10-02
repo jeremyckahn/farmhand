@@ -93,7 +93,6 @@ const vitestConfig = vitestDefineConfig({
   test: {
     watch: false,
     globals: true,
-    environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
     restoreMocks: true,
     dir: 'src',
@@ -101,6 +100,46 @@ const vitestConfig = vitestDefineConfig({
       reporter: ['text', 'html'],
       exclude: ['node_modules', 'src/setupTests.ts', 'dist', 'src/__mocks__'],
     },
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'dom',
+          environment: 'jsdom',
+          include: [
+            '**/*.test.tsx',
+            '**/components/Farmhand/useFarmhand.test.ts',
+            '**/components/Farmhand/hooks/useFarmhandNetwork.test.ts',
+            '**/shell/**/*.test.ts',
+            '**/handlers/**/*.test.ts',
+            '**/game-logic/*.test.ts',
+            '**/game-logic/reducers/updatePeer.test.ts',
+            '**/utils/hashQueryParams.test.ts',
+            '**/utils/getValidatedStageFocusFromHash.test.ts',
+            '**/utils/getCowImage.test.ts',
+          ],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'node',
+          environment: 'node',
+          include: ['**/*.test.ts'],
+          exclude: [
+            '**/components/Farmhand/useFarmhand.test.ts',
+            '**/components/Farmhand/hooks/useFarmhandNetwork.test.ts',
+            '**/shell/**/*.test.ts',
+            '**/handlers/**/*.test.ts',
+            '**/game-logic/*.test.ts',
+            '**/game-logic/reducers/updatePeer.test.ts',
+            '**/utils/hashQueryParams.test.ts',
+            '**/utils/getValidatedStageFocusFromHash.test.ts',
+            '**/utils/getCowImage.test.ts',
+          ],
+        },
+      },
+    ],
   },
 })
 
