@@ -143,7 +143,14 @@ export const COW_MAXIMUM_VALUE_MULTIPLIER = 1
 export const COW_GESTATION_PERIOD_DAYS = 3
 export const COW_MINIMUM_HAPPINESS_TO_BREED = 0.8
 
-export const NOTIFICATION_DURATION = import.meta.env?.MODE === 'test' ? 1 : 6000
+export const NOTIFICATION_DURATION_MIN = 4000
+export const NOTIFICATION_DURATION_MAX = 12000
+export const NOTIFICATION_DURATION_DEFAULT = 6000
+export const getNotificationDuration = (duration: number) =>
+  import.meta.env?.MODE === 'test' ? 1 : duration
+export const NOTIFICATION_DURATION = getNotificationDuration(
+  NOTIFICATION_DURATION_DEFAULT
+)
 export const NOTIFICATION_LOG_SIZE = 14
 
 export const PRICE_EVENT_CHANCE = 0.2
@@ -199,6 +206,7 @@ export const PERSISTED_STATE_KEYS = [
   'mulchApplied',
   'newDayNotifications',
   'notificationLog',
+  'notificationDuration',
   'priceCrashes',
   'priceSurges',
   'profitabilityStreak',

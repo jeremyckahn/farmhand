@@ -10,11 +10,16 @@ import FormControlLabel from '@mui/material/FormControlLabel/index.js'
 import FormGroup from '@mui/material/FormGroup/index.js'
 import FormLabel from '@mui/material/FormLabel/index.js'
 import Switch from '@mui/material/Switch/index.js'
+import Slider from '@mui/material/Slider/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import FileReaderInput from 'react-file-reader-input'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { Div } from '../Elements/index.js'
+import {
+  NOTIFICATION_DURATION_MAX,
+  NOTIFICATION_DURATION_MIN,
+} from '../../constants.js'
 
 import { RandomSeedInput } from './RandomSeedInput.js'
 
@@ -25,10 +30,12 @@ const SettingsView = ({
   handleExportDataClick,
   handleImportDataClick,
   handleSaveButtonClick,
+  handleNotificationDurationChange,
   handleShowNotificationsChange,
   handleUseAlternateEndDayButtonPositionChange,
   handleShowHomeScreenChange,
   showNotifications,
+  notificationDuration,
   useAlternateEndDayButtonPosition,
   showHomeScreen,
 }: {
@@ -40,6 +47,10 @@ const SettingsView = ({
   handleExportDataClick: () => void
   handleImportDataClick: (results: any) => void
   handleSaveButtonClick: () => void
+  handleNotificationDurationChange: (
+    event: React.SyntheticEvent | Event,
+    value: number | number[]
+  ) => void
   handleShowNotificationsChange: (
     event: React.ChangeEvent<HTMLInputElement>
   ) => void
@@ -50,6 +61,7 @@ const SettingsView = ({
     event: React.ChangeEvent<HTMLInputElement>
   ) => void
   showNotifications: boolean
+  notificationDuration: number
   useAlternateEndDayButtonPosition: boolean
   showHomeScreen: boolean
 }) => {
@@ -108,6 +120,18 @@ const SettingsView = ({
               />
             }
             label="Show new notifications"
+          />
+          <FormLabel component="legend">Notification display time</FormLabel>
+          <Slider
+            aria-label="Notification display time"
+            marks
+            min={NOTIFICATION_DURATION_MIN / 1000}
+            max={NOTIFICATION_DURATION_MAX / 1000}
+            onChange={handleNotificationDurationChange}
+            sx={{ margin: '0 auto', width: '90%' }}
+            value={notificationDuration / 1000}
+            valueLabelDisplay="auto"
+            valueLabelFormat={value => `${value} seconds`}
           />
           <FormControlLabel
             control={

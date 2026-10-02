@@ -108,10 +108,9 @@ const Inventory = ({
     )
   }
 
-  const filteredCategories = (Array.from(itemCategories.entries()) as [
-    string,
-    farmhand.item[]
-  ][]).reduce(
+  const filteredCategories = (
+    Array.from(itemCategories.entries()) as [string, farmhand.item[]][]
+  ).reduce(
     (
       filtered: Map<string, farmhand.item[]>,
       [category, categoryItems]: [string, farmhand.item[]]

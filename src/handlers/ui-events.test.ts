@@ -48,8 +48,10 @@ describe('UI Event Handlers', () => {
         isAwaitingCowTradeRequest: false,
         currentDialogView: dialogView.NONE,
         showHomeScreen: true,
+        notificationDuration: 6000,
       },
       setState: vi.fn(),
+      props: { localforage: { setItem: vi.fn().mockResolvedValue(undefined) } },
       purchaseItem: vi.fn(),
       makeRecipe: vi.fn(),
       makeFermentationRecipe: vi.fn(),
@@ -430,6 +432,48 @@ describe('UI Event Handlers', () => {
       expect(mockContext.setState).toHaveBeenCalledWith({
         showHomeScreen: false,
       })
+    })
+  })
+
+  describe('notification duration handlers', () => {
+    test('updates notification duration in milliseconds from slider seconds', () => {
+      const handler =
+        uiEventHandlers.handleNotificationDurationChange.bind(mockContext)
+
+      handler(new Event('change'), 8)
+
+      expect(mockContext.setState).toHaveBeenCalledWith({
+        notificationDuration: 8000,
+      })
+    })
+
+    test('persists notification duration in milliseconds when slider interaction ends', async () => {
+      const handler =
+        uiEventHandlers.handleNotificationDurationChangeCommitted.bind(
+          mockContext
+        )
+
+      await handler(new Event('change'), 8)
+
+      expect(mockContext.props.localforage.setItem).toHaveBeenCalledWith(
+        'state',
+        expect.objectContaining({ notificationDuration: 8000 })
+      )
+    })
+
+    test('ignores array slider values', async () => {
+      const changeHandler =
+        uiEventHandlers.handleNotificationDurationChange.bind(mockContext)
+      const committedHandler =
+        uiEventHandlers.handleNotificationDurationChangeCommitted.bind(
+          mockContext
+        )
+
+      changeHandler(new Event('change'), [8])
+      await committedHandler(new Event('change'), [8])
+
+      expect(mockContext.setState).not.toHaveBeenCalled()
+      expect(mockContext.props.localforage.setItem).not.toHaveBeenCalled()
     })
   })
 

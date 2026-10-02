@@ -102,9 +102,10 @@ const Farmhand = (props: FarmhandProps) => {
                     pointerEvents: 'none',
                   },
                 }),
-                [`@media (min-width: ${breakpoints.smallPhone}px) and (orientation: landscape)`]: {
-                  paddingTop: '3em',
-                },
+                [`@media (min-width: ${breakpoints.smallPhone}px) and (orientation: landscape)`]:
+                  {
+                    paddingTop: '3em',
+                  },
                 [`@media (min-width: ${breakpoints.sm}px)`]: {
                   paddingTop: '4em',
                 },

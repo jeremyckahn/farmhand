@@ -12,6 +12,7 @@ import {
 import uiEventHandlers from '../../handlers/ui-events.js'
 import { generateCow } from '../../utils/generateCow.js'
 import { scarecrow } from '../../data/items.js'
+import { NOTIFICATION_DURATION_DEFAULT } from '../../constants.js'
 
 /**
  * A utility type that transforms a type containing functions with an explicit `this` parameter
@@ -159,6 +160,7 @@ export const createContextData = (): ContextData => {
       latestNotification: null,
       newDayNotifications: [],
       notificationLog: [],
+      notificationDuration: NOTIFICATION_DURATION_DEFAULT,
       peers: {}, // empty object for now
       peerRoom: null,
       pendingPeerMessages: [],

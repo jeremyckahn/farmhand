@@ -578,10 +578,11 @@ export const Field = (props: FieldProps) => {
             backgroundColor: colorYellow,
             cursor: 'pointer',
           },
-          '&.harvest-mode.is-inventory-full .Plot.crop.can-be-harvested, &.cleanup-mode.is-inventory-full .Plot.is-replantable': {
-            backgroundColor: colorRedDanger,
-            cursor: 'not-allowed',
-          },
+          '&.harvest-mode.is-inventory-full .Plot.crop.can-be-harvested, &.cleanup-mode.is-inventory-full .Plot.is-replantable':
+            {
+              backgroundColor: colorRedDanger,
+              cursor: 'not-allowed',
+            },
           '&.cleanup-mode .Plot.is-replantable': {
             backgroundColor: colorGreenOk,
             cursor: 'pointer',
@@ -590,14 +591,15 @@ export const Field = (props: FieldProps) => {
             backgroundColor: colorGreenOk,
             cursor: 'auto',
           },
-          '&.set-sprinkler-mode:hover .Plot:hover, &.set-scarecrow-mode:hover .Plot:hover, &.set-lightning-rod-mode:hover .Plot:hover': {
-            '&.is-empty img': { cursor: 'pointer', opacity: 0.5 },
-            '&:not(.is-empty)': {
-              backgroundColor: colorRedDanger,
-              backgroundImage: 'none',
-              cursor: 'not-allowed',
+          '&.set-sprinkler-mode:hover .Plot:hover, &.set-scarecrow-mode:hover .Plot:hover, &.set-lightning-rod-mode:hover .Plot:hover':
+            {
+              '&.is-empty img': { cursor: 'pointer', opacity: 0.5 },
+              '&:not(.is-empty)': {
+                backgroundColor: colorRedDanger,
+                backgroundImage: 'none',
+                cursor: 'not-allowed',
+              },
             },
-          },
           '&.set-sprinkler-mode:hover .Plot:hover.is-empty img': {
             backgroundImage: `url(${sprinklerImg})`,
           },
