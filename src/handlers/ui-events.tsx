@@ -470,22 +470,6 @@ export default {
     }
   },
 
-  async handleNotificationDurationChangeCommitted(
-    this: Farmhand,
-    _event: React.SyntheticEvent | Event,
-    value: number | number[]
-  ) {
-    if (typeof value === 'number') {
-      await this.props.localforage?.setItem(
-        'state',
-        reduceByPersistedKeys({
-          ...this.state,
-          notificationDuration: value * 1000,
-        })
-      )
-    }
-  },
-
   handleClickNotificationIndicator(this: Farmhand) {
     this.openDialogView(dialogView.FARMERS_LOG)
   },
