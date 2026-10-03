@@ -1,4 +1,6 @@
+import { darken, Theme } from '@mui/material/styles/index.js'
 import createTheme from '@mui/material/styles/createTheme.js'
+import type { Shadows } from '@mui/material/styles/shadows.js'
 
 import blueStripeBg from './img/ui/blue-stripe-bg.png'
 import lightBlueStripeBg from './img/ui/light-blue-stripe-bg.png'
@@ -7,7 +9,60 @@ import {
   cardStyleSx,
   spriteShadowSx,
 } from './styles/sx.js'
+import {
+  pixelBevel,
+  pixelBevelPressed,
+  pixelFrameSx,
+  pixelPressedSx,
+  pixelShadowColor,
+  px,
+} from './styles/pixel.js'
 import { breakpoints, colors, layout } from './styles/tokens.js'
+
+type PaletteColorName =
+  'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success'
+
+const paletteColorNames = new Set<string>([
+  'primary',
+  'secondary',
+  'error',
+  'warning',
+  'info',
+  'success',
+])
+
+const isPaletteColorName = (color: unknown): color is PaletteColorName =>
+  typeof color === 'string' && paletteColorNames.has(color)
+
+// Pixel art outlines read best when they're a deep shade of the fill color
+// rather than a flat black.
+const outlineFor = (theme: Theme, color: unknown) =>
+  isPaletteColorName(color)
+    ? darken(theme.palette[color].main, 0.5)
+    : colors.neutralOutline
+
+// Every elevation gets the same hard, unblurred pixel art drop shadow rather
+// than MUI's soft Material Design shadows.
+const pixelShadow = `${px(1)} ${px(1)} 0 0 ${pixelShadowColor}`
+const shadows = [
+  'none',
+  ...Array<string>(24).fill(pixelShadow),
+] as unknown as Shadows
+
+// Shared by Button and Fab: a raised 9-slice frame that gets pushed into its
+// shadow when pressed.
+const raisedControlSx = (outline: string) =>
+  ({
+    ...pixelFrameSx({ outline, shadow: true }),
+    boxShadow: pixelBevel(),
+    '&:hover': { boxShadow: pixelBevel() },
+    '&.Mui-focusVisible': { boxShadow: pixelBevel() },
+    '&:active': pixelPressedSx(outline),
+    '&.Mui-disabled': {
+      ...pixelFrameSx({ outline: colors.disabledOutline, shadow: 'pressed' }),
+      boxShadow: 'none',
+    },
+  }) as const
 
 // These global styles used to live in Farmhand.sass, scoped by a `.Farmhand`
 // class applied to many DOM roots across the app (including MUI Dialogs,
@@ -77,7 +132,10 @@ export default createTheme({
   palette: {
     mode: 'light',
   },
-  shape: {},
+  // Pixel art has no anti-aliased curves. Corners are notched by the 9-slice
+  // frames instead.
+  shape: { borderRadius: 0 },
+  shadows,
   typography: {
     fontFamily: '"Public Sans", sans-serif',
     // Buttons and Tabs derive their default styles from this rather than
@@ -106,13 +164,14 @@ export default createTheme({
     },
     MuiTabs: {
       styleOverrides: {
-        root: ({ theme }) => ({
-          background: '#ffeec6',
-          borderColor: '#9b6d00',
-          borderWidth: 2,
-          borderStyle: 'solid',
-          borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
-        }),
+        root: {
+          ...pixelFrameSx({ outline: colors.cardOutline }),
+          backgroundColor: '#ffeec6',
+          boxShadow: pixelBevel(),
+        },
+        indicator: {
+          height: px(1),
+        },
       },
     },
     MuiInput: {
@@ -128,7 +187,7 @@ export default createTheme({
           ...cardStyleSx(theme),
           '&.is-selected': cardStyleSelectedSx,
           '& .MuiCard-root': {
-            background: colors.cardBackgroundNested,
+            backgroundColor: colors.cardBackgroundNested,
           },
         }),
       },
@@ -163,7 +222,57 @@ export default createTheme({
     },
     MuiButtonBase: {
       styleOverrides: {
-        root: { textTransform: 'none' },
+        root: {
+          textTransform: 'none',
+          // Ripples and focus pulses are circular by default, which clashes
+          // with the square pixel art controls.
+          '& .MuiTouchRipple-root .MuiTouchRipple-child': { borderRadius: 0 },
+        },
+      },
+    },
+    MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+      },
+      styleOverrides: {
+        root: ({ ownerState, theme }) => {
+          const outline = outlineFor(theme, ownerState.color)
+
+          switch (ownerState.variant) {
+            case 'contained':
+              return raisedControlSx(outline)
+
+            case 'outlined':
+              return {
+                ...pixelFrameSx({ outline, shadow: true }),
+                '&:hover': pixelFrameSx({ outline, shadow: true }),
+                '&:active': {
+                  ...pixelPressedSx(outline),
+                  boxShadow: 'none',
+                },
+                '&.Mui-disabled': pixelFrameSx({
+                  outline: colors.disabledOutline,
+                  shadow: 'pressed',
+                }),
+              }
+
+            default:
+              // Text buttons get an invisible frame of the same size so
+              // they don't shift the layout when toggled to another variant
+              // (e.g. selected items in ItemList and Toolbelt).
+              return pixelFrameSx({ outline: 'transparent', shadow: 'pressed' })
+          }
+        },
+      },
+    },
+    MuiFab: {
+      styleOverrides: {
+        root: ({ ownerState, theme }) => ({
+          ...raisedControlSx(outlineFor(theme, ownerState.color)),
+          // Fabs are normally round. Keep them square (with notched
+          // corners) to match the rest of the pixel art UI.
+          borderRadius: 0,
+        }),
       },
     },
     MuiPaper: {
@@ -171,9 +280,64 @@ export default createTheme({
         rounded: { backgroundColor: '#fff7e7' },
       },
     },
+    MuiPopover: {
+      styleOverrides: {
+        paper: {
+          ...pixelFrameSx({ outline: colors.cardOutline, shadow: true }),
+          boxShadow: pixelBevel(),
+        },
+      },
+    },
+    MuiAccordion: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          ...cardStyleSx(theme),
+          '&:before': { display: 'none' },
+          '&.Mui-expanded': { margin: `${px(2)} 0` },
+        }),
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        notchedOutline: {
+          borderWidth: 2,
+        },
+      },
+    },
+    MuiSwitch: {
+      styleOverrides: {
+        thumb: {
+          borderRadius: 0,
+          boxShadow: `${pixelBevel()}, ${px(1)} ${px(1)} 0 0 ${pixelShadowColor}`,
+        },
+        track: {
+          borderRadius: 0,
+        },
+      },
+    },
+    MuiSlider: {
+      styleOverrides: {
+        thumb: {
+          borderRadius: 0,
+          boxShadow: pixelBevel(),
+          '&:hover, &.Mui-focusVisible, &.Mui-active': {
+            boxShadow: pixelBevelPressed,
+          },
+          '&:before': { boxShadow: 'none' },
+        },
+        rail: { borderRadius: 0 },
+        track: { borderRadius: 0 },
+      },
+    },
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
+          ...pixelFrameSx({ outline: colors.neutralOutline }),
+          backgroundColor: 'rgba(60, 50, 40, 0.94)',
+          boxShadow: pixelBevel({
+            highlight: 'rgba(255, 255, 255, 0.15)',
+            lowlight: 'rgba(0, 0, 0, 0.25)',
+          }),
           '& p': { textAlign: 'center' },
         },
       },
@@ -181,7 +345,11 @@ export default createTheme({
     MuiDialog: {
       styleOverrides: {
         root: { display: 'block' },
-        paper: { backgroundImage: `url(${lightBlueStripeBg})` },
+        paper: {
+          ...pixelFrameSx({ outline: colors.dialogOutline, shadow: true }),
+          backgroundImage: `url(${lightBlueStripeBg})`,
+          boxShadow: pixelBevel(),
+        },
       },
     },
     MuiDivider: {
@@ -191,7 +359,12 @@ export default createTheme({
     },
     MuiAlert: {
       styleOverrides: {
-        root: {
+        root: ({ ownerState, theme }) => ({
+          ...pixelFrameSx({
+            outline: outlineFor(theme, ownerState.severity ?? 'success'),
+            shadow: true,
+          }),
+          boxShadow: pixelBevel(),
           marginBottom: '1em',
           [`@media (min-width: 0px) and (orientation: landscape)`]: {
             top: '3.5em',
@@ -206,7 +379,7 @@ export default createTheme({
           '& li': { marginLeft: '1em' },
           '& ul li': { listStyle: 'disc' },
           '& ol li': { listStyle: 'decimal' },
-        },
+        }),
       },
     },
   },

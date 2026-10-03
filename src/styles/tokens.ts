@@ -11,6 +11,10 @@ export const colors = {
   error: '#ce0000',
   success: '#2e7d32',
   cardBackground: '#ffe3a1',
+  cardOutline: '#8a5c00',
+  dialogOutline: '#1f4f78',
+  neutralOutline: '#2b2118',
+  disabledOutline: 'rgba(0, 0, 0, 0.26)',
   // Matches the legacy Sass `color.adjust($card-background, $lightness: -10%)`
   // for cards nested inside other cards. MUI's `darken()` helper uses a
   // different (multiplicative) algorithm and produces a visibly duller color.

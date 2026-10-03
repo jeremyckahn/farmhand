@@ -1,5 +1,6 @@
 import { lighten, Theme } from '@mui/material/styles/index.js'
 
+import { pixelBevel, pixelDropShadowFilter, pixelFrameSx, px } from './pixel.js'
 import { breakpoints, colors, layout } from './tokens.js'
 
 // NOTE: These are plain object literals (not typed as SxProps<Theme>) so
@@ -26,17 +27,23 @@ export const squareImgSx = {
 
 // Replaces the `card-style` mixin. Merge cardStyleSelectedSx on top of this
 // when the card's `is-selected` state is active.
+//
+// Cards are drawn as pixel art panels with a 9-slice frame (see pixel.ts).
+// Use `backgroundColor` rather than the `background` shorthand when
+// overriding the color of anything built on this: the shorthand resets the
+// `backgroundClip` that keeps the frame's corners and shadow transparent.
 export const cardStyleSx = (theme: Theme) => ({
-  background: colors.cardBackground,
-  border: 'solid 2px #b68000',
-  transition: theme.transitions.create('background', {
+  ...pixelFrameSx({ outline: colors.cardOutline, shadow: true }),
+  backgroundColor: colors.cardBackground,
+  boxShadow: pixelBevel(),
+  transition: theme.transitions.create('background-color', {
     duration: theme.transitions.duration.enteringScreen,
     easing: theme.transitions.easing.easeOut,
   }),
 })
 
 export const cardStyleSelectedSx = {
-  background: lighten(colors.cardBackground, 0.4),
+  backgroundColor: lighten(colors.cardBackground, 0.4),
 } as const
 
 // Replaces the `center-tabs` mixin.
@@ -50,8 +57,11 @@ export const centerTabsSx = {
     marginTop: '4em',
   },
   '& [role="tabpanel"]': {
-    background: 'rgba(255, 255, 255, 0.5)',
-    borderRadius: '0 0 0.5em 0.5em',
+    ...pixelFrameSx({ outline: colors.cardOutline }),
+    // The tabs above this panel already draw the shared top edge.
+    borderTopWidth: 0,
+    borderImageWidth: `0 ${px(1)} ${px(1)}`,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
     padding: '0.5em 0.5em 0.5em',
     '& .card-list > li:last-child': {
       marginBottom: 0,
@@ -61,7 +71,7 @@ export const centerTabsSx = {
 
 // Replaces the `sprite-shadow` mixin.
 export const spriteShadowSx = {
-  filter: 'drop-shadow(2px 2px 2px rgba(100, 100, 100, 0.4))',
+  filter: pixelDropShadowFilter,
 } as const
 
 // Shared by QuickSelect and ForestQuickSelect: both render the same fixed
@@ -100,7 +110,6 @@ export const quickSelectSx = (theme: Theme, isMenuOpen: boolean) => ({
     display: isMenuOpen ? 'none' : undefined,
   },
   '& .MuiGrid-root': {
-    borderRadius: '0.25em',
     overflowX: 'scroll',
     overflowY: 'hidden',
     padding: '0.5em',

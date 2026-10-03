@@ -3,7 +3,8 @@ import { useDebounceCallback } from 'usehooks-ts'
 import TextField from '@mui/material/TextField/index.js'
 
 import { Div } from '../Elements/index.js'
-import { layout } from '../../styles/tokens.js'
+import { pixelBevel, pixelFrameSx } from '../../styles/pixel.js'
+import { colors, layout } from '../../styles/tokens.js'
 
 const SearchBar = ({
   placeholder,
@@ -31,14 +32,13 @@ const SearchBar = ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        ...pixelFrameSx({ outline: colors.cardOutline, shadow: true }),
         backgroundColor: '#fff',
-        borderRadius: '1em',
-        boxShadow: '0 0.25em 0.5em rgba(0, 0, 0, 0.1)',
+        boxShadow: pixelBevel({ highlight: 'rgba(0, 0, 0, 0.06)' }),
         '& .MuiOutlinedInput-root': {
           width: '100%',
           fontSize: '1em',
           backgroundColor: 'transparent',
-          borderRadius: '0.5em',
           transition: 'all 0.3s ease',
           '&:hover .MuiOutlinedInput-notchedOutline': {
             borderColor: '#ffd24d',
