@@ -47,8 +47,8 @@ export const breakpoints = {
 // Pixel fonts. `display` is used for headings, buttons and other UI labels;
 // `body` is used for running text.
 export const fonts = {
-  display: '"Jersey 10", sans-serif',
-  body: '"Pixelify Sans", sans-serif',
+  display: '"Farmhand Display", sans-serif',
+  body: '"Farmhand Body", sans-serif',
 } as const
 
 export const layout = {
