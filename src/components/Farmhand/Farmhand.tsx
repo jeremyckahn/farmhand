@@ -1,7 +1,3 @@
-import HotelIcon from '@mui/icons-material/Hotel.js'
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft.js'
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight.js'
-import MenuIcon from '@mui/icons-material/Menu.js'
 import CssBaseline from '@mui/material/CssBaseline/index.js'
 import Drawer from '@mui/material/Drawer/index.js'
 import Fab from '@mui/material/Fab/index.js'
@@ -13,6 +9,13 @@ import localforage from 'localforage'
 import { SnackbarProvider } from 'notistack'
 import { GlobalHotKeys } from 'react-hotkeys'
 import { Redirect } from 'react-router-dom'
+
+import {
+  HotelIcon,
+  KeyboardArrowLeftIcon as KeyboardArrowLeft,
+  KeyboardArrowRightIcon as KeyboardArrowRight,
+  MenuIcon,
+} from '../PixelIcon/index.js'
 
 import { Z_INDEX } from '../../constants.js'
 import theme, { blueStripeBg } from '../../mui-theme.js'

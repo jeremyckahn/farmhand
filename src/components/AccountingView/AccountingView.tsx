@@ -4,8 +4,10 @@ import CardHeader from '@mui/material/CardHeader/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import Button from '@mui/material/Button/index.js'
 import TextField from '@mui/material/TextField/index.js'
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance.js'
+
 import NumberFormat from 'react-number-format'
+
+import { AccountBalanceIcon } from '../PixelIcon/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { moneyString } from '../../utils/moneyString.js'

@@ -1,5 +1,3 @@
-import { faHeart } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
@@ -12,6 +10,7 @@ import { LEFT, RIGHT } from '../../constants.js'
 import { pixel } from '../../img/index.js'
 import { getCowDisplayName } from '../../utils/getCowDisplayName.js'
 import { getCowImage } from '../../utils/getCowImage.js'
+import { HeartIcon } from '../PixelIcon/index.js'
 
 // Only moves the cow within the middle 80% of the pen
 const randomPosition = () => 10 + random() * 80
@@ -265,12 +264,12 @@ export const Cow = ({
             }}
             alt={cowDisplayName}
           />
-          <FontAwesomeIcon
+          <HeartIcon
             {...{
-              className: classNames('animation', {
+              className: classNames('heart-icon', 'animation', {
                 'is-animating': showHugAnimation,
               }),
-              icon: faHeart,
+              fontSize: 'inherit',
             }}
           />
         </div>
@@ -278,11 +277,7 @@ export const Cow = ({
       <ol {...{ className: 'happiness-boosts-today' }}>
         {new Array(cow.happinessBoostsToday).fill(undefined).map((_, i) => (
           <li {...{ key: i }}>
-            <FontAwesomeIcon
-              {...{
-                icon: faHeart,
-              }}
-            />
+            <HeartIcon className="heart-icon" fontSize="inherit" />
           </li>
         ))}
       </ol>

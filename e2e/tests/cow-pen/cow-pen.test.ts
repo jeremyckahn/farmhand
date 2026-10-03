@@ -35,11 +35,11 @@ test('should purchase a cow pen and a cow, verify hugging and selling works', as
   await expect(hugButton).toBeVisible()
   await expect(sellButton).toBeVisible()
 
-  // In CowPen.sass, the animation heart has the class `.fa-heart.animation`.
-  // When a cow is hugged, the class `.is-animating` is added to it: `.fa-heart.animation.is-animating`
+  // In CowPen.tsx, the animation heart has the class `.heart-icon.animation`.
+  // When a cow is hugged, the class `.is-animating` is added to it: `.heart-icon.animation.is-animating`
   // We can just verify this element exists in the DOM after clicking "Hug".
   const animatingHeart = page
-    .locator('.fa-heart.animation.is-animating')
+    .locator('.heart-icon.animation.is-animating')
     .first()
 
   // Click hug

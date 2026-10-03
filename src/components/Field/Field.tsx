@@ -1,5 +1,3 @@
-import ZoomInIcon from '@mui/icons-material/ZoomIn.js'
-import ZoomOutIcon from '@mui/icons-material/ZoomOut.js'
 import Fab from '@mui/material/Fab/index.js'
 import FormControl from '@mui/material/FormControl/index.js'
 import FormControlLabel from '@mui/material/FormControlLabel/index.js'
@@ -13,6 +11,8 @@ import classNames from 'classnames'
 import React, { memo, useEffect, useState } from 'react'
 import { GlobalHotKeys } from 'react-hotkeys'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
+
+import { ZoomInIcon, ZoomOutIcon } from '../PixelIcon/index.js'
 
 import {
   basicLightningRod,

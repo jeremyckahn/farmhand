@@ -1,7 +1,18 @@
 import { darken, Theme } from '@mui/material/styles/index.js'
+import { createElement } from 'react'
 import createTheme from '@mui/material/styles/createTheme.js'
 import type { Shadows } from '@mui/material/styles/shadows.js'
 
+import {
+  ArrowDropDownIcon,
+  CheckBoxIcon,
+  CheckBoxOutlineBlankIcon,
+  ErrorIcon,
+  IndeterminateCheckBoxIcon,
+  InfoIcon,
+  SuccessIcon,
+  WarningIcon,
+} from './components/PixelIcon/index.js'
 import blueStripeBg from './img/ui/blue-stripe-bg.png'
 import lightBlueStripeBg from './img/ui/light-blue-stripe-bg.png'
 import {
@@ -341,6 +352,18 @@ export default createTheme({
         track: { borderRadius: 0 },
       },
     },
+    MuiSelect: {
+      defaultProps: {
+        IconComponent: ArrowDropDownIcon,
+      },
+    },
+    MuiCheckbox: {
+      defaultProps: {
+        icon: createElement(CheckBoxOutlineBlankIcon),
+        checkedIcon: createElement(CheckBoxIcon),
+        indeterminateIcon: createElement(IndeterminateCheckBoxIcon),
+      },
+    },
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
@@ -370,7 +393,18 @@ export default createTheme({
       },
     },
     MuiAlert: {
+      defaultProps: {
+        iconMapping: {
+          success: createElement(SuccessIcon, { fontSize: 'inherit' }),
+          info: createElement(InfoIcon, { fontSize: 'inherit' }),
+          warning: createElement(WarningIcon, { fontSize: 'inherit' }),
+          error: createElement(ErrorIcon, { fontSize: 'inherit' }),
+        },
+      },
       styleOverrides: {
+        // 24px keeps each of the 12x12 pixel icon's art pixels at a whole
+        // number of CSS pixels (MUI's default is 22px).
+        icon: { fontSize: 24 },
         root: ({ ownerState, theme }) => ({
           ...pixelFrameSx({
             outline: outlineFor(theme, ownerState.severity ?? 'success'),

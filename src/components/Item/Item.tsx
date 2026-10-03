@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp.js'
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown.js'
+
 import Button from '@mui/material/Button/index.js'
 import Box from '@mui/material/Box/index.js'
 import Card from '@mui/material/Card/index.js'
@@ -10,6 +9,11 @@ import CardActions from '@mui/material/CardActions/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
+
+import {
+  KeyboardArrowUpIcon as KeyboardArrowUp,
+  KeyboardArrowDownIcon as KeyboardArrowDown,
+} from '../PixelIcon/index.js'
 
 import FarmhandContext, { ContextData } from '../Farmhand/Farmhand.context.js'
 import { items } from '../../img/index.js'

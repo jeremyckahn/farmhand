@@ -94,7 +94,7 @@ describe('Cow', () => {
 
     render(<Cow {...defaultCowProps} cow={happyCow} />)
 
-    expect(document.querySelector('.fa-heart')).toBeInTheDocument()
+    expect(document.querySelector('.heart-icon')).toBeInTheDocument()
   })
 
   test('does not show happiness indicator when cow is not happy', () => {
@@ -214,7 +214,7 @@ describe('Cow', () => {
       />
     )
 
-    const heart = () => container.querySelector('.fa-heart.animation')
+    const heart = () => container.querySelector('.heart-icon.animation')
 
     rerender(
       <Cow
@@ -234,7 +234,7 @@ describe('Cow', () => {
       />
     )
 
-    const heart = () => container.querySelector('.fa-heart.animation')
+    const heart = () => container.querySelector('.heart-icon.animation')
 
     rerender(
       <Cow
@@ -258,7 +258,7 @@ describe('Cow', () => {
       />
     )
 
-    const heart = () => container.querySelector('.fa-heart.animation')
+    const heart = () => container.querySelector('.heart-icon.animation')
 
     // Midnight: the daily reset brings the boost count back down.
     rerender(

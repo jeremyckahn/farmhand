@@ -1,12 +1,6 @@
 import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
 
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance.js'
-import AssessmentIcon from '@mui/icons-material/Assessment.js'
-import BeenhereIcon from '@mui/icons-material/Beenhere.js'
-import BookIcon from '@mui/icons-material/Book.js'
-import FlashOnIcon from '@mui/icons-material/FlashOn.js'
-import SettingsIcon from '@mui/icons-material/Settings.js'
 import Button from '@mui/material/Button/index.js'
 import Dialog from '@mui/material/Dialog/index.js'
 import DialogActions from '@mui/material/DialogActions/index.js'
@@ -22,6 +16,15 @@ import Switch from '@mui/material/Switch/index.js'
 import TextField from '@mui/material/TextField/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
+
+import {
+  AccountBalanceIcon,
+  AssessmentIcon,
+  BeenhereIcon,
+  BookIcon,
+  FlashOnIcon,
+  SettingsIcon,
+} from '../PixelIcon/index.js'
 
 import { MAX_ROOM_NAME_LENGTH } from '../../common/constants.js'
 import {
