@@ -1,10 +1,15 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { SnackbarProvider } from 'notistack'
 
 import { NOTIFICATION_DURATION_DEFAULT } from '../../constants.js'
 
-import { NotificationSystem, getNotificationKey } from './NotificationSystem.js'
+import {
+  NotificationAlert,
+  NotificationSystem,
+  getNotificationKey,
+} from './NotificationSystem.js'
 
 const defaultProps = {
   enqueueSnackbar: vitest.fn(),
@@ -147,4 +152,38 @@ test('uses the same key for repeated notifications with identical message and se
   expect(enqueueSnackbar.mock.calls[0][1].key).toBe(
     enqueueSnackbar.mock.calls[1][1].key
   )
+})
+
+describe('NotificationAlert', () => {
+  test('renders the message without an action button by default', () => {
+    render(
+      <NotificationAlert
+        notification={{ message: 'Hello', severity: 'info' }}
+      />
+    )
+
+    expect(screen.getByText('Hello')).toBeInTheDocument()
+    expect(screen.queryByRole('button')).not.toBeInTheDocument()
+  })
+
+  test('renders onClick as a labeled button rather than a clickable alert', async () => {
+    const onClick = vitest.fn()
+
+    render(
+      <NotificationAlert
+        notification={{
+          actionLabel: 'Reload',
+          message: 'Update available',
+          onClick,
+          severity: 'success',
+        }}
+      />
+    )
+
+    await userEvent.click(screen.getByText('Update available'))
+    expect(onClick).not.toHaveBeenCalled()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Reload' }))
+    expect(onClick).toHaveBeenCalledTimes(1)
+  })
 })

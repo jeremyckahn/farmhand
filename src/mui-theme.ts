@@ -412,17 +412,6 @@ export default createTheme({
             ...pixelFrameSx({ outline, shadow: true }),
             boxShadow: pixelBevel(),
             marginBottom: '1em',
-            // Some notifications are clickable (e.g. the "update available"
-            // one). Mobile browsers paint their own tap highlight over
-            // clickable elements, which covers the whole alert in a dark
-            // block, so suppress it and give the alert a pixel art pressed
-            // state like the buttons have instead.
-            ...(ownerState.onClick && {
-              cursor: 'pointer',
-              WebkitTapHighlightColor: 'transparent',
-              userSelect: 'none',
-              '&:active': pixelPressedSx(outline),
-            }),
             [`@media (min-width: 0px) and (orientation: landscape)`]: {
               top: '3.5em',
             },

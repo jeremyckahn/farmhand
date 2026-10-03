@@ -10,7 +10,8 @@ export const showNotification = (
   state: farmhand.state,
   message: string,
   severity: notificationSeverity = 'info',
-  onClick: import('@mui/material/Alert').AlertProps['onClick'] = undefined
+  onClick: farmhand.notification['onClick'] = undefined,
+  actionLabel: farmhand.notification['actionLabel'] = undefined
 ): farmhand.state => {
   const { showNotifications, todaysNotifications } = state
 
@@ -20,6 +21,7 @@ export const showNotification = (
       latestNotification: {
         message,
         onClick,
+        actionLabel,
         severity,
       },
     }),
@@ -28,6 +30,6 @@ export const showNotification = (
       notification => notification.message === message
     )
       ? todaysNotifications
-      : todaysNotifications.concat({ message, onClick, severity }),
+      : todaysNotifications.concat({ message, onClick, actionLabel, severity }),
   }
 }
