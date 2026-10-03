@@ -10,6 +10,7 @@ const FORCE_UPDATE_NOTIFICATION = true
 
 const UpdateNotifier = () => {
   const {
+    gameState: { hasBooted },
     handlers: { handleGameUpdateAvailable },
   } = useContext(FarmhandContext)
 
@@ -20,7 +21,10 @@ const UpdateNotifier = () => {
   const appNeedsUpdate = needRefresh || FORCE_UPDATE_NOTIFICATION
 
   useEffect(() => {
-    if (!appNeedsUpdate) {
+    // Wait for the saved game to load: restoring it replaces
+    // todaysNotifications, which would drop this notification from the
+    // Farmer's Log.
+    if (!appNeedsUpdate || !hasBooted) {
       return
     }
 
@@ -30,7 +34,12 @@ const UpdateNotifier = () => {
     window.addEventListener('beforeunload', () => {
       updateServiceWorker(true)
     })
-  }, [appNeedsUpdate, handleGameUpdateAvailable, updateServiceWorker])
+  }, [
+    appNeedsUpdate,
+    hasBooted,
+    handleGameUpdateAvailable,
+    updateServiceWorker,
+  ])
 
   return null
 }
