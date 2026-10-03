@@ -84,10 +84,11 @@ const raisedControlSx = (outline: string) =>
 const globalStyleOverrides = {
   body: {
     overscrollBehavior: 'contain',
-    // The pixel fonts only ship the weights they're designed for. Faux bold
-    // and italics smear their pixel grid, so don't let the browser
-    // synthesize them.
-    fontSynthesis: 'none',
+    // This typeface only has a regular weight, so let the browser
+    // synthesize bold (otherwise bold labels like "In inventory:" lose
+    // their emphasis). Faux italics smear the pixel grid, so don't
+    // synthesize those.
+    fontSynthesis: 'weight',
   },
   'ul, ol': { listStyle: 'none', margin: 0, padding: 0 },
   p: { margin: 0 },
