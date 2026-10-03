@@ -39,6 +39,9 @@ interface ValueIndicatorProps {
   poorValue: boolean
 }
 
+// Keeps the indicator from crowding the price it follows.
+const valueIndicatorSx = { marginLeft: '0.5rem' } as const
+
 const ValueIndicator = ({ poorValue }: ValueIndicatorProps) => (
   <Tooltip
     {...{
@@ -48,9 +51,9 @@ const ValueIndicator = ({ poorValue }: ValueIndicatorProps) => (
     }}
   >
     {poorValue ? (
-      <KeyboardArrowDown color="error" />
+      <KeyboardArrowDown color="error" sx={valueIndicatorSx} />
     ) : (
-      <KeyboardArrowUp color="primary" />
+      <KeyboardArrowUp color="primary" sx={valueIndicatorSx} />
     )}
   </Tooltip>
 )
