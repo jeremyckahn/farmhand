@@ -9,6 +9,7 @@ import {
   cardStyleSx,
   spriteShadowSx,
 } from './styles/sx.js'
+import { fontFaces } from './styles/fonts.js'
 import {
   pixelBevel,
   pixelBevelPressed,
@@ -17,7 +18,7 @@ import {
   pixelShadowColor,
   px,
 } from './styles/pixel.js'
-import { breakpoints, colors, layout } from './styles/tokens.js'
+import { breakpoints, colors, fonts, layout } from './styles/tokens.js'
 
 type PaletteColorName =
   'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success'
@@ -70,7 +71,13 @@ const raisedControlSx = (outline: string) =>
 // MuiCssBaseline is a direct replacement that also sidesteps the reason
 // that class trick existed in the first place (styling portalled content).
 const globalStyleOverrides = {
-  body: { overscrollBehavior: 'contain' },
+  body: {
+    overscrollBehavior: 'contain',
+    // The pixel fonts only ship the weights they're designed for. Faux bold
+    // and italics smear their pixel grid, so don't let the browser
+    // synthesize them.
+    fontSynthesis: 'none',
+  },
   'ul, ol': { listStyle: 'none', margin: 0, padding: 0 },
   p: { margin: 0 },
   '.markdown': {
@@ -90,7 +97,7 @@ const globalStyleOverrides = {
     width: '1px',
   },
   'h4, h5, h6, p, p.MuiTypography-root': {
-    fontFamily: '"Public Sans", sans-serif',
+    fontFamily: fonts.body,
   },
   'h3, h4, h5, h6': { fontWeight: 'bold' },
   h2: { fontSize: '1.4em' },
@@ -106,7 +113,7 @@ const globalStyleOverrides = {
   th: { fontWeight: 'bold' },
   'h1, h2, h3, h4, h5, h6, legend, td, th, .MuiTypography-h1, .MuiTypography-h2, .MuiTypography-h3, .MuiTypography-h4, .MuiTypography-h5, .MuiTypography-h6, .MuiButtonBase-root':
     {
-      fontFamily: '"Francois One", sans-serif',
+      fontFamily: fonts.display,
     },
   '.danger-text': { color: colors.error },
   '.success-text': { color: colors.success },
@@ -137,30 +144,35 @@ export default createTheme({
   shape: { borderRadius: 0 },
   shadows,
   typography: {
-    fontFamily: '"Public Sans", sans-serif',
+    fontFamily: fonts.body,
     // Buttons and Tabs derive their default styles from this rather than
     // the `.MuiButtonBase-root` CssBaseline override below, which loses the
     // cascade to their own emotion-generated styles.
     button: {
-      fontFamily: '"Francois One", sans-serif',
+      fontFamily: fonts.display,
       textTransform: 'none',
     },
     // DialogTitle (used by every modal header, e.g. Farmer's Log, Price
     // Events) renders variant="h6". Same cascade issue as `button` above.
     h6: {
-      fontFamily: '"Francois One", sans-serif',
+      fontFamily: fonts.display,
       fontSize: '1.4em',
     },
     // CardHeader titles default to variant="h5" when no avatar is passed
     // (e.g. the peer name headers in the Active Players modal). Same
     // cascade issue as `button`/`h6` above.
     h5: {
-      fontFamily: '"Francois One", sans-serif',
+      fontFamily: fonts.display,
     },
   },
   components: {
     MuiCssBaseline: {
-      styleOverrides: globalStyleOverrides,
+      // Each @font-face rule needs its own style object: emotion collapses
+      // an array of them under a single '@font-face' key into one rule.
+      styleOverrides: () => [
+        ...fontFaces.map(fontFace => ({ '@font-face': fontFace })),
+        globalStyleOverrides,
+      ],
     },
     MuiTabs: {
       styleOverrides: {

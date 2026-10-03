@@ -35,7 +35,7 @@ import { integerString } from '../../utils/integerString.js'
 import { inventorySpaceConsumed } from '../../utils/inventorySpaceConsumed.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { breakpoints, colors } from '../../styles/tokens.js'
+import { breakpoints, colors, fonts } from '../../styles/tokens.js'
 import AccountingView from '../AccountingView/index.js'
 import AchievementsView from '../AchievementsView/index.js'
 import { H3, Header } from '../Elements/index.js'
@@ -303,7 +303,7 @@ export const Navigation = ({
         flexShrink: 0,
         display: 'flex',
         '& .version': {
-          fontFamily: '"Francois One", sans-serif',
+          fontFamily: fonts.display,
           textAlign: 'center',
         },
         '& .farm-name': {
@@ -313,7 +313,7 @@ export const Navigation = ({
             background: 'none',
             margin: 0,
             '& input': {
-              fontFamily: '"Francois One"',
+              fontFamily: fonts.display,
               paddingLeft: '0.5em',
               paddingRight: '0.5em',
               textAlign: 'center',

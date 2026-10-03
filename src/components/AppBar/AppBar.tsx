@@ -12,7 +12,7 @@ import { seasonNameMap } from '../../data/seasons.js'
 import { getCurrentSeason } from '../../utils/getCurrentSeason.js'
 import { getDayOfSeason } from '../../utils/getDayOfSeason.js'
 import { moneyString } from '../../utils/moneyString.js'
-import { breakpoints } from '../../styles/tokens.js'
+import { breakpoints, fonts } from '../../styles/tokens.js'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.js'
 
 const MoneyDisplay = ({ money }: { money: number }) => {
@@ -102,7 +102,7 @@ export const AppBar = ({
         display: 'flex',
         '& h2': {
           color: '#fff',
-          fontFamily: '"Francois One", monospace',
+          fontFamily: fonts.display,
           fontSize: '1.2em',
         },
         '& .stage-header': {
