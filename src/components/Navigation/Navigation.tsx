@@ -442,7 +442,6 @@ export const Navigation = ({
         ].map(({ dialogView: dialogViewType, Icon }) => (
           <Tooltip
             {...{
-              arrow: true,
               key: dialogViewType,
               placement: 'top',
               title: dialogTriggerTextMap[dialogViewType],

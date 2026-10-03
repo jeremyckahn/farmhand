@@ -126,7 +126,6 @@ const Subheader = ({
           </ol>
           <Tooltip
             {...{
-              arrow: true,
               placement: 'top',
               title: (
                 <Typography>
@@ -157,7 +156,6 @@ const Subheader = ({
           </Tooltip>
           <Tooltip
             {...{
-              arrow: true,
               placement: 'top',
               disableFocusListener: disableBreedingControlTooltip,
               disableHoverListener: disableBreedingControlTooltip,

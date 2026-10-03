@@ -45,7 +45,6 @@ const valueIndicatorSx = { marginLeft: '0.5rem' } as const
 const ValueIndicator = ({ poorValue }: ValueIndicatorProps) => (
   <Tooltip
     {...{
-      arrow: true,
       placement: 'top',
       title: `${poorValue ? 'Poor' : 'Good'} opportunity`,
     }}
@@ -235,7 +234,6 @@ export const Item = ({
             !isPurchaseView && description ? (
               <Tooltip
                 {...{
-                  arrow: true,
                   placement: 'top',
                   title: <Typography>{description}</Typography>,
                 }}
@@ -252,7 +250,6 @@ export const Item = ({
                 <p>
                   <Tooltip
                     {...{
-                      arrow: true,
                       placement: 'top',
                       title:
                         previousDayAdjustedValue === null
@@ -294,7 +291,6 @@ export const Item = ({
                 <p>
                   <Tooltip
                     {...{
-                      arrow: true,
                       placement: 'top',
                       title:
                         previousDayAdjustedValue === null

@@ -248,7 +248,6 @@ export const Cow = ({
       )}
       <Tooltip
         {...{
-          arrow: true,
           placement: 'top',
           title: <Typography>{cowDisplayName}</Typography>,
           open: isSelected,

@@ -275,7 +275,6 @@ export const CowCard = ({
           {canCowBeTradedFor && (
             <Tooltip
               {...{
-                arrow: true,
                 placement: 'top',
                 title: 'The game will be saved when the trade is completed.',
               }}
@@ -308,7 +307,6 @@ export const CowCard = ({
                 (cowIdOfferedForTrade === cow.id ? (
                   <Tooltip
                     {...{
-                      arrow: true,
                       placement: 'top',
                       title: WITHDRAW_COW_FROM_TRADE('', cowDisplayName),
                     }}
@@ -329,7 +327,6 @@ export const CowCard = ({
                 ) : (
                   <Tooltip
                     {...{
-                      arrow: true,
                       placement: 'top',
                       title: (
                         <Typography>

@@ -24,7 +24,6 @@ const Bloodline = ({
         <Tooltip
           {...{
             key: color,
-            arrow: true,
             placement: 'top',
             title: COW_COLOR_NAMES[color as keyof typeof COW_COLOR_NAMES],
           }}
