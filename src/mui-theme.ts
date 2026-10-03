@@ -405,27 +405,39 @@ export default createTheme({
         // 24px keeps each of the 12x12 pixel icon's art pixels at a whole
         // number of CSS pixels (MUI's default is 22px).
         icon: { fontSize: 24 },
-        root: ({ ownerState, theme }) => ({
-          ...pixelFrameSx({
-            outline: outlineFor(theme, ownerState.severity ?? 'success'),
-            shadow: true,
-          }),
-          boxShadow: pixelBevel(),
-          marginBottom: '1em',
-          [`@media (min-width: 0px) and (orientation: landscape)`]: {
-            top: '3.5em',
-          },
-          [`@media (min-width: ${breakpoints.sm}px)`]: { top: '4.5em' },
-          '& p': {
-            margin: '1em 0',
-            '&:first-of-type': { marginTop: 0 },
-            '&:last-child': { marginBottom: 0 },
-          },
-          '& strong': { fontWeight: 'bold' },
-          '& li': { marginLeft: '1em' },
-          '& ul li': { listStyle: 'disc' },
-          '& ol li': { listStyle: 'decimal' },
-        }),
+        root: ({ ownerState, theme }) => {
+          const outline = outlineFor(theme, ownerState.severity ?? 'success')
+
+          return {
+            ...pixelFrameSx({ outline, shadow: true }),
+            boxShadow: pixelBevel(),
+            marginBottom: '1em',
+            // Some notifications are clickable (e.g. the "update available"
+            // one). Mobile browsers paint their own tap highlight over
+            // clickable elements, which covers the whole alert in a dark
+            // block, so suppress it and give the alert a pixel art pressed
+            // state like the buttons have instead.
+            ...(ownerState.onClick && {
+              cursor: 'pointer',
+              WebkitTapHighlightColor: 'transparent',
+              userSelect: 'none',
+              '&:active': pixelPressedSx(outline),
+            }),
+            [`@media (min-width: 0px) and (orientation: landscape)`]: {
+              top: '3.5em',
+            },
+            [`@media (min-width: ${breakpoints.sm}px)`]: { top: '4.5em' },
+            '& p': {
+              margin: '1em 0',
+              '&:first-of-type': { marginTop: 0 },
+              '&:last-child': { marginBottom: 0 },
+            },
+            '& strong': { fontWeight: 'bold' },
+            '& li': { marginLeft: '1em' },
+            '& ul li': { listStyle: 'disc' },
+            '& ol li': { listStyle: 'decimal' },
+          }
+        },
       },
     },
   },
