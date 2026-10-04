@@ -55,7 +55,8 @@ export const snackbarProviderContentCallback = (
   notification: unknown
 ) => (
   <NotificationAlert
-    {...{ key, notification: notification as farmhand.notification }}
+    key={key}
+    {...{ notification: notification as farmhand.notification }}
   />
 )
 
