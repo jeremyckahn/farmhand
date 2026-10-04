@@ -15,6 +15,7 @@ import NumberFormat from 'react-number-format'
 import {
   Match,
   MatchState,
+  contentPaddingVar,
   deserializeMatch,
   handToggleBottomVar,
   handToggleLeftVar,
@@ -285,7 +286,9 @@ export const FarmhandShuffleView = () => {
         ...(matchPhase === 'wager' && {
           overflowX: 'hidden',
           overflowY: 'auto',
-          paddingBottom: '8em',
+          // The Stage has no padding for this view (see Stage.tsx), so the
+          // wager screen keeps the 0.5rem inset around it itself.
+          padding: '0.5rem 0.5rem 8em',
           scrollbarWidth: 'none',
           '&::-webkit-scrollbar': { display: 'none' },
         }),
@@ -462,16 +465,19 @@ In Farmhand Shuffle you play against a bot opponent and pay money into a Communi
               backgroundImage: 'none',
               color: 'black',
               [placeholderOutlineColorVar]: 'rgba(0, 0, 0, 0.35)',
+              // The spacing between the game and the edges of the Stage.
+              // Shuffle draws its glows and hover effects into this space
+              // and fades them out at the Stage's edge (see Match.tsx).
+              [contentPaddingVar]: '0.5rem',
               // Lines the hide/show Hand button up with Farmhand's own
               // bottom nav buttons (`.bottom-controls` in Farmhand.tsx):
               // their bottom edge sits 1.4375rem (measured in the browser)
               // above the screen's bottom, so the button matches that, and
-              // is the same distance from the Stage's left edge. Match
-              // itself starts 0.5rem inside the Stage (see Stage.tsx), so
-              // that inset comes off the left offset. Only applies on
+              // is the same distance from the Stage's left edge (Match
+              // fills the Stage, so no inset comes off it). Only applies on
               // large viewports; narrow ones don't render this button.
               [handToggleBottomVar]: '1.4375rem',
-              [handToggleLeftVar]: 'calc(1.4375rem - 0.5rem)',
+              [handToggleLeftVar]: '1.4375rem',
             },
             renderGameOverContent: (winnerId: string | null) => (
               <ShuffleResultSummary
