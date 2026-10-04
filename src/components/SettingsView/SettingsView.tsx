@@ -162,7 +162,6 @@ const SettingsView = ({
       <div className="button-row">
         <Tooltip
           {...{
-            arrow: true,
             placement: 'top',
             title: 'Save your game data as a file on your device',
           }}
@@ -187,7 +186,6 @@ const SettingsView = ({
         >
           <Tooltip
             {...{
-              arrow: true,
               placement: 'top',
               title: 'Load game data that was previously saved',
             }}

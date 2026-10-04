@@ -70,7 +70,7 @@ export const CowPen = ({
               easing: theme.transitions.easing.easeOut,
             }),
           },
-          '& .fa-heart': {
+          '& .heart-icon': {
             color: colors.heart,
             '&.animation': {
               opacity: 0,

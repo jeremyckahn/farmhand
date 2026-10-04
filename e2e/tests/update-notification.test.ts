@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 import { openPage } from '../test-utils/open-page.js'
 
 test.describe('Update Notification', () => {
-  test('clicking the update notification triggers a page reload', async ({
+  test("clicking the update notification's Reload button triggers a page reload", async ({
     page,
   }) => {
     await openPage(page)
@@ -44,12 +44,15 @@ test.describe('Update Notification', () => {
       )
     })
 
-    const notification = page.getByText(
-      "A game update is available! Click this message to reload and see what's new."
-    )
+    const notification = page.getByRole('alert').filter({
+      hasText: "A game update is available! Reload to see what's new.",
+    })
     await expect(notification).toBeVisible()
 
-    await Promise.all([page.waitForEvent('load'), notification.click()])
+    await Promise.all([
+      page.waitForEvent('load'),
+      notification.getByRole('button', { name: 'Reload' }).click(),
+    ])
 
     // If the page didn't actually reload, the app would still be showing the
     // old notification instead of rebooting fresh.

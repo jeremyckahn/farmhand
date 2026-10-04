@@ -40,7 +40,6 @@ export function DayAndProgressContainer({
       <span>Day {integerString(dayCount)}, level:</span>
       <Tooltip
         {...{
-          arrow: true,
           placement: 'top',
           title: EXPERIENCE_GAUGE_TOOLTIP_LABEL`${experiencePointsToNextLevel}${nextLevel}`,
         }}

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import Alert from '@mui/material/Alert/index.js'
+import Button from '@mui/material/Button/index.js'
 import ReactMarkdown from 'react-markdown'
 import { withSnackbar } from 'notistack'
 
@@ -11,28 +12,47 @@ export const getNotificationKey = ({
   severity,
 }: farmhand.notification): string => `${severity}:${message}`
 
+/**
+ * Renders a notification as an Alert. A notification with an onClick gets a
+ * button for it rather than making the whole Alert clickable: on Android,
+ * clickable alerts rendered with a corrupted, partially dark frame.
+ */
+export const NotificationAlert = React.forwardRef<
+  HTMLDivElement,
+  { notification: farmhand.notification }
+>(function NotificationAlert(
+  { notification: { actionLabel = 'OK', message, onClick, severity } },
+  ref
+) {
+  return (
+    <Alert
+      {...{
+        ref,
+        elevation: 3,
+        severity,
+        action: onClick ? (
+          <Button
+            {...{
+              color: 'inherit',
+              onClick,
+              size: 'small',
+              variant: 'outlined',
+            }}
+          >
+            {actionLabel}
+          </Button>
+        ) : undefined,
+      }}
+    >
+      <ReactMarkdown {...{ source: message }} />
+    </Alert>
+  )
+})
+
 export const snackbarProviderContentCallback = (
   key: string | number,
-  {
-    message,
-    onClick,
-    severity,
-  }: farmhand.notification & { onClick?: () => void }
-) => (
-  <Alert
-    {...{
-      elevation: 3,
-      key,
-      onClick,
-      severity,
-      style: {
-        cursor: onClick ? 'pointer' : 'default',
-      },
-    }}
-  >
-    <ReactMarkdown {...{ source: message }} />
-  </Alert>
-)
+  notification: farmhand.notification
+) => <NotificationAlert {...{ key, notification }} />
 
 export const NotificationSystem = ({
   enqueueSnackbar,

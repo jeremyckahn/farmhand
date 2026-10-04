@@ -1,12 +1,6 @@
 import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
 
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance.js'
-import AssessmentIcon from '@mui/icons-material/Assessment.js'
-import BeenhereIcon from '@mui/icons-material/Beenhere.js'
-import BookIcon from '@mui/icons-material/Book.js'
-import FlashOnIcon from '@mui/icons-material/FlashOn.js'
-import SettingsIcon from '@mui/icons-material/Settings.js'
 import Button from '@mui/material/Button/index.js'
 import Dialog from '@mui/material/Dialog/index.js'
 import DialogActions from '@mui/material/DialogActions/index.js'
@@ -23,6 +17,15 @@ import TextField from '@mui/material/TextField/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 
+import {
+  AccountBalanceIcon,
+  AssessmentIcon,
+  BeenhereIcon,
+  BookIcon,
+  FlashOnIcon,
+  SettingsIcon,
+} from '../PixelIcon/index.js'
+
 import { MAX_ROOM_NAME_LENGTH } from '../../common/constants.js'
 import {
   DEFAULT_ROOM,
@@ -35,7 +38,7 @@ import { integerString } from '../../utils/integerString.js'
 import { inventorySpaceConsumed } from '../../utils/inventorySpaceConsumed.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { breakpoints, colors } from '../../styles/tokens.js'
+import { breakpoints, colors, fonts } from '../../styles/tokens.js'
 import AccountingView from '../AccountingView/index.js'
 import AchievementsView from '../AchievementsView/index.js'
 import { H3, Header } from '../Elements/index.js'
@@ -303,7 +306,7 @@ export const Navigation = ({
         flexShrink: 0,
         display: 'flex',
         '& .version': {
-          fontFamily: '"Francois One", sans-serif',
+          fontFamily: fonts.display,
           textAlign: 'center',
         },
         '& .farm-name': {
@@ -313,7 +316,7 @@ export const Navigation = ({
             background: 'none',
             margin: 0,
             '& input': {
-              fontFamily: '"Francois One"',
+              fontFamily: fonts.display,
               paddingLeft: '0.5em',
               paddingRight: '0.5em',
               textAlign: 'center',
@@ -439,7 +442,6 @@ export const Navigation = ({
         ].map(({ dialogView: dialogViewType, Icon }) => (
           <Tooltip
             {...{
-              arrow: true,
               key: dialogViewType,
               placement: 'top',
               title: dialogTriggerTextMap[dialogViewType],

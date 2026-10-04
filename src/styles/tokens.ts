@@ -11,6 +11,10 @@ export const colors = {
   error: '#ce0000',
   success: '#2e7d32',
   cardBackground: '#ffe3a1',
+  cardOutline: '#8a5c00',
+  dialogOutline: '#1f4f78',
+  neutralOutline: '#2b2118',
+  disabledOutline: 'rgba(0, 0, 0, 0.26)',
   // Matches the legacy Sass `color.adjust($card-background, $lightness: -10%)`
   // for cards nested inside other cards. MUI's `darken()` helper uses a
   // different (multiplicative) algorithm and produces a visibly duller color.
@@ -38,6 +42,13 @@ export const breakpoints = {
   md: 960,
   lg: 1280,
   xl: 1920,
+} as const
+
+// Pixel fonts. `display` is used for headings, buttons and other UI labels;
+// `body` is used for running text.
+export const fonts = {
+  display: '"Farmhand Display", sans-serif',
+  body: '"Farmhand Body", sans-serif',
 } as const
 
 export const layout = {

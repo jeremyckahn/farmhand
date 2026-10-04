@@ -3,6 +3,8 @@ import { interpolate, tween } from 'shifty'
 
 import { Div, P } from '../Elements/index.js'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.js'
+import { pixelBevel, pixelFrameSx, px } from '../../styles/pixel.js'
+import { colors } from '../../styles/tokens.js'
 
 const incompleteColor = '#ff9f00'
 const completeColor = '#00e500'
@@ -91,9 +93,13 @@ const ProgressBar = ({ percent }: { percent: number }) => {
         className="progress-wrapper"
         sx={{
           flexGrow: 1,
-          height: '1em',
-          background: 'rgba(0, 0, 0, 0.15)',
-          borderRadius: '0.5em',
+          ...pixelFrameSx({ outline: colors.neutralOutline }),
+          height: `calc(1em + ${px(2)})`,
+          backgroundColor: 'rgba(0, 0, 0, 0.15)',
+          boxShadow: pixelBevel({
+            highlight: 'rgba(0, 0, 0, 0.15)',
+            lowlight: 'rgba(255, 255, 255, 0.2)',
+          }),
           overflow: 'hidden',
         }}
       >

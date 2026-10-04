@@ -1,4 +1,3 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore.js'
 import Accordion from '@mui/material/Accordion/index.js'
 import AccordionDetails from '@mui/material/AccordionDetails/index.js'
 import AccordionSummary from '@mui/material/AccordionSummary/index.js'
@@ -8,6 +7,8 @@ import CardContent from '@mui/material/CardContent/index.js'
 import Divider from '@mui/material/Divider/index.js'
 import globalWindow from 'global/window.js'
 import ReactMarkdown from 'react-markdown'
+
+import { ExpandMoreIcon } from '../PixelIcon/index.js'
 
 import { items } from '../../img/index.js'
 

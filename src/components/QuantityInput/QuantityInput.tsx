@@ -1,9 +1,13 @@
 import React, { forwardRef } from 'react'
 import Fab from '@mui/material/Fab/index.js'
-import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp.js'
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown.js'
+
 import NumberFormat from 'react-number-format'
 import TextField from '@mui/material/TextField/index.js'
+
+import {
+  KeyboardArrowUpIcon as KeyboardArrowUp,
+  KeyboardArrowDownIcon as KeyboardArrowDown,
+} from '../PixelIcon/index.js'
 
 import { integerString } from '../../utils/integerString.js'
 import AnimatedNumber from '../AnimatedNumber/index.js'

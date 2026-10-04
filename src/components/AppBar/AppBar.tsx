@@ -5,14 +5,15 @@ import { tween, Tweenable } from 'shifty'
 import { default as MuiAppBar } from '@mui/material/AppBar/index.js'
 import Toolbar from '@mui/material/Toolbar/index.js'
 import Typography from '@mui/material/Typography/index.js'
-import StepIcon from '@mui/material/StepIcon/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { WarningIcon } from '../PixelIcon/index.js'
 import { seasonNameMap } from '../../data/seasons.js'
 import { getCurrentSeason } from '../../utils/getCurrentSeason.js'
 import { getDayOfSeason } from '../../utils/getDayOfSeason.js'
 import { moneyString } from '../../utils/moneyString.js'
-import { breakpoints } from '../../styles/tokens.js'
+import { pixelBevel, pixelFrameSx } from '../../styles/pixel.js'
+import { breakpoints, colors, fonts } from '../../styles/tokens.js'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.js'
 
 const MoneyDisplay = ({ money }: { money: number }) => {
@@ -102,7 +103,7 @@ export const AppBar = ({
         display: 'flex',
         '& h2': {
           color: '#fff',
-          fontFamily: '"Francois One", monospace',
+          fontFamily: fonts.display,
           fontSize: '1.2em',
         },
         '& .stage-header': {
@@ -129,8 +130,21 @@ export const AppBar = ({
           right: '1em',
         },
         '& .notification-indicator-container': {
+          alignItems: 'center',
+          cursor: 'pointer',
           display: 'flex',
-          '& .error-indicator': { marginLeft: '1em' },
+          '& .notification-count': {
+            ...pixelFrameSx({ outline: colors.neutralOutline }),
+            backgroundColor: 'rgba(0, 0, 0, 0.38)',
+            boxShadow: pixelBevel(),
+            color: '#fff',
+            fontFamily: fonts.display,
+            lineHeight: 1,
+            minWidth: '1.5em',
+            padding: '0.2em 0.35em',
+            textAlign: 'center',
+          },
+          '& .error-indicator': { display: 'flex', marginLeft: '1em' },
         },
       },
     }}
@@ -147,8 +161,8 @@ export const AppBar = ({
             onClick: handleClickNotificationIndicator,
           }}
         >
-          <Typography>
-            <StepIcon {...{ icon: todaysNotifications.length }} />
+          <Typography {...{ className: 'notification-count' }}>
+            {todaysNotifications.length}
           </Typography>
           {areAnyNotificationsErrors && (
             <Typography
@@ -156,7 +170,7 @@ export const AppBar = ({
                 className: 'error-indicator',
               }}
             >
-              <StepIcon {...{ error: true, icon: '' }} />
+              <WarningIcon {...{ color: 'error' }} />
             </Typography>
           )}
         </div>
