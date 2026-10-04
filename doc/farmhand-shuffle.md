@@ -59,7 +59,7 @@ Set up Farmhand as described in the main [README](../README.md#running-locally).
 
 ### How Farmhand gets the library
 
-While Farmhand Shuffle is unreleased, Farmhand's `package.json` points `@jeremyckahn/farmhand-shuffle` at a GitHub tarball of the `dist-lib-preview` branch. That branch is rebuilt by a GitHub Action in `farmhand-shuffle` on every push to its feature branch, and Farmhand's lockfile intentionally has no integrity hash for it, so `npm ci` always installs the newest preview build. (See [Deployment](#deployment) for when this goes away. Afterward it is an ordinary versioned npm dependency.)
+Farmhand depends on `@jeremyckahn/farmhand-shuffle` like any other npm package (a semver range in `package.json`, pinned by the lockfile). To pick up a new release, see [Releasing Farmhand](#releasing-farmhand).
 
 ### Working on the game itself
 
@@ -89,6 +89,8 @@ npm start             # restart the dev server
 
 Repeat that after every library change. Running `npm ci` in Farmhand replaces your copy with the published build again.
 
+To try an unmerged library change in a Farmhand PR without publishing, you can temporarily point the dependency at a build you host somewhere (such as a tarball produced with `npm pack`). Don't merge a Farmhand change that does.
+
 Avoid `npm link` for this. It makes the library resolve its own copy of React, which breaks hooks ("Cannot read properties of null (reading 'useContext')"). If you do use it, point the library's `node_modules/react` and `react-dom` at Farmhand's copies.
 
 ### Getting to the game in Farmhand
@@ -113,7 +115,7 @@ A typical change that touches both:
 
 1. Change and test the library (`npm run check`).
 2. Rebuild it into Farmhand's `node_modules` (see above) and check the result in Farmhand, at phone width too. The embedded layout differs from the standalone one.
-3. Open the library PR first. Farmhand picks up the change once the library is published (or, before the first release, once the preview branch rebuilds after your push).
+3. Open the library PR first. Farmhand picks up the change once the library is published.
 4. Open the Farmhand PR with the matching changes.
 
 Whenever you change something that gets saved, such as the shape of a serialized match, see the saved matches note under [Gotchas](#gotchas).
@@ -153,13 +155,6 @@ The one-time npm trusted-publisher setup for this package is described in the `f
 
 2. Merge the Farmhand PR into `develop`.
 3. Release Farmhand with the **Release New Version** workflow, as described in the main README's [Releasing updates](../README.md#releasing-updates). Use `patch` unless the release changes `farmhand.state`. The `farmhandShuffle` key was added to the state when the minigame first shipped, and old saves pick up its defaults automatically.
-
-### Before the library's first real release
-
-Until `@jeremyckahn/farmhand-shuffle` has a real release, the preview dependency described above is temporary scaffolding. When the first release goes out:
-
-1. In Farmhand, replace the tarball URL in `package.json` with the released version (for example `^0.1.0`) and refresh the lockfile.
-2. In `farmhand-shuffle`, delete `.github/workflows/publish-dist-lib-preview.yml` and the `dist-lib-preview` branch. Do this after step 1, or Farmhand's install will break.
 
 ## Gotchas
 
