@@ -26,6 +26,7 @@ vi.mock('@jeremyckahn/farmhand-shuffle', () => ({
   },
   starterDeck: () => [],
   placeholderOutlineColorVar: '--farmhand-shuffle-placeholder-outline-color',
+  bottomInsetVar: '--farmhand-shuffle-bottom-inset',
   contentPaddingVar: '--farmhand-shuffle-content-padding',
   handToggleBottomVar: '--farmhand-shuffle-hand-toggle-bottom',
   handToggleLeftVar: '--farmhand-shuffle-hand-toggle-left',
@@ -356,6 +357,27 @@ describe('<FarmhandShuffleView />', () => {
 
       expect(matchPropsRef.current.sx).toMatchObject({
         '--farmhand-shuffle-placeholder-outline-color': 'rgba(0, 0, 0, 0.35)',
+      })
+    })
+
+    test('reserves space under the game for the nav buttons on narrow screens', () => {
+      renderWithContext({
+        farmhandShuffle: {
+          isMatchInProgress: true,
+          wager: 50,
+          serializedMatch: null,
+          totalMatchesPlayed: 0,
+          totalWins: 0,
+          totalLosses: 0,
+          currentWinStreak: 0,
+          longestWinStreak: 0,
+        },
+      })
+
+      expect(matchPropsRef.current.sx).toMatchObject({
+        '@media (max-width: 899.95px)': {
+          '--farmhand-shuffle-bottom-inset': '7.5em',
+        },
       })
     })
 

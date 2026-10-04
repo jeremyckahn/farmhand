@@ -15,6 +15,7 @@ import NumberFormat from 'react-number-format'
 import {
   Match,
   MatchState,
+  bottomInsetVar,
   contentPaddingVar,
   deserializeMatch,
   handToggleBottomVar,
@@ -469,6 +470,17 @@ In Farmhand Shuffle you play against a bot opponent and pay money into a Communi
               // Shuffle draws its glows and hover effects into this space
               // and fades them out at the Stage's edge (see Match.tsx).
               [contentPaddingVar]: '0.5rem',
+              // On narrow screens Farmhand's fixed nav buttons sit over the
+              // bottom of the game, on top of the Hand. Reserve the same
+              // 7.5em the other views leave under their content (the
+              // `.spacer` in mui-theme.ts) so Shuffle keeps the Hand above
+              // the buttons and can scroll clear of them. `max-width` of
+              // 899.95px is Shuffle's own narrow-viewport cutoff (MUI's
+              // `md`, 900px, with `down` being exclusive).
+              [bottomInsetVar]: '0px',
+              '@media (max-width: 899.95px)': {
+                [bottomInsetVar]: '7.5em',
+              },
               // Lines the hide/show Hand button up with Farmhand's own
               // bottom nav buttons (`.bottom-controls` in Farmhand.tsx):
               // their bottom edge sits 1.4375rem (measured in the browser)
