@@ -54,9 +54,20 @@ test('losing a match does not pay out and still unlocks the first-match achievem
   // of this chain after the first). runFor() advances incrementally,
   // executing callbacks as they become due - including ones newly
   // scheduled along the way - which this chain depends on.
-  await page.clock.runFor(15_000)
+  //
+  // The clock is advanced in small steps until the result shows up, rather
+  // than in one fixed 15s jump: the first-match achievement's notification
+  // appears when the match settles and auto-hides after a few seconds of
+  // (fake) clock time, so overshooting the moment the match ends by more than
+  // that would let the notification expire before it's asserted on below. How
+  // long the bot's turn takes depends on the cards in the fixture's match.
+  await expect(async () => {
+    await page.clock.runFor(500)
+    await expect(page.getByText('You lost your $50.00 wager.')).toBeVisible({
+      timeout: 250,
+    })
+  }).toPass({ timeout: 60_000 })
 
-  await expect(page.getByText('You lost your $50.00 wager.')).toBeVisible()
   // $500 (fixture) + $100 (the first-match achievement's own reward,
   // which still fires on a loss - see 'farmhand-shuffle-first-match' in
   // src/data/achievements.ts) = $600. No further deduction: the wager was
