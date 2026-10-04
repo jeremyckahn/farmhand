@@ -3,7 +3,7 @@ import { moneyTotal } from '../../utils/moneyTotal.js'
 /**
  * Settles a completed Farmhand Shuffle match (called from the
  * `onMatchEnd` callback wired up to `@jeremyckahn/farmhand-shuffle`'s
- * `Match` component - see the plan's 2.4). `winnerId` is `null` when the
+ * `Match` component, or when a match is forfeited). `winnerId` is `null` when the
  * library reports a draw (`IMatch.winner === null` at game-over), which is
  * treated as a push: the wager is refunded and no streak/win/loss counters
  * change.
@@ -20,6 +20,13 @@ export const settleFarmhandShuffleMatch = (
 ): farmhand.state => {
   const { farmhandShuffle, money } = state
   const { wager } = farmhandShuffle
+
+  // A match can only be settled once: the wager is cleared on settlement, so
+  // a second call (e.g. confirming a Forfeit dialog that was left open while
+  // the match ended on its own) would otherwise be applied as a fresh result.
+  if (!farmhandShuffle.isMatchInProgress) {
+    return state
+  }
 
   const isDraw = winnerId === null
   const isWin = !isDraw && winnerId === userPlayerId

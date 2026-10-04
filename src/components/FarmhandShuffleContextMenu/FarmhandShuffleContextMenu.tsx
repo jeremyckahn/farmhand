@@ -6,11 +6,11 @@ import DialogTitle from '@mui/material/DialogTitle/index.js'
 import Paper from '@mui/material/Paper/index.js'
 import { useState } from 'react'
 
+import { FARMHAND_SHUFFLE_BOT_PLAYER_ID } from '../../constants.js'
 import uiEventHandlers from '../../handlers/ui-events.js'
 import { moneyString } from '../../utils/moneyString.js'
 import { Div, P } from '../Elements/index.js'
 import FarmhandContext, { BoundHandlers } from '../Farmhand/Farmhand.context.js'
-import { BOT_PLAYER_ID } from '../FarmhandShuffleView/FarmhandShuffleView.js'
 
 export const FarmhandShuffleContextMenu = ({
   farmhandShuffle,
@@ -25,16 +25,11 @@ export const FarmhandShuffleContextMenu = ({
 }) => {
   const [isForfeitDialogOpen, setIsForfeitDialogOpen] = useState(false)
 
-  const {
-    isMatchInProgress,
-    wager,
-    totalWins,
-    totalLosses,
-    currentWinStreak,
-  } = farmhandShuffle
+  const { isMatchInProgress, wager, totalWins, totalLosses, currentWinStreak } =
+    farmhandShuffle
 
   const handleForfeitConfirm = () => {
-    handleSettleFarmhandShuffleMatch(BOT_PLAYER_ID, playerId)
+    handleSettleFarmhandShuffleMatch(FARMHAND_SHUFFLE_BOT_PLAYER_ID, playerId)
     setIsForfeitDialogOpen(false)
   }
 
@@ -87,8 +82,10 @@ export const FarmhandShuffleContextMenu = ({
         <DialogTitle>Forfeit match?</DialogTitle>
         <DialogContent dividers>
           <p>
-            Are you sure that you want to forfeit this match? You&apos;ll lose
-            your {moneyString(wager)} wager and it will count as a loss.
+            Are you sure that you want to forfeit this match?{' '}
+            {wager > 0
+              ? `You'll lose your ${moneyString(wager)} wager and it will count as a loss.`
+              : 'It will count as a loss.'}
           </p>
           <DialogActions>
             <Button

@@ -158,6 +158,11 @@ export const NOTIFICATION_DURATION = getNotificationDuration(
 )
 export const NOTIFICATION_LOG_SIZE = 14
 
+// The (only) Farmhand Shuffle bot opponent's player id. Shared by
+// FarmhandShuffleView (which seeds the match with it) and
+// FarmhandShuffleContextMenu (which settles a forfeit as a win for it).
+export const FARMHAND_SHUFFLE_BOT_PLAYER_ID = 'farmhand-shuffle-bot'
+
 export const PRICE_EVENT_CHANCE = 0.2
 export const PRICE_EVENT_STANDARD_DURATION_DECREASE = 1
 

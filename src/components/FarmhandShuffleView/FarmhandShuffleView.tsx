@@ -27,6 +27,7 @@ import {
 import farmhandShufflePackageJson from '@jeremyckahn/farmhand-shuffle/package.json'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { FARMHAND_SHUFFLE_BOT_PLAYER_ID } from '../../constants.js'
 import { breakpoints } from '../../styles/tokens.js'
 import { Div, H2, P } from '../Elements/index.js'
 import { Markdown } from '../Markdown/index.js'
@@ -35,15 +36,11 @@ import { moneyString } from '../../utils/moneyString.js'
 // The installed @jeremyckahn/farmhand-shuffle version, used to tag every
 // checkpoint we write. Compared against on resume so a later library update
 // that changes IMatch's internal shape can be detected and handled gracefully
-// (refund + notify) instead of crashing - see the integration plan's Edge
-// cases section.
+// (refund + notify) instead of crashing.
 const FARMHAND_SHUFFLE_LIBRARY_VERSION = farmhandShufflePackageJson.version
 
-// v1 uses one fixed, symmetric starter deck for both sides (see the
-// integration plan's locked-in "Deck" decision) and a stable id for the
-// (only) bot opponent. Exported for FarmhandShuffleContextMenu, which needs
-// it to settle a forfeited match as a loss (winnerId = the opponent).
-export const BOT_PLAYER_ID = 'farmhand-shuffle-bot'
+// v1 uses one fixed, symmetric starter deck for both sides.
+const BOT_PLAYER_ID = FARMHAND_SHUFFLE_BOT_PLAYER_ID
 
 const CHECKPOINT_STATES = [
   MatchState.WAITING_FOR_PLAYER_SETUP_ACTION,
@@ -109,7 +106,7 @@ const ShuffleResultSummary = ({
   const isWin = !isDraw && winnerId === userPlayerId
 
   // A $0 wager is valid and plays out normally, but "+$0" reads like a bug -
-  // render it as "no wager placed" instead (see the plan's Edge cases).
+  // render it as "no wager placed" instead .
   const resultLine =
     wager === 0
       ? 'No wager was placed.'
@@ -198,7 +195,10 @@ export const FarmhandShuffleView = () => {
     } catch (e) {
       return 'error'
     }
-  }, [farmhandShuffle])
+    // Only needed when a Match mounts (it ignores initialMatch afterwards), so
+    // don't redo this - a full deserialization - on every checkpoint save.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matchPhase])
 
   useEffect(() => {
     if (initialMatch === 'error') {
@@ -446,8 +446,8 @@ In Farmhand Shuffle you play against a bot opponent and pay money into a Communi
             // (the AppBar and Stage's own layout already consume some of
             // it) - 100vh would overflow that and force Stage itself to
             // scroll too. height: '100%' fills the real available space
-            // instead, and Match's own overflow: auto (untouched by this
-            // override) is what actually scrolls.
+            // instead, and Match's own inner scroll container is what
+            // actually scrolls.
             //
             // The background overrides replace Match's own default
             // treatment (a solid color plus a repeating dot pattern) with

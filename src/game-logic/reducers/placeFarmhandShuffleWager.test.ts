@@ -21,6 +21,22 @@ describe('placeFarmhandShuffleWager', () => {
     })
   })
 
+  describe('a match is already in progress', () => {
+    test('no-ops instead of charging a second wager', () => {
+      state.farmhandShuffle.isMatchInProgress = true
+      state.farmhandShuffle.wager = 25
+
+      expect(placeFarmhandShuffleWager(state, 10)).toBe(state)
+    })
+  })
+
+  describe('wager is not a finite number', () => {
+    test('no-ops', () => {
+      expect(placeFarmhandShuffleWager(state, NaN)).toBe(state)
+      expect(placeFarmhandShuffleWager(state, Infinity)).toBe(state)
+    })
+  })
+
   describe('wager is negative', () => {
     test('no-ops', () => {
       expect(placeFarmhandShuffleWager(state, -1)).toMatchObject({

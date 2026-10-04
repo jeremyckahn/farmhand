@@ -7,9 +7,8 @@ import { showNotification } from './showNotification.js'
  * either `deserializeMatch` threw, or the persisted
  * `SerializedFarmhandShuffleMatch.libraryVersion` doesn't match the
  * installed `@jeremyckahn/farmhand-shuffle` version (schema drift, since
- * the library is pre-1.0/semver-unstable - see the plan's Edge cases and
- * 2.6). Unlike settleFarmhandShuffleMatch.ts, this is triggered from
- * `FarmhandShuffleView` itself (2.4) rather than from the library's
+ * the library is pre-1.0/semver-unstable). Unlike settleFarmhandShuffleMatch.ts, this is triggered from
+ * `FarmhandShuffleView` itself rather than from the library's
  * `onMatchEnd` callback, since the match never actually resumed far enough
  * to produce a winner: the wager is refunded, the match fields are
  * cleared, and no win/loss/streak counters change since the match never

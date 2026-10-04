@@ -290,13 +290,12 @@ declare namespace farmhand {
 
   /**
    * A checkpointed Farmhand Shuffle match, captured at one of the two
-   * "idle, waiting on the human player" machine states (see the
-   * farmhand-shuffle resume design). Tagged with the
+   * "idle, waiting on the human player" machine states. Tagged with the
    * `@jeremyckahn/farmhand-shuffle` package version it was captured under so
    * a later library update that changes the match's internal shape can be
    * detected on resume (deserialization/version mismatch is handled by
    * refunding the wager and clearing these fields rather than crashing -
-   * see settleFarmhandShuffleMatch.ts).
+   * see refundUnresumableFarmhandShuffleMatch.ts).
    */
   interface SerializedFarmhandShuffleMatch {
     libraryVersion: string

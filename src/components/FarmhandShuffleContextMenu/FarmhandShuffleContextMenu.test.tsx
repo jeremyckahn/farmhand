@@ -2,7 +2,7 @@ import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
-import { BOT_PLAYER_ID } from '../FarmhandShuffleView/FarmhandShuffleView.js'
+import { FARMHAND_SHUFFLE_BOT_PLAYER_ID } from '../../constants.js'
 
 import { FarmhandShuffleContextMenu } from './FarmhandShuffleContextMenu.js'
 
@@ -101,7 +101,7 @@ describe('FarmhandShuffleContextMenu', () => {
     fireEvent.click(screen.getByRole('button', { name: /Do it/i }))
 
     expect(handleSettleFarmhandShuffleMatch).toHaveBeenCalledWith(
-      BOT_PLAYER_ID,
+      FARMHAND_SHUFFLE_BOT_PLAYER_ID,
       'player-1'
     )
   })

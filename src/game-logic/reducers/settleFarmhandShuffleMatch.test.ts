@@ -24,6 +24,20 @@ describe('settleFarmhandShuffleMatch', () => {
     })
   })
 
+  describe('the match was already settled', () => {
+    test('no-ops instead of applying a second result', () => {
+      const settled = settleFarmhandShuffleMatch(
+        state,
+        USER_PLAYER_ID,
+        USER_PLAYER_ID
+      )
+
+      expect(
+        settleFarmhandShuffleMatch(settled, OPPONENT_PLAYER_ID, USER_PLAYER_ID)
+      ).toBe(settled)
+    })
+  })
+
   describe('the user wins', () => {
     test('pays out double the wager and updates win/streak counters', () => {
       expect(

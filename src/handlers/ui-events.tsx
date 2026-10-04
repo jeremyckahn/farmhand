@@ -551,16 +551,22 @@ export default {
     )
   },
 
-  handlePlaceFarmhandShuffleWager(this: Farmhand, wager: number) {
+  // NOTE: The wager and the settlement both change money, so each is
+  // persisted right away (like the checkpoint below) instead of waiting for
+  // the next autosave - otherwise a reload in between would restore the last
+  // checkpoint and undo a loss (or lose a payout).
+  async handlePlaceFarmhandShuffleWager(this: Farmhand, wager: number) {
     this.placeFarmhandShuffleWager(wager)
+    await this.persistState()
   },
 
-  handleSettleFarmhandShuffleMatch(
+  async handleSettleFarmhandShuffleMatch(
     this: Farmhand,
     winnerId: string | null,
     userPlayerId: string
   ) {
     this.settleFarmhandShuffleMatch(winnerId, userPlayerId)
+    await this.persistState()
   },
 
   async handleSaveFarmhandShuffleMatch(

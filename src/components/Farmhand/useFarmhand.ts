@@ -532,7 +532,13 @@ export const useFarmhand = (props: FarmhandProps) => {
 
   const keyHandlers = useMemo(() => {
     const map: Record<string, () => void> = {
-      incrementDay: () => incrementDay(),
+      // The End Day button is hidden while a Farmhand Shuffle match is in
+      // progress (see Farmhand.tsx), so its hotkey must not bypass that.
+      incrementDay: () => {
+        if (!state.farmhandShuffle.isMatchInProgress) {
+          incrementDay()
+        }
+      },
       nextView: focusNextView,
       openAccounting: () => openDialogView(dialogView.ACCOUNTING),
       openAchievements: () => openDialogView(dialogView.ACHIEVEMENTS),
@@ -580,6 +586,7 @@ export const useFarmhand = (props: FarmhandProps) => {
     openDialogView,
     focusPreviousView,
     handlers,
+    state.farmhandShuffle.isMatchInProgress,
     state.toolLevels,
     viewList,
     clearPersistedData,

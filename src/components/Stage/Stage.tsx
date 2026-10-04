@@ -75,9 +75,6 @@ export const Stage = ({
     [stageFocusType.FIELD]: grassBg,
     [stageFocusType.COW_PEN]: grassBg,
     [stageFocusType.FOREST]: forestFloorBg,
-    // No dedicated art yet - reuse the floorboard texture as a placeholder
-    // (see the Farmhand Shuffle integration plan's "Visual asset" decision).
-    // Commissioning real art is a follow-up, not a blocker for the unlock.
     [stageFocusType.FARMHAND_SHUFFLE]: hayBg,
   }[stageFocus as string]
 
@@ -257,7 +254,13 @@ export const Stage = ({
       {stageFocus === stageFocusType.FARMHAND_SHUFFLE && (
         <FarmhandShuffleView />
       )}
-      <div {...{ className: 'spacer' }} />
+      {
+        // The embedded game doesn't scroll the Stage (see above), so a spacer
+        // would only make its hidden overflow reachable by focus scrolling.
+        stageFocus !== stageFocusType.FARMHAND_SHUFFLE && (
+          <div {...{ className: 'spacer' }} />
+        )
+      }
     </Div>
   )
 }
