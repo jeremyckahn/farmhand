@@ -1,11 +1,11 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import AssignmentLateIcon from '@mui/icons-material/AssignmentLate.js'
 import Card from '@mui/material/Card/index.js'
 import CardHeader from '@mui/material/CardHeader/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
-import BeenhereIcon from '@mui/icons-material/Beenhere.js'
+
+import { AssignmentLateIcon, BeenhereIcon } from '../PixelIcon/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { Div } from '../Elements/index.js'

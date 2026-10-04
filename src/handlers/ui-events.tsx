@@ -541,9 +541,14 @@ export default {
     this: Farmhand,
     updateServiceWorker: (reloadPage?: boolean) => Promise<void>
   ) {
-    this.showNotification(UPDATE_AVAILABLE, 'success', () => {
-      updateServiceWorker(true)
-    })
+    this.showNotification(
+      UPDATE_AVAILABLE,
+      'success',
+      () => {
+        updateServiceWorker(true)
+      },
+      'Reload'
+    )
   },
 
   handlePlaceFarmhandShuffleWager(this: Farmhand, wager: number) {

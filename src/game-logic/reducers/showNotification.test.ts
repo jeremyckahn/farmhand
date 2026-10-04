@@ -14,6 +14,26 @@ describe('showNotification', () => {
     expect(todaysNotifications).toEqual([{ ...notificationObject }])
   })
 
+  test('includes the onClick handler and its action label', () => {
+    const onClick = () => {}
+    const { latestNotification, todaysNotifications } = showNotification(
+      testState({ showNotifications: true, todaysNotifications: [] }),
+      'foo',
+      'success',
+      onClick,
+      'Reload'
+    )
+    const notificationObject = {
+      message: 'foo',
+      severity: 'success',
+      onClick,
+      actionLabel: 'Reload',
+    }
+
+    expect(latestNotification).toEqual(notificationObject)
+    expect(todaysNotifications).toEqual([notificationObject])
+  })
+
   test('does not show redundant notifications', () => {
     const state = showNotification(
       testState({ todaysNotifications: [] }),

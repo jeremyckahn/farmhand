@@ -4,7 +4,8 @@ import AccordionSummary from '@mui/material/AccordionSummary/index.js'
 import AccordionDetails from '@mui/material/AccordionDetails/index.js'
 import Checkbox from '@mui/material/Checkbox/index.js'
 import FormControlLabel from '@mui/material/FormControlLabel/index.js'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore.js'
+
+import { ExpandMoreIcon } from '../PixelIcon/index.js'
 
 import FarmhandContext, { ContextData } from '../Farmhand/Farmhand.context.js'
 import Item from '../Item/index.js'

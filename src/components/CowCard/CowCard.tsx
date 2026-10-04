@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button from '@mui/material/Button/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardActions from '@mui/material/CardActions/index.js'
@@ -28,13 +26,14 @@ import { isCowInBreedingPen } from '../../utils/isCowInBreedingPen.js'
 import { isInViewport } from '../../utils/isInViewport.js'
 import { A } from '../Elements/index.js'
 import FarmhandContext, { BoundHandlers } from '../Farmhand/Farmhand.context.js'
+import { FemaleIcon, MaleIcon } from '../PixelIcon/index.js'
 
 import Subheader from './Subheader/index.js'
 
 const genderIcons = {
-  [genders.FEMALE as string]: faVenus,
-  [genders.MALE as string]: faMars,
-} as Record<string, typeof faVenus>
+  [genders.FEMALE as string]: FemaleIcon,
+  [genders.MALE as string]: MaleIcon,
+} as Record<string, typeof FemaleIcon>
 
 export interface CowCardProps {
   allowCustomPeerCowNames: farmhand.state['allowCustomPeerCowNames']
@@ -156,6 +155,8 @@ export const CowCard = ({
     }
   }, [isSelected])
 
+  const GenderIcon = genderIcons[cow.gender]
+
   return (
     <>
       <A
@@ -232,11 +233,7 @@ export const CowCard = ({
                 ) : (
                   displayName
                 )}{' '}
-                <FontAwesomeIcon
-                  {...{
-                    icon: genderIcons[cow.gender],
-                  }}
-                />
+                <GenderIcon fontSize="inherit" />
               </>
             ),
             subheader: (
@@ -278,7 +275,6 @@ export const CowCard = ({
           {canCowBeTradedFor && (
             <Tooltip
               {...{
-                arrow: true,
                 placement: 'top',
                 title: 'The game will be saved when the trade is completed.',
               }}
@@ -311,7 +307,6 @@ export const CowCard = ({
                 (cowIdOfferedForTrade === cow.id ? (
                   <Tooltip
                     {...{
-                      arrow: true,
                       placement: 'top',
                       title: WITHDRAW_COW_FROM_TRADE('', cowDisplayName),
                     }}
@@ -332,7 +327,6 @@ export const CowCard = ({
                 ) : (
                   <Tooltip
                     {...{
-                      arrow: true,
                       placement: 'top',
                       title: (
                         <Typography>

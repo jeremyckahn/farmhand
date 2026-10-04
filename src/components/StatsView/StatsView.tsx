@@ -82,7 +82,6 @@ export const StatsView = ({
           </TableRow>
           <Tooltip
             {...{
-              arrow: true,
               placement: 'top',
               title: FARM_PRODUCTS_TOOLTIP_TEXT,
             }}
@@ -98,7 +97,6 @@ export const StatsView = ({
           </Tooltip>
           <Tooltip
             {...{
-              arrow: true,
               placement: 'top',
               title: FARM_PRODUCTS_TOOLTIP_TEXT,
             }}
@@ -122,7 +120,6 @@ export const StatsView = ({
           </TableRow>
           <Tooltip
             {...{
-              arrow: true,
               placement: 'top',
               title: COW_SOLD_TOOLTIP_TEXT,
             }}

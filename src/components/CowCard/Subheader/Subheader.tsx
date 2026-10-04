@@ -1,6 +1,3 @@
-import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons'
-import { faHeart as faFullHeart } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Checkbox from '@mui/material/Checkbox/index.js'
 import FormControlLabel from '@mui/material/FormControlLabel/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
@@ -18,6 +15,7 @@ import { isCowInBreedingPen } from '../../../utils/isCowInBreedingPen.js'
 import { memoize } from '../../../utils/memoize.js'
 import { moneyString } from '../../../utils/moneyString.js'
 import { nullArray } from '../../../utils/nullArray.js'
+import { HeartIcon, HeartOutlineIcon } from '../../PixelIcon/index.js'
 import Bloodline from '../Bloodline/index.js'
 import { CowCardProps } from '../CowCard.js'
 
@@ -114,25 +112,20 @@ const Subheader = ({
           <ol className="hearts">
             {nullArray(10).map((_null: null, i: number) => (
               <li key={`${cow.id}_${i}`}>
-                <FontAwesomeIcon
-                  {...{
-                    icon: isHeartFull(i, numberOfFullHearts)
-                      ? faFullHeart
-                      : faEmptyHeart,
-                    color: isHeartFull(i, numberOfFullHearts)
-                      ? colors.heart
-                      : undefined,
-                    className: classNames('heart', {
-                      'is-full': isHeartFull(i, numberOfFullHearts),
-                    }),
-                  }}
-                />
+                {isHeartFull(i, numberOfFullHearts) ? (
+                  <HeartIcon
+                    className="heart is-full"
+                    fontSize="inherit"
+                    htmlColor={colors.heart}
+                  />
+                ) : (
+                  <HeartOutlineIcon className="heart" fontSize="inherit" />
+                )}
               </li>
             ))}
           </ol>
           <Tooltip
             {...{
-              arrow: true,
               placement: 'top',
               title: (
                 <Typography>
@@ -163,7 +156,6 @@ const Subheader = ({
           </Tooltip>
           <Tooltip
             {...{
-              arrow: true,
               placement: 'top',
               disableFocusListener: disableBreedingControlTooltip,
               disableHoverListener: disableBreedingControlTooltip,

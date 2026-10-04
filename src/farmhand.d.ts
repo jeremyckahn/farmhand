@@ -204,6 +204,10 @@ declare namespace farmhand {
   interface notification {
     severity: import('./enums.js').notificationSeverity
     onClick?: (...args: any[]) => any
+    // Label for the button that calls onClick. Notifications with an
+    // onClick render it as a button rather than making the whole alert
+    // clickable.
+    actionLabel?: string
     message: string
   }
 

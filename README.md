@@ -139,6 +139,10 @@ In this case, the local app will be using the Production API, database, and pair
 - Art style is inherently subjective, but new assets should stay visually consistent with the game's existing art - bold outlines, minimal/simple shading, and a transparent (not filled) background.
 - Filenames should match the identifier used for that item/tile in the game data (e.g. the `apple` item ID backs `apple.png`/`apple.piskel`, and its `growsInto`/growth-stage IDs back `apple-tree-grown.png`, etc.), so an asset can be traced back to the code that references it.
 
+### UI theme conventions
+
+The UI's retro pixel art look (9-slice frames, pixel icons and pixel fonts) is built with some nonstandard techniques. Before changing UI styling, icons or fonts, read [ADR 7: Pixel Art UI Theme](doc/adr/0007-pixel-art-ui-theme.md). Some of the rules there are easy to break by accident, for example using `backgroundColor` instead of `background` on framed elements.
+
 ### Testing Guidelines
 
 When writing tests for Farmhand, please follow the guidelines documented in [`.rules`](.rules). Key points:

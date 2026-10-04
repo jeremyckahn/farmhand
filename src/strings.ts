@@ -18,7 +18,7 @@ export const COW_SOLD_TOOLTIP_TEXT =
 export const DATA_DELETED = 'Your local game data has been deleted.'
 export const INVALID_DATA_PROVIDED = 'Invalid Farmhand data provided.'
 export const UPDATE_AVAILABLE =
-  "A game update is available! Click this message to reload and see what's new."
+  "A game update is available! Reload to see what's new."
 export const SERVER_ERROR =
   'There was an issue connecting to the server. Please try again in a moment.'
 export const CONNECTING_TO_SERVER = 'Connecting...'

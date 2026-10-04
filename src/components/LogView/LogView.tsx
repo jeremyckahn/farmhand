@@ -8,6 +8,7 @@ import { Markdown } from '../Markdown/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { Div } from '../Elements/index.js'
+import { NotificationAlert } from '../NotificationSystem/NotificationSystem.js'
 
 export const LogView = ({
   notificationLog,
@@ -25,28 +26,11 @@ export const LogView = ({
   >
     <h3>Today</h3>
     <ul>
-      {todaysNotifications.map(
-        ({
-          message,
-          onClick,
-          severity,
-        }: farmhand.notification & { onClick?: () => void }) => (
-          <li key={message}>
-            <Alert
-              {...{
-                elevation: 3,
-                onClick,
-                severity,
-                style: {
-                  cursor: onClick ? 'pointer' : 'default',
-                },
-              }}
-            >
-              <Markdown {...{ children: message }} />
-            </Alert>
-          </li>
-        )
-      )}
+      {todaysNotifications.map(notification => (
+        <li key={notification.message}>
+          <NotificationAlert {...{ notification }} />
+        </li>
+      ))}
     </ul>
     <Divider />
     <ul>
