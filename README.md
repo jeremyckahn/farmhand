@@ -58,6 +58,7 @@ Farmhand uses a [SemVer](https://semver.org/)-like versioning system. It differs
 
 - This project uses [Vite](https://vitejs.dev/), so please refer to the documentation of that project to learn about the development toolchain.
 - Farmhand uses [Piskel](https://www.piskelapp.com/) for the art assets.
+- The Farmhand Shuffle minigame lives in a separate repository and is embedded here. See [the Farmhand Shuffle guide](doc/farmhand-shuffle.md) for local setup, making changes, and deployment.
 
 ## Debugging
 
