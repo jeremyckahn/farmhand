@@ -21,12 +21,12 @@ export interface QuantityInputProps {
   handleUpdateNumber: (e: any) => void
   maxQuantity: number
   setQuantity: (quantity: number) => void
-  value: number
+  value?: number
 }
 
-const QuantityNumberFormat = forwardRef(
-  (
-    {
+const QuantityNumberFormat = forwardRef<HTMLInputElement, any>(
+  (props: any, ref) => {
+    const {
       min,
       max,
       onChange,
@@ -35,22 +35,23 @@ const QuantityNumberFormat = forwardRef(
       min?: number
       max: number
       onChange: (value: number) => void
-    } & Record<string, unknown>,
-    ref: React.ForwardedRef<HTMLInputElement>
-  ) => (
-    <NumberFormat
-      isNumericString
-      thousandSeparator
-      getInputRef={ref}
-      {...{
-        ...rest,
-        allowNegative: false,
-        decimalScale: 0,
-        onValueChange: ({ floatValue = 0 }) =>
-          onChange(Math.min(floatValue, max)),
-      }}
-    />
-  )
+    } & Record<string, unknown> = props
+
+    return (
+      <NumberFormat
+        isNumericString
+        thousandSeparator
+        getInputRef={ref}
+        {...{
+          ...rest,
+          allowNegative: false,
+          decimalScale: 0,
+          onValueChange: ({ floatValue = 0 }) =>
+            onChange(Math.min(floatValue, max)),
+        }}
+      />
+    )
+  }
 )
 
 // TODO: Rename event handlers to use on* format
@@ -113,7 +114,7 @@ const QuantityInput = ({
   handleUpdateNumber,
   maxQuantity,
   setQuantity,
-  value,
+  value = 1,
 }: QuantityInputProps) => {
   const decrementQuantity = () => {
     let newValue = value - 1
@@ -188,10 +189,6 @@ const QuantityInput = ({
       </Div>
     </Div>
   )
-}
-
-QuantityInput.defaultProps = {
-  value: 1,
 }
 
 export default QuantityInput

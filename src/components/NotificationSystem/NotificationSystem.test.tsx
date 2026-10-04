@@ -3,7 +3,11 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { SnackbarProvider } from 'notistack'
 
-import { NOTIFICATION_DURATION_DEFAULT } from '../../constants.js'
+import {
+  NOTIFICATION_DURATION,
+  NOTIFICATION_DURATION_DEFAULT,
+  NOTIFICATION_DURATION_TEST,
+} from '../../constants.js'
 
 import {
   NotificationAlert,
@@ -52,7 +56,7 @@ test('calls enqueueSnackbar with a content-derived key when latestNotification i
 
   expect(enqueueSnackbar).toHaveBeenCalledWith(latestNotification, {
     key: 'info:Test notification',
-    autoHideDuration: 1,
+    autoHideDuration: NOTIFICATION_DURATION_TEST,
     preventDuplicate: true,
   })
 })
@@ -93,7 +97,7 @@ test('re-enqueues notification when latestNotification changes to a different me
   expect(enqueueSnackbar).toHaveBeenCalledTimes(1)
   expect(enqueueSnackbar).toHaveBeenCalledWith(initialNotification, {
     key: getNotificationKey(initialNotification),
-    autoHideDuration: 1,
+    autoHideDuration: NOTIFICATION_DURATION,
     preventDuplicate: true,
   })
 
@@ -111,7 +115,7 @@ test('re-enqueues notification when latestNotification changes to a different me
   expect(enqueueSnackbar).toHaveBeenCalledTimes(2)
   expect(enqueueSnackbar).toHaveBeenLastCalledWith(newNotification, {
     key: getNotificationKey(newNotification),
-    autoHideDuration: 1,
+    autoHideDuration: NOTIFICATION_DURATION,
     preventDuplicate: true,
   })
 })

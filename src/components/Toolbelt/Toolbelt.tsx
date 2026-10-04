@@ -1,10 +1,11 @@
 import React from 'react'
 import classNames from 'classnames'
-import ReactMarkdown from 'react-markdown'
 
 import Button from '@mui/material/Button/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
+
+import { Markdown } from '../Markdown/index.js'
 
 import { toolLevel, stageFocusType, toolType } from '../../enums.js'
 import { memoize } from '../../utils/memoize.js'
@@ -45,16 +46,18 @@ const getToolImage = (tool: { level: toolLevel; id: string }) => {
 
 interface ToolbeltProps {
   fieldMode: string
-  handleFieldModeSelect: (mode: string) => void
+  handleFieldModeSelect?: (mode: string) => void
   stageFocus?: stageFocusType
-  toolLevels: Record<toolType, toolLevel>
+  toolLevels?: Record<toolType, toolLevel>
 }
+
+const defaultToolLevels = {} as Record<toolType, toolLevel>
 
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
-  handleFieldModeSelect,
+  handleFieldModeSelect = noop,
   stageFocus,
-  toolLevels,
+  toolLevels = defaultToolLevels,
 }: ToolbeltProps) => {
   const tools = getTools(toolLevels, stageFocus)
 
@@ -79,16 +82,15 @@ export const Toolbelt = ({
             return (
               <Tooltip
                 followCursor
+                key={fieldMode}
                 {...{
-                  key: fieldMode,
                   placement: 'top',
                   title: (
                     <Typography component="div">
                       <p>{alt}</p>
-                      <ReactMarkdown
+                      <Markdown
                         {...{
-                          className: 'markdown',
-                          source: (levelInfo as any)[toolLevels[type]],
+                          children: (levelInfo as any)[toolLevels[type]],
                         }}
                       />
                       <p>({fieldKey})</p>
@@ -144,11 +146,6 @@ export const Toolbelt = ({
       </Div>
     </Div>
   )
-}
-
-Toolbelt.defaultProps = {
-  handleFieldModeSelect: noop,
-  toolLevels: {},
 }
 
 export default function Consumer(

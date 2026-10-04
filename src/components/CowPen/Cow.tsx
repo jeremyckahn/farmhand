@@ -275,7 +275,7 @@ export const Cow = ({
       </Tooltip>
       <ol {...{ className: 'happiness-boosts-today' }}>
         {new Array(cow.happinessBoostsToday).fill(undefined).map((_, i) => (
-          <li {...{ key: i }}>
+          <li key={i}>
             <HeartIcon className="heart-icon" fontSize="inherit" />
           </li>
         ))}

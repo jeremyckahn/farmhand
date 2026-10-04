@@ -36,7 +36,7 @@ const AchievementsList = ({
   <AccordionDetails>
     <ul className="card-list">
       {unpartitionedAchievements.map((achievement: farmhand.achievement) => (
-        <li {...{ key: achievement.id }}>
+        <li key={achievement.id}>
           <Achievement {...{ achievement }} />
         </li>
       ))}

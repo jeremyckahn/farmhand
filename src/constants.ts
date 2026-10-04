@@ -143,11 +143,16 @@ export const COW_MAXIMUM_VALUE_MULTIPLIER = 1
 export const COW_GESTATION_PERIOD_DAYS = 3
 export const COW_MINIMUM_HAPPINESS_TO_BREED = 0.8
 
+// The test-mode value must stay well clear of 0: it's a real race against
+// findBy*'s default polling/timeout window (assertions need the snackbar to
+// still be mounted when they check), and React 18's different effect/
+// batching timing narrows that window further than it was under React 17.
+export const NOTIFICATION_DURATION_TEST = 5000
 export const NOTIFICATION_DURATION_MIN = 4000
 export const NOTIFICATION_DURATION_MAX = 12000
 export const NOTIFICATION_DURATION_DEFAULT = 6000
 export const getNotificationDuration = (duration: number) =>
-  import.meta.env?.MODE === 'test' ? 1 : duration
+  import.meta.env?.MODE === 'test' ? NOTIFICATION_DURATION_TEST : duration
 export const NOTIFICATION_DURATION = getNotificationDuration(
   NOTIFICATION_DURATION_DEFAULT
 )
@@ -164,6 +169,7 @@ export const STAGE_TITLE_MAP = {
   [stageFocusType.COW_PEN]: 'Cows',
   [stageFocusType.WORKSHOP]: 'Workshop',
   [stageFocusType.CELLAR]: 'Cellar',
+  [stageFocusType.FARMHAND_SHUFFLE]: 'Farmhand Shuffle',
 }
 
 export const DAILY_FINANCIAL_HISTORY_RECORD_LENGTH = 7
@@ -186,6 +192,7 @@ export const PERSISTED_STATE_KEYS = [
   'dayCount',
   'experience',
   'farmName',
+  'farmhandShuffle',
   'field',
   'forest',
   'hasProducedRainbowFertilizer',

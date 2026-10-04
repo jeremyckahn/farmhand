@@ -153,11 +153,11 @@ export const CowPen = ({
       <Tumbleweeds doSpawn={cowInventory.length === 0} />
       {cowInventory.map((cow: farmhand.cow) => (
         <Cow
+          key={cow.id}
           {...{
             allowCustomPeerCowNames,
             cow,
             cowInventory,
-            key: cow.id,
             handleCowClick,
             playerId,
             isSelected: selectedCowId === cow.id,

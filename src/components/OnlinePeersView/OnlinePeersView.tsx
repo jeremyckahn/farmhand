@@ -1,10 +1,12 @@
 import React from 'react'
-import ReactMarkdown from 'react-markdown'
+
 import Alert from '@mui/material/Alert/index.js'
 import Divider from '@mui/material/Divider/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import sortBy from 'lodash.sortby'
+
+import { Markdown } from '../Markdown/index.js'
 
 import BailOutErrorBoundary from '../BailOutErrorBoundary/index.js'
 
@@ -73,7 +75,7 @@ const OnlinePeersView = ({
                 // Use negative value to reverse sort order
                 -levelAchieved(peers[peerId].experience || 0),
             ]).map(peerId => (
-              <BailOutErrorBoundary {...{ key: peerId }}>
+              <BailOutErrorBoundary key={peerId}>
                 <OnlinePeer {...{ peer: peers[peerId] }} />
               </BailOutErrorBoundary>
             ))}
@@ -93,16 +95,18 @@ const OnlinePeersView = ({
                 }: { playerId: string; message: string; severity?: string },
                 messageIndex: number
               ) => (
-                <li {...{ key: messageIndex }}>
+                <li key={messageIndex}>
                   <Alert
                     {...{
                       elevation: 3,
                       severity: severity as any,
                     }}
                   >
-                    <ReactMarkdown
+                    <Markdown
                       {...{
-                        source: `**${getPlayerName(peerPlayerId)}** ${message}`,
+                        children: `**${getPlayerName(
+                          peerPlayerId
+                        )}** ${message}`,
                       }}
                     />
                   </Alert>

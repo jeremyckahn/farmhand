@@ -2,7 +2,8 @@ import React, { useContext, useState } from 'react'
 import Divider from '@mui/material/Divider/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
-import ReactMarkdown from 'react-markdown'
+
+import { Markdown } from '../Markdown/index.js'
 
 import SearchBar from '../SearchBar/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
@@ -75,11 +76,9 @@ export const CellarInventoryTabPanel = ({
         <li>
           <Card>
             <CardContent>
-              <ReactMarkdown
+              <Markdown
                 {...{
-                  linkTarget: '_blank',
-                  className: 'markdown',
-                  source: `This is your inventory of Cellar kegs.
+                  children: `This is your inventory of Cellar kegs.
 
 Keg contents take time to reach maturity before they can be sold. After they reach maturity, keg contents become higher in quality over time and their value grows.
 
