@@ -24,7 +24,9 @@ export function Keg({ keg }: { keg: farmhand.keg }) {
 
   const item = itemsMap[keg.itemId]
 
-  if (!item) return null
+  if (!item) {
+    throw new Error(`Keg references unknown item id: ${keg.itemId}`)
+  }
 
   let imageSrc = items[item.id as keyof typeof items]
 

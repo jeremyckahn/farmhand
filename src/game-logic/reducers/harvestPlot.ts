@@ -44,7 +44,10 @@ function getHarvestedQuantity(state: farmhand.state): number {
       amount = 1
   }
 
-  return amount
+  // Cap the yield to the space actually available so that callers only count
+  // crops the player received, not crops that addItemToInventory would
+  // silently drop because the inventory is nearly full.
+  return Math.min(amount, inventorySpaceRemaining(state))
 }
 
 function harvestCrops(
@@ -66,14 +69,6 @@ function harvestCrops(
     crop.fertilizerType === fertilizerType.RAINBOW
 
   const harvestedQuantity = getHarvestedQuantity(state)
-
-  // Cap the counted yield to the space actually available so cropsHarvested
-  // reflects crops the player received, not crops that addItemToInventory
-  // silently dropped because the inventory was nearly full.
-  const receivedQuantity = Math.min(
-    harvestedQuantity,
-    inventorySpaceRemaining(state)
-  )
 
   state = removeFieldPlotAt(state, x, y)
   state = addItemToInventory(state, item, harvestedQuantity)
@@ -107,7 +102,7 @@ function harvestCrops(
     ...state,
     cropsHarvested: {
       ...cropsHarvested,
-      [cropType]: (cropsHarvested[cropType] || 0) + receivedQuantity,
+      [cropType]: (cropsHarvested[cropType] || 0) + harvestedQuantity,
     },
   }
 }
