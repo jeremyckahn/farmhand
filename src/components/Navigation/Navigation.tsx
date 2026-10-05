@@ -27,21 +27,15 @@ import {
 } from '../PixelIcon/index.js'
 
 import { MAX_ROOM_NAME_LENGTH } from '../../common/constants.js'
-import {
-  DEFAULT_ROOM,
-  INFINITE_STORAGE_LIMIT,
-  STAGE_TITLE_MAP,
-} from '../../constants.js'
+import { DEFAULT_ROOM, STAGE_TITLE_MAP } from '../../constants.js'
 import { dialogView } from '../../enums.js'
-import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
 import { integerString } from '../../utils/integerString.js'
-import { inventorySpaceConsumed } from '../../utils/inventorySpaceConsumed.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { breakpoints, colors, fonts } from '../../styles/tokens.js'
+import { breakpoints, fonts } from '../../styles/tokens.js'
 import AccountingView from '../AccountingView/index.js'
 import AchievementsView from '../AchievementsView/index.js'
-import { H3, Header } from '../Elements/index.js'
+import { Header } from '../Elements/index.js'
 import KeybindingsView from '../KeybindingsView/index.js'
 import LogView from '../LogView/index.js'
 import OnlinePeersView from '../OnlinePeersView/index.js'
@@ -260,8 +254,6 @@ export const Navigation = ({
   handleOnlineToggleChange,
   handleRoomChange,
   handleViewChange,
-  inventory,
-  inventoryLimit,
   isChatAvailable,
   isDialogViewOpen,
   isOnline,
@@ -286,8 +278,6 @@ export const Navigation = ({
   handleOnlineToggleChange: (checked: boolean) => void
   handleRoomChange: (newRoom: string) => void
   handleViewChange: (event: any) => void
-  inventory: farmhand.state['inventory']
-  inventoryLimit: number
   isChatAvailable: boolean
   isDialogViewOpen: boolean
   isOnline: boolean
@@ -369,7 +359,6 @@ export const Navigation = ({
             position: 'relative',
           },
         },
-        '& .inventory-info': { fontSize: '1em' },
         '& .MuiSelect-select': { padding: '1em' },
         '& .chat-placeholder': {
           fontSize: '0.75em',
@@ -396,26 +385,6 @@ export const Navigation = ({
           room,
         }}
       />
-      {inventoryLimit > INFINITE_STORAGE_LIMIT && (
-        <H3
-          {...{
-            className: classNames('inventory-info', {
-              'is-inventory-full': !doesInventorySpaceRemain({
-                inventory,
-                inventoryLimit,
-              }),
-            }),
-          }}
-          sx={{
-            color: !doesInventorySpaceRemain({ inventory, inventoryLimit })
-              ? colors.error
-              : undefined,
-          }}
-        >
-          Inventory: {integerString(inventorySpaceConsumed(inventory))} /{' '}
-          {integerString(inventoryLimit)}
-        </H3>
-      )}
 
       <Select
         variant="standard"
