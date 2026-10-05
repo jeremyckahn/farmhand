@@ -1,4 +1,5 @@
-// TODO: Add tests for this reducer
+import { findCowById } from '../../utils/findCowById.js'
+
 /**
  * @param fn Function that takes a cow and returns the modified cow or undefined.
  */
@@ -7,20 +8,14 @@ export const modifyCow = (
   cowId: string,
   fn: (cow: farmhand.cow) => Partial<farmhand.cow>
 ): farmhand.state => {
-  const cowInventory = [...state.cowInventory]
-
-  // TODO: Use the findCowById util here.
-  const cow = cowInventory.find(({ id }) => id === cowId)
+  const cow = findCowById(state.cowInventory, cowId)
 
   if (!cow) {
     return state
   }
 
+  const cowInventory = [...state.cowInventory]
   const cowIndex = cowInventory.indexOf(cow)
-
-  if (cowIndex === -1) {
-    return state
-  }
 
   cowInventory[cowIndex] = {
     ...cow,

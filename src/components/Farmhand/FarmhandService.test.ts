@@ -33,6 +33,31 @@ describe('FarmhandService', () => {
     })
   })
 
+  describe('inventory containing an unknown item id', () => {
+    const inventory = [
+      { quantity: 1, id: 'not-a-real-item' },
+      { quantity: 1, id: 'carrot-seed' },
+    ]
+
+    test('computePlayerInventory ignores the unknown item', () => {
+      expect(FarmhandService.computePlayerInventory(inventory, {})).toEqual([
+        { quantity: 1, ...carrotSeed },
+      ])
+    })
+
+    test('getFieldToolInventory does not throw', () => {
+      expect(() =>
+        FarmhandService.getFieldToolInventory(inventory)
+      ).not.toThrow()
+    })
+
+    test('getPlantableCropInventory ignores the unknown item', () => {
+      expect(FarmhandService.getPlantableCropInventory(inventory)).toEqual([
+        { ...carrotSeed, quantity: 1 },
+      ])
+    })
+  })
+
   describe('getFieldToolInventory', () => {
     test('selects field tools from inventory', () => {
       const fieldToolInventory = FarmhandService.getFieldToolInventory([

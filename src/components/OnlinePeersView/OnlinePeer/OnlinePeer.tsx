@@ -30,8 +30,7 @@ const OnlinePeer = ({
             subheader: (
               <div>
                 <p>Day: {integerString(dayCount)}</p>
-                {/* TODO: Remove `?? 0` after 10/24 */}
-                <p>Level: {integerString(levelAchieved(experience ?? 0))}</p>
+                <p>Level: {integerString(levelAchieved(experience))}</p>
                 <p>Money: {moneyString(money)}</p>
               </div>
             ),
