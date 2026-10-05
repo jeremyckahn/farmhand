@@ -24,7 +24,8 @@ export function Keg({ keg }: { keg: farmhand.keg }) {
 
   const item = itemsMap[keg.itemId]
 
-  // TODO: Add a defensive check in case item is undefined (e.g. keg.itemId is invalid) to prevent runtime crash when accessing item.id
+  if (!item) return null
+
   let imageSrc = items[item.id as keyof typeof items]
 
   const recipeName = getKegDisplayName(item)

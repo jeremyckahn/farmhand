@@ -7,6 +7,7 @@ import {
 } from '../../enums.js'
 import { itemsMap } from '../../data/maps.js'
 import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
+import { inventorySpaceRemaining } from '../../utils/inventorySpaceRemaining.js'
 import { getCropLifeStage } from '../../utils/getCropLifeStage.js'
 import { getPlotContentType } from '../../utils/getPlotContentType.js'
 import { getSeedItemIdFromFinalStageCropItemId } from '../../utils/getSeedItemIdFromFinalStageCropItemId.js'
@@ -66,6 +67,14 @@ function harvestCrops(
 
   const harvestedQuantity = getHarvestedQuantity(state)
 
+  // Cap the counted yield to the space actually available so cropsHarvested
+  // reflects crops the player received, not crops that addItemToInventory
+  // silently dropped because the inventory was nearly full.
+  const receivedQuantity = Math.min(
+    harvestedQuantity,
+    inventorySpaceRemaining(state)
+  )
+
   state = removeFieldPlotAt(state, x, y)
   state = addItemToInventory(state, item, harvestedQuantity)
 
@@ -94,16 +103,11 @@ function harvestCrops(
 
   const { cropsHarvested } = state
 
-  // TODO: cropsHarvested is incremented by the full harvestedQuantity even
-  // when addItemToInventory silently caps how much is actually added because
-  // the inventory is nearly full, so this counter can over-count relative to
-  // what the player actually received. See the equivalent fix applied to
-  // treeFruitsHarvested in harvestForestPlot.ts for the pattern to follow.
   return {
     ...state,
     cropsHarvested: {
       ...cropsHarvested,
-      [cropType]: (cropsHarvested[cropType] || 0) + harvestedQuantity,
+      [cropType]: (cropsHarvested[cropType] || 0) + receivedQuantity,
     },
   }
 }
@@ -120,6 +124,14 @@ function harvestWeed(
 
   const item = itemsMap[crop.itemId]
   const harvestedQuantity = getHarvestedQuantity(state)
+
+  // Cap the counted yield to the space actually available so cropsHarvested
+  // reflects crops the player received, not crops that addItemToInventory
+  // silently dropped because the inventory was nearly full.
+  const receivedQuantity = Math.min(
+    harvestedQuantity,
+    inventorySpaceRemaining(state)
+  )
 
   state = removeFieldPlotAt(state, x, y)
   state = addItemToInventory(state, item, harvestedQuantity)

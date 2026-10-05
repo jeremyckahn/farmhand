@@ -27,6 +27,13 @@ describe('transformStateDataForImport', () => {
     expect(sanitizedState).toEqual(stateWithoutVersion)
   })
 
+  test('it does not throw if cowBreedingPen and cowInventory are missing', () => {
+    delete state.cowBreedingPen
+    delete state.cowInventory
+
+    expect(() => transformStateDataForImport(state as any)).not.toThrow()
+  })
+
   test('it calculates experience from itemsSold if experience is 0', () => {
     state.experience = 0
     state.itemsSold = {
