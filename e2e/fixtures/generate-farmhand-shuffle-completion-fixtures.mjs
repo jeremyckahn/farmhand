@@ -39,7 +39,7 @@ const farmhandShufflePackageJson = JSON.parse(
 const opponentPlayerId = 'farmhand-shuffle-bot'
 
 // Reuses the existing unlocked fixture as a base - it's already at a level
-// (35+) and money that satisfies the unlock gate, which is a separate
+// (19+) and money that satisfies the unlock gate, which is a separate
 // concern from what these fixtures are for.
 const baseFixture = JSON.parse(
   readFileSync(path.join(__dirname, 'farmhand-shuffle-unlocked.json'), 'utf8')

@@ -1,6 +1,6 @@
 # Farmhand Shuffle in Farmhand
 
-Farmhand Shuffle is a card game that is embedded in Farmhand as a minigame. Players unlock it at level 35, wager money on a match against a bot, and win double their wager back if they win.
+Farmhand Shuffle is a card game that is embedded in Farmhand as a minigame. Players unlock it at level 19, wager money on a match against a bot, and win double their wager back if they win.
 
 The game itself lives in its own repository, [`farmhand-shuffle`](https://github.com/jeremyckahn/farmhand-shuffle), and is published to npm as `@jeremyckahn/farmhand-shuffle`. This document explains how the two projects fit together and how to work on and ship changes to either of them.
 
@@ -19,7 +19,7 @@ The game itself lives in its own repository, [`farmhand-shuffle`](https://github
 
 | Concern                                                                                      | Where it lives                                                                                                                                                     |
 | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| The level 35 unlock and the view list                                                        | `src/data/levels.ts`, `src/utils/getViewList.ts`, `src/utils/getValidatedStageFocusFromHash.ts`, `stageFocusType.FARMHAND_SHUFFLE` in `src/enums.ts`               |
+| The level 19 unlock and the view list                                                        | `src/data/levels.ts`, `src/utils/getViewList.ts`, `src/utils/getValidatedStageFocusFromHash.ts`, `stageFocusType.FARMHAND_SHUFFLE` in `src/enums.ts`               |
 | The wager screen, running a match, resuming a saved one                                      | `src/components/FarmhandShuffleView/`                                                                                                                              |
 | The context pane (stats, wager and prize, Forfeit button)                                    | `src/components/FarmhandShuffleContextMenu/`, wired up in `src/components/ContextPane/ContextPane.tsx`                                                             |
 | Wagers, payouts and saved matches (persisted as the `farmhandShuffle` key of Farmhand state) | `src/game-logic/reducers/*FarmhandShuffle*.ts`, their stubs in `src/components/Farmhand/FarmhandReducers.tsx`, and the handlers in `src/handlers/ui-events.tsx`    |
@@ -95,10 +95,10 @@ Avoid `npm link` for this. It makes the library resolve its own copy of React, w
 
 ### Getting to the game in Farmhand
 
-The game unlocks at level 35. In the browser console:
+The game unlocks at level 19. In the browser console:
 
 ```js
-window.farmhand.setState({ experience: 115600 }) // level 35
+window.farmhand.setState({ experience: 32400 }) // level 19
 ```
 
 Or load a ready-made save: Settings, then "Import Game Data", with `e2e/fixtures/farmhand-shuffle-unlocked.json`. Then pick "Farmhand Shuffle" from the view selector.

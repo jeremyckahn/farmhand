@@ -341,7 +341,7 @@ declare namespace farmhand {
     farmName: string
     /**
      * Persisted state for the Farmhand Shuffle minigame (unlocked at level
-     * 35 - see levels.ts). `totalMatchesPlayed` is incremented on every
+     * 19 - see levels.ts). `totalMatchesPlayed` is incremented on every
      * settled match (win, loss, *and* draw) so the "first match" achievement
      * can key off it directly rather than reconstructing it from
      * totalWins + totalLosses, which would never be true if a player's

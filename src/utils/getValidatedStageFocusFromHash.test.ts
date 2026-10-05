@@ -70,7 +70,7 @@ describe('getValidatedStageFocusFromHash', () => {
     expect(getValidatedStageFocusFromHash(defaultState)).toBeUndefined()
   })
 
-  test('returns FARMHAND_SHUFFLE once its unlock requirement (level 35) is met', () => {
+  test('returns FARMHAND_SHUFFLE once its unlock requirement (level 19) is met', () => {
     window.history.replaceState(
       {},
       '',
@@ -78,7 +78,7 @@ describe('getValidatedStageFocusFromHash', () => {
     )
 
     expect(
-      getValidatedStageFocusFromHash({ ...defaultState, experience: 120_000 })
+      getValidatedStageFocusFromHash({ ...defaultState, experience: 32_400 })
     ).toEqual(FARMHAND_SHUFFLE)
   })
 
