@@ -55,6 +55,37 @@ describe('bootup', () => {
     })
   })
 
+  test('does not announce already-learned recipes as newly learned when booting from a save file', async () => {
+    const loadedState = saveDataStubFactory({
+      dayCount: 10,
+      learnedRecipes: { bread: true, butter: true },
+    })
+
+    await farmhandStub({
+      localforage: {
+        getItem: () => Promise.resolve(loadedState),
+        setItem: (_key: string, data: unknown) => Promise.resolve(data),
+      },
+    })
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Day 10', {
+          exact: false,
+          selector: '.day-and-progress-container span',
+        })
+      ).toBeInTheDocument()
+    })
+
+    // Notifications are deferred via setTimeout(0) and flushed after boot, so
+    // give them a moment to (incorrectly) appear.
+    await new Promise(resolve => setTimeout(resolve, 100))
+
+    expect(
+      screen.queryByText(/You learned the recipes/)
+    ).not.toBeInTheDocument()
+  })
+
   test(
     'pending notifications for the loaded day are not shown again the next day',
     async () => {
