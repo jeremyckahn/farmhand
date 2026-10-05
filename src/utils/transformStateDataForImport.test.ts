@@ -31,7 +31,9 @@ describe('transformStateDataForImport', () => {
     delete state.cowBreedingPen
     delete state.cowInventory
 
-    expect(() => transformStateDataForImport(state as any)).not.toThrow()
+    const sanitizedState = transformStateDataForImport(state as any)
+
+    expect(sanitizedState.cowBreedingPen).toBeUndefined()
   })
 
   test('it calculates experience from itemsSold if experience is 0', () => {

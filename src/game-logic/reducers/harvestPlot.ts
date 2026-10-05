@@ -125,14 +125,6 @@ function harvestWeed(
   const item = itemsMap[crop.itemId]
   const harvestedQuantity = getHarvestedQuantity(state)
 
-  // Cap the counted yield to the space actually available so cropsHarvested
-  // reflects crops the player received, not crops that addItemToInventory
-  // silently dropped because the inventory was nearly full.
-  const receivedQuantity = Math.min(
-    harvestedQuantity,
-    inventorySpaceRemaining(state)
-  )
-
   state = removeFieldPlotAt(state, x, y)
   state = addItemToInventory(state, item, harvestedQuantity)
 

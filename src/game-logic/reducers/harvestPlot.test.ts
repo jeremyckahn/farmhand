@@ -107,6 +107,7 @@ describe('harvestPlot', () => {
           inventoryLimit: 5,
           toolLevels: toolLevelsBronze,
         })
+        // The bronze scythe yields 2 crops but only 1 slot is free
         const { cropsHarvested } = harvestPlot(inputState, 0, 0)
 
         expect(cropsHarvested).toEqual({
