@@ -19,7 +19,7 @@ export default function IngredientsList({
         <h4>Ingredients required:</h4>
       </li>
       {Object.keys(ingredients).map(itemId => (
-        <li {...{ key: itemId }} data-testid="ingredient">
+        <li key={itemId} data-testid="ingredient">
           <P
             {...{
               className: classNames(

@@ -5,7 +5,7 @@ import MobileStepper from '@mui/material/MobileStepper/index.js'
 import { Theme, ThemeProvider } from '@mui/material/styles/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import classNames from 'classnames'
-import localforage from 'localforage'
+import localforageLib from 'localforage'
 import { SnackbarProvider } from 'notistack'
 import { GlobalHotKeys } from 'react-hotkeys'
 import { Redirect } from 'react-router-dom'
@@ -46,7 +46,23 @@ const emptyObject = Object.freeze({})
 
 export type FarmhandInstance = any
 
-const Farmhand = (props: FarmhandProps) => {
+// Module-level (rather than inline default parameter values) so each default
+// keeps a stable identity across renders, as the defaultProps they replace did.
+const defaultFeatures = {}
+const defaultLocalforage = localforageLib.createInstance({
+  name: 'farmhand',
+  description: 'Persisted game data for Farmhand',
+})
+const defaultMatch = { path: '', params: {} }
+
+const Farmhand = ({
+  features = defaultFeatures,
+  localforage = defaultLocalforage,
+  match = defaultMatch,
+  ...rest
+}: FarmhandProps) => {
+  const props = { ...rest, features, localforage, match }
+
   const {
     gameState,
     handlers,
@@ -127,7 +143,14 @@ const Farmhand = (props: FarmhandProps) => {
                     easing: t.transitions.easing.easeOut,
                   }),
                   width: 0,
-                  zIndex: 20,
+                  // Was 20: the embedded Farmhand Shuffle view can render
+                  // its own fixed-position controls (e.g. the hide/show
+                  // Hand button) near the same screen area on narrow
+                  // viewports. This is Farmhand's own primary navigation -
+                  // it should never be visually contested by any embedded
+                  // view's content, so it gets the same z-index tier as
+                  // the end-day button rather than an arbitrary low value.
+                  zIndex: Z_INDEX.END_DAY_BUTTON,
                   [`@media (max-width: ${breakpoints.mediumPhone}px)`]: {
                     bottom: '0.5em',
                   },
@@ -245,27 +268,29 @@ const Farmhand = (props: FarmhandProps) => {
                   </Fab>
                 </div>
               </div>
-              <Tooltip
-                placement="left"
-                title={
-                  <>
-                    <p>
-                      End the day to save your progress and advance the game.
-                    </p>
-                    <p>(shift + c)</p>
-                  </>
-                }
-              >
-                <Fab
-                  aria-label="End the day to save your progress and advance the game."
-                  className="end-day"
-                  color="error"
-                  onClick={handlers.handleClickEndDayButton}
-                  sx={{ zIndex: Z_INDEX.END_DAY_BUTTON }}
+              {!gameState.farmhandShuffle.isMatchInProgress && (
+                <Tooltip
+                  placement="left"
+                  title={
+                    <>
+                      <p>
+                        End the day to save your progress and advance the game.
+                      </p>
+                      <p>(shift + c)</p>
+                    </>
+                  }
                 >
-                  <HotelIcon />
-                </Fab>
-              </Tooltip>
+                  <Fab
+                    aria-label="End the day to save your progress and advance the game."
+                    className="end-day"
+                    color="error"
+                    onClick={handlers.handleClickEndDayButton}
+                    sx={{ zIndex: Z_INDEX.END_DAY_BUTTON }}
+                  >
+                    <HotelIcon />
+                  </Fab>
+                </Tooltip>
+              )}
             </Div>
             {isChatAvailable ? <ChatRoom /> : null}
             <NotificationSystem />
@@ -274,15 +299,6 @@ const Farmhand = (props: FarmhandProps) => {
       </ThemeProvider>
     </GlobalHotKeys>
   )
-}
-
-Farmhand.defaultProps = {
-  features: {},
-  localforage: localforage.createInstance({
-    name: 'farmhand',
-    description: 'Persisted game data for Farmhand',
-  }),
-  match: { path: '', params: {} },
 }
 
 export default Farmhand

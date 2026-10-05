@@ -209,8 +209,8 @@ export const CowPenContextMenu = ({
               {sortCows(filteredCowInventory, sortType, isAscending).map(cow =>
                 isCowInBreedingPen(cow, cowBreedingPen) ? null : (
                   <li
+                    key={cow.id}
                     {...{
-                      key: cow.id,
                       onFocus: () => handleCowSelect(cow),
                       onClick: () => handleCowSelect(cow),
                     }}

@@ -35,8 +35,8 @@ export const ItemList = ({
     {sortItems(items).map((item: farmhand.item) => (
       <Tooltip
         followCursor
+        key={item.id}
         {...{
-          key: item.id,
           placement: 'top',
           title: <Typography>{item.name}</Typography>,
         }}

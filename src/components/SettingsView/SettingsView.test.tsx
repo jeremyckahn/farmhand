@@ -252,3 +252,29 @@ test('displays tooltips for export and import buttons', async () => {
     await screen.findByText('Load game data that was previously saved')
   ).toBeInTheDocument()
 })
+
+test('passes a selected import file to handleImportDataClick', async () => {
+  const user = userEvent.setup()
+  const handleImportDataClick = vi.fn()
+  const { container } = render(
+    <SettingsView {...defaultProps} {...{ handleImportDataClick }} />
+  )
+  const file = new File(['{}'], 'farmhand.json', { type: 'application/json' })
+  const input = container.querySelector('input[type=file]') as HTMLInputElement
+
+  await user.upload(input, file)
+
+  expect(handleImportDataClick).toHaveBeenCalledWith([[null, file]])
+  expect(input.value).toBe('')
+})
+
+test('Import Game Data button opens the file picker', async () => {
+  const user = userEvent.setup()
+  const { container } = render(<SettingsView {...defaultProps} />)
+  const input = container.querySelector('input[type=file]') as HTMLInputElement
+  const clickSpy = vi.spyOn(input, 'click')
+
+  await user.click(screen.getByText('Import Game Data'))
+
+  expect(clickSpy).toHaveBeenCalled()
+})

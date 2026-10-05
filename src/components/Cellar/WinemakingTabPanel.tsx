@@ -2,7 +2,8 @@ import React from 'react'
 import Divider from '@mui/material/Divider/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
-import ReactMarkdown from 'react-markdown'
+
+import { Markdown } from '../Markdown/index.js'
 
 import { WineRecipeList } from '../WineRecipeList/WineRecipeList.js'
 
@@ -22,11 +23,9 @@ export const WinemakingTabPanel = ({
       <li>
         <Card>
           <CardContent>
-            <ReactMarkdown
+            <Markdown
               {...{
-                linkTarget: '_blank',
-                className: 'markdown',
-                source:
+                children:
                   'Grapes can be made into wine. Wine becomes very valuable in time and never spoils.',
               }}
             />

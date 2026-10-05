@@ -117,6 +117,21 @@ describe('ContextPane', () => {
       expect(screen.queryByTestId('mocked-inventory')).not.toBeInTheDocument()
       expect(document.querySelector('.CowPenContextMenu')).toBeInTheDocument()
     })
+
+    test('shows the Farmhand Shuffle context menu instead of inventory when stageFocus is FARMHAND_SHUFFLE', () => {
+      render(
+        <ContextPane
+          {...defaultProps}
+          stageFocus={stageFocusType.FARMHAND_SHUFFLE}
+        />
+      )
+
+      expect(screen.queryByText('Inventory')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('mocked-inventory')).not.toBeInTheDocument()
+      expect(
+        document.querySelector('.FarmhandShuffleContextMenu')
+      ).toBeInTheDocument()
+    })
   })
 
   test('displays all items from playerInventory in shop context', () => {

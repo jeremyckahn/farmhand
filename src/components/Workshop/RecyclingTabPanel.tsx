@@ -3,7 +3,8 @@ import React from 'react'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import Divider from '@mui/material/Divider/index.js'
-import ReactMarkdown from 'react-markdown'
+
+import { Markdown } from '../Markdown/index.js'
 
 import { recipeType } from '../../enums.js'
 import { recipeCategories } from '../../data/maps.js'
@@ -33,11 +34,9 @@ export function RecyclingTabPanel({
         <li>
           <Card>
             <CardContent>
-              <ReactMarkdown
+              <Markdown
                 {...{
-                  linkTarget: '_blank',
-                  className: 'markdown',
-                  source: `Recyling recipes are learned by selling items foraged from the field.`,
+                  children: `Recyling recipes are learned by selling items foraged from the field.`,
                 }}
               />
             </CardContent>

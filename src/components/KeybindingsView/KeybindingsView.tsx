@@ -32,7 +32,7 @@ const KeybindingsView = () => (
             { label: 'Go to Bank Account', keybinding: 'B' },
             { label: 'Go to Settings', keybinding: ',' },
           ].map(({ label, keybinding }) => (
-            <TableRow {...{ key: label }}>
+            <TableRow key={label}>
               <TableCell {...{ component: 'th', scope: 'row' }}>
                 {label}
               </TableCell>
@@ -50,7 +50,7 @@ const KeybindingsView = () => (
             { label: 'Zoom in', keybinding: '=' },
             { label: 'Zoom out', keybinding: '-' },
           ].map(({ label, keybinding }) => (
-            <TableRow {...{ key: label }}>
+            <TableRow key={label}>
               <TableCell {...{ component: 'th', scope: 'row' }}>
                 {label}
               </TableCell>

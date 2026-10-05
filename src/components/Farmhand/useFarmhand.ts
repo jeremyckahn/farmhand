@@ -91,6 +91,16 @@ export const useFarmhand = (props: FarmhandProps) => {
       dayCount: 0,
       experience: 0,
       farmName: 'Unnamed',
+      farmhandShuffle: {
+        isMatchInProgress: false,
+        wager: 0,
+        serializedMatch: null,
+        totalMatchesPlayed: 0,
+        totalWins: 0,
+        totalLosses: 0,
+        currentWinStreak: 0,
+        longestWinStreak: 0,
+      },
       field: createNewField(),
       fieldMode: fieldMode.OBSERVE as fieldMode,
       forest: createNewForest(),
@@ -228,11 +238,14 @@ export const useFarmhand = (props: FarmhandProps) => {
 
   const isForestUnlocked =
     levelEntitlements.stageFocusType[stageFocusType.FOREST]
+  const isFarmhandShuffleUnlocked =
+    levelEntitlements.stageFocusType[stageFocusType.FARMHAND_SHUFFLE]
   const isChatAvailable = state.isOnline && state.room !== DEFAULT_ROOM
 
   const viewList = useMemo(
     () =>
       getViewList({
+        isFarmhandShuffleUnlocked,
         isForestUnlocked,
         purchasedCellar: state.purchasedCellar,
         purchasedCowPen: state.purchasedCowPen,
@@ -240,6 +253,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       }),
     [
       state.showHomeScreen,
+      isFarmhandShuffleUnlocked,
       isForestUnlocked,
       state.purchasedCowPen,
       state.purchasedCellar,
@@ -374,6 +388,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       peerMetadata,
       isInputBlocked,
       isChatAvailable,
+      isFarmhandShuffleUnlocked,
       isForestUnlocked,
       setState: (updater: any, callback?: () => void) => {
         setState(previous => {
@@ -450,6 +465,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       peerMetadata,
       isInputBlocked,
       isChatAvailable,
+      isFarmhandShuffleUnlocked,
       isForestUnlocked,
       tradeForPeerCow,
       handleCowTradeTimeout,
@@ -516,7 +532,13 @@ export const useFarmhand = (props: FarmhandProps) => {
 
   const keyHandlers = useMemo(() => {
     const map: Record<string, () => void> = {
-      incrementDay: () => incrementDay(),
+      // The End Day button is hidden while a Farmhand Shuffle match is in
+      // progress (see Farmhand.tsx), so its hotkey must not bypass that.
+      incrementDay: () => {
+        if (!state.farmhandShuffle.isMatchInProgress) {
+          incrementDay()
+        }
+      },
       nextView: focusNextView,
       openAccounting: () => openDialogView(dialogView.ACCOUNTING),
       openAchievements: () => openDialogView(dialogView.ACHIEVEMENTS),
@@ -564,6 +586,7 @@ export const useFarmhand = (props: FarmhandProps) => {
     openDialogView,
     focusPreviousView,
     handlers,
+    state.farmhandShuffle.isMatchInProgress,
     state.toolLevels,
     viewList,
     clearPersistedData,
@@ -729,7 +752,16 @@ export const useFarmhand = (props: FarmhandProps) => {
               : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }]
           )
           .forEach(({ message, severity }) =>
-            boundReducersRef.current.showNotification(message, severity)
+            // NOTE: Deferred via setTimeout (matching the boot-restore
+            // notification path above) so each call lands in its own task
+            // and gets its own render, rather than being collapsed into a
+            // single React 18 automatic-batching update that would only
+            // ever show the last notification in the list.
+            setTimeout(
+              () =>
+                boundReducersRef.current.showNotification(message, severity),
+              0
+            )
           )
 
         if (resolvedNextDayState.isCombineEnabled) {

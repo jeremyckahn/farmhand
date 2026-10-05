@@ -22,8 +22,8 @@ const Bloodline = ({
       .sort()
       .map(color => (
         <Tooltip
+          key={color}
           {...{
-            key: color,
             placement: 'top',
             title: COW_COLOR_NAMES[color as keyof typeof COW_COLOR_NAMES],
           }}

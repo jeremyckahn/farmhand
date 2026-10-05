@@ -19,9 +19,9 @@ describe('item selling', () => {
     })
 
     const menu = screen.getByRole('complementary')
-    const carrotSeedMenuItem = within(menu)
-      .getByText('Carrot Seed')
-      .closest('.Item')
+    const carrotSeedMenuItem = (
+      await within(menu).findByText('Carrot Seed')
+    ).closest('.Item')
     const sellButton = within(carrotSeedMenuItem as HTMLElement).getByText(
       'Sell'
     )

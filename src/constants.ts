@@ -143,15 +143,25 @@ export const COW_MAXIMUM_VALUE_MULTIPLIER = 1
 export const COW_GESTATION_PERIOD_DAYS = 3
 export const COW_MINIMUM_HAPPINESS_TO_BREED = 0.8
 
+// The test-mode value must stay well clear of 0: it's a real race against
+// findBy*'s default polling/timeout window (assertions need the snackbar to
+// still be mounted when they check), and React 18's different effect/
+// batching timing narrows that window further than it was under React 17.
+export const NOTIFICATION_DURATION_TEST = 5000
 export const NOTIFICATION_DURATION_MIN = 4000
 export const NOTIFICATION_DURATION_MAX = 12000
 export const NOTIFICATION_DURATION_DEFAULT = 6000
 export const getNotificationDuration = (duration: number) =>
-  import.meta.env?.MODE === 'test' ? 1 : duration
+  import.meta.env?.MODE === 'test' ? NOTIFICATION_DURATION_TEST : duration
 export const NOTIFICATION_DURATION = getNotificationDuration(
   NOTIFICATION_DURATION_DEFAULT
 )
 export const NOTIFICATION_LOG_SIZE = 14
+
+// The (only) Farmhand Shuffle bot opponent's player id. Shared by
+// FarmhandShuffleView (which seeds the match with it) and
+// FarmhandShuffleContextMenu (which settles a forfeit as a win for it).
+export const FARMHAND_SHUFFLE_BOT_PLAYER_ID = 'farmhand-shuffle-bot'
 
 export const PRICE_EVENT_CHANCE = 0.2
 export const PRICE_EVENT_STANDARD_DURATION_DECREASE = 1
@@ -164,6 +174,7 @@ export const STAGE_TITLE_MAP = {
   [stageFocusType.COW_PEN]: 'Cows',
   [stageFocusType.WORKSHOP]: 'Workshop',
   [stageFocusType.CELLAR]: 'Cellar',
+  [stageFocusType.FARMHAND_SHUFFLE]: 'Farmhand Shuffle',
 }
 
 export const DAILY_FINANCIAL_HISTORY_RECORD_LENGTH = 7
@@ -186,6 +197,7 @@ export const PERSISTED_STATE_KEYS = [
   'dayCount',
   'experience',
   'farmName',
+  'farmhandShuffle',
   'field',
   'forest',
   'hasProducedRainbowFertilizer',

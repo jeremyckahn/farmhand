@@ -10,6 +10,7 @@ import CowPen from '../CowPen/index.js'
 import Shop from '../Shop/index.js'
 import Workshop from '../Workshop/index.js'
 import { Cellar } from '../Cellar/index.js'
+import { FarmhandShuffleView } from '../FarmhandShuffleView/index.js'
 import { stageFocusType } from '../../enums.js'
 import { seasonFilterMap } from '../../data/seasons.js'
 import { getCurrentSeason } from '../../utils/getCurrentSeason.js'
@@ -20,6 +21,7 @@ import { breakpoints, layout } from '../../styles/tokens.js'
 
 import brownDotBg from '../../img/ui/brown-dot-bg.png'
 import floorboardBg from '../../img/ui/floorboard.png'
+import hayBg from '../../img/ui/hay-bg.png'
 import jackOLanternBg from '../../img/ui/jack-o-lantern-bg.png'
 import winterBg from '../../img/ui/winter-bg.png'
 import yellowDotBg from '../../img/ui/yellow-dot-bg.png'
@@ -73,6 +75,7 @@ export const Stage = ({
     [stageFocusType.FIELD]: grassBg,
     [stageFocusType.COW_PEN]: grassBg,
     [stageFocusType.FOREST]: forestFloorBg,
+    [stageFocusType.FARMHAND_SHUFFLE]: hayBg,
   }[stageFocus as string]
 
   // The Field, Cow Pen, and Forest screens get a season-specific visual
@@ -158,6 +161,14 @@ export const Stage = ({
           [`@media (min-width: ${breakpoints.largePhone}px)`]: {
             display: 'none',
           },
+          // Farmhand Shuffle's own embedded UI (TurnControl) already
+          // provides page-level context, so this generic mobile-only
+          // title would just be redundant chrome eating into its
+          // limited vertical space - unlike every other view, which
+          // relies on it as their only heading on narrow screens.
+          ...(stageFocus === stageFocusType.FARMHAND_SHUFFLE && {
+            display: 'none',
+          }),
         },
         '& section': {
           padding: '0.5em 0',
@@ -207,6 +218,21 @@ export const Stage = ({
                 marginLeft: `-${layout.narrowSidebarWidth}px`,
               },
             }),
+        // The embedded Farmhand Shuffle game manages its own internal
+        // scrolling (see Match's own overflow handling in
+        // FarmhandShuffleView.tsx) and fills this container's full height -
+        // letting Stage's own padding/overflow apply on top would produce
+        // a second, redundant scrollbar and a visible gap around it. No
+        // padding here either: the spacing around the game is Shuffle's own
+        // content padding (see FarmhandShuffleView.tsx), so that the room
+        // its glows and hover effects need and the space around the game
+        // are the same space, instead of effects being clipped at a Stage
+        // padding they can't reach into. Last in this object so it wins
+        // over the padding/paddingTop set by the conditionals above,
+        // regardless of their own flags.
+        ...(stageFocus === stageFocusType.FARMHAND_SHUFFLE
+          ? { overflow: 'hidden', padding: 0 }
+          : {}),
       })}
     >
       <div className="stage-background" />
@@ -225,7 +251,16 @@ export const Stage = ({
       {stageFocus === stageFocusType.COW_PEN && <CowPen />}
       {stageFocus === stageFocusType.WORKSHOP && <Workshop />}
       {stageFocus === stageFocusType.CELLAR && <Cellar />}
-      <div {...{ className: 'spacer' }} />
+      {stageFocus === stageFocusType.FARMHAND_SHUFFLE && (
+        <FarmhandShuffleView />
+      )}
+      {
+        // The embedded game doesn't scroll the Stage (see above), so a spacer
+        // would only make its hidden overflow reachable by focus scrolling.
+        stageFocus !== stageFocusType.FARMHAND_SHUFFLE && (
+          <div {...{ className: 'spacer' }} />
+        )
+      }
     </Div>
   )
 }
