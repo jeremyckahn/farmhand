@@ -863,7 +863,14 @@ export const useFarmhand = (props: FarmhandProps) => {
     }
 
     showInventoryFullNotifications(prevState, state)
-    showRecipeLearnedNotifications(prevState)
+
+    // prevState.hasBooted is false only for the render where the persisted
+    // game is restored on page load. Diffing against that pre-boot state
+    // (which has no learned recipes) would report every recipe the player has
+    // ever learned as newly learned, on every page load.
+    if (prevState.hasBooted) {
+      showRecipeLearnedNotifications(prevState)
+    }
   }, [
     state,
     prevState,
