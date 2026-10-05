@@ -18,6 +18,7 @@ import {
 } from '../PixelIcon/index.js'
 
 import { Z_INDEX } from '../../constants.js'
+import { stageFocusType } from '../../enums.js'
 import theme, { blueStripeBg } from '../../mui-theme.js'
 import { Div } from '../Elements/index.js'
 import { fillSx } from '../../styles/sx.js'
@@ -76,6 +77,12 @@ const Farmhand = ({
     focusNextView,
     isChatAvailable,
   } = useFarmhand(props)
+
+  // Ending the day mid-match is only blocked on the Shuffle stage itself;
+  // a match left in progress must not hide the button everywhere else.
+  const isEndDayHidden =
+    state.stageFocus === stageFocusType.FARMHAND_SHUFFLE &&
+    gameState.farmhandShuffle.isMatchInProgress
 
   return (
     <GlobalHotKeys
@@ -268,7 +275,7 @@ const Farmhand = ({
                   </Fab>
                 </div>
               </div>
-              {!gameState.farmhandShuffle.isMatchInProgress && (
+              {!isEndDayHidden && (
                 <Tooltip
                   placement="left"
                   title={
