@@ -34,27 +34,25 @@ describe('FarmhandService', () => {
   })
 
   describe('inventory containing an unknown item id', () => {
-    const inventory = [
-      { quantity: 1, id: 'not-a-real-item' },
-      { quantity: 1, id: 'carrot-seed' },
-    ]
+    const inventory = [{ quantity: 1, id: 'not-a-real-item' }]
+    const message = 'Inventory references unknown item id: not-a-real-item'
 
-    test('computePlayerInventory ignores the unknown item', () => {
-      expect(FarmhandService.computePlayerInventory(inventory, {})).toEqual([
-        { quantity: 1, ...carrotSeed },
-      ])
-    })
-
-    test('getFieldToolInventory does not throw', () => {
+    test('computePlayerInventory throws an informative error', () => {
       expect(() =>
-        FarmhandService.getFieldToolInventory(inventory)
-      ).not.toThrow()
+        FarmhandService.computePlayerInventory(inventory, {})
+      ).toThrow(message)
     })
 
-    test('getPlantableCropInventory ignores the unknown item', () => {
-      expect(FarmhandService.getPlantableCropInventory(inventory)).toEqual([
-        { ...carrotSeed, quantity: 1 },
-      ])
+    test('getFieldToolInventory throws an informative error', () => {
+      expect(() => FarmhandService.getFieldToolInventory(inventory)).toThrow(
+        message
+      )
+    })
+
+    test('getPlantableCropInventory throws an informative error', () => {
+      expect(() =>
+        FarmhandService.getPlantableCropInventory(inventory)
+      ).toThrow(message)
     })
   })
 

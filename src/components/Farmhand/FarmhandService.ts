@@ -6,32 +6,41 @@ import { memoize } from '../../utils/memoize.js'
 const { PLANT } = fieldMode
 const { MULCH } = itemType
 
+const getItemOrThrow = (id: string): farmhand.item => {
+  const item = itemsMap[id as keyof typeof itemsMap]
+
+  if (!item) {
+    throw new Error(`Inventory references unknown item id: ${id}`)
+  }
+
+  return item
+}
+
 export class FarmhandService {
   static computePlayerInventory = memoize(
     (
       inventory: farmhand.state['inventory'],
       valueAdjustments: Record<string, number>
     ): farmhand.item[] =>
-      inventory
-        .filter(({ id }: { id: string }) => id in itemsMap)
-        .map(({ quantity, id }: { quantity: number; id: string }) => ({
+      inventory.map(({ quantity, id }: { quantity: number; id: string }) => {
+        const item = getItemOrThrow(id)
+
+        return {
           quantity,
-          ...itemsMap[id as keyof typeof itemsMap],
-          value: getItemCurrentValue(
-            itemsMap[id as keyof typeof itemsMap],
-            valueAdjustments
-          ),
-        }))
+          ...item,
+          value: getItemCurrentValue(item, valueAdjustments),
+        }
+      })
   )
 
   static getFieldToolInventory = memoize(
     (inventory: farmhand.state['inventory']): farmhand.item[] =>
       inventory
         .filter(({ id }: { id: string }) => {
-          const item = itemsMap[id as keyof typeof itemsMap]
+          const item = getItemOrThrow(id)
 
           return (
-            typeof item?.enablesFieldMode === 'string' &&
+            typeof item.enablesFieldMode === 'string' &&
             item.enablesFieldMode !== PLANT &&
             // Mulch is Forest-only - it must never show up in the Field's
             // toolbelt even though it shares the FERTILIZE field mode with
@@ -48,10 +57,7 @@ export class FarmhandService {
   static getPlantableCropInventory = memoize(
     (inventory: farmhand.state['inventory']): farmhand.item[] =>
       inventory
-        .filter(
-          ({ id }: { id: string }) =>
-            itemsMap[id as keyof typeof itemsMap]?.isPlantableCrop
-        )
+        .filter(({ id }: { id: string }) => getItemOrThrow(id).isPlantableCrop)
         .map(({ id, quantity }: { id: string; quantity: number }) => ({
           ...itemsMap[id as keyof typeof itemsMap],
           quantity,
