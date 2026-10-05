@@ -34,20 +34,17 @@ export const transformStateDataForImport = (
   // cowInventory, but at least one player's game somehow got into that state.
   // This block detects such an invalid state and corrects it.
   {
-    // TODO: Add defensive check safeguards for sanitizedState.cowBreedingPen
-    // and sanitizedState.cowInventory to prevent TypeError crashes during
-    // corrupt/legacy state imports.
-    const { cowId1, cowId2 } =
-      sanitizedState.cowBreedingPen as farmhand.state['cowBreedingPen']
+    const { cowId1, cowId2 } = (sanitizedState.cowBreedingPen ?? {}) as Partial<
+      farmhand.state['cowBreedingPen']
+    >
 
-    const cowPenIdMap = (sanitizedState.cowInventory as farmhand.cow[]).reduce(
-      (acc: Record<string, farmhand.cow>, cow: farmhand.cow) => {
-        acc[cow.id] = cow
+    const cowPenIdMap = (
+      (sanitizedState.cowInventory ?? []) as farmhand.cow[]
+    ).reduce((acc: Record<string, farmhand.cow>, cow: farmhand.cow) => {
+      acc[cow.id] = cow
 
-        return acc
-      },
-      {}
-    )
+      return acc
+    }, {})
 
     const isCowInBreedingPenMissingFromInventory = [cowId1, cowId2].some(
       cowId => {

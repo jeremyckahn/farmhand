@@ -99,6 +99,24 @@ describe('harvestPlot', () => {
       })
     })
 
+    describe('inventory has less space than the harvest yield', () => {
+      test('only counts the crops that were actually received', () => {
+        const inputState = testState({
+          field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
+          inventory: [{ id: 'sample-crop-2', quantity: 4 }],
+          inventoryLimit: 5,
+          toolLevels: toolLevelsBronze,
+        })
+        // The bronze scythe yields 2 crops but only 1 slot is free
+        const { cropsHarvested } = harvestPlot(inputState, 0, 0)
+
+        expect(cropsHarvested).toEqual({
+          ...testState().cropsHarvested,
+          SAMPLE_CROP_TYPE_1: 1,
+        })
+      })
+    })
+
     describe('there is insufficient inventory space', () => {
       test('no-ops', () => {
         const inputState = testState({

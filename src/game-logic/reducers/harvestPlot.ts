@@ -7,6 +7,7 @@ import {
 } from '../../enums.js'
 import { itemsMap } from '../../data/maps.js'
 import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
+import { inventorySpaceRemaining } from '../../utils/inventorySpaceRemaining.js'
 import { getCropLifeStage } from '../../utils/getCropLifeStage.js'
 import { getPlotContentType } from '../../utils/getPlotContentType.js'
 import { getSeedItemIdFromFinalStageCropItemId } from '../../utils/getSeedItemIdFromFinalStageCropItemId.js'
@@ -43,7 +44,10 @@ function getHarvestedQuantity(state: farmhand.state): number {
       amount = 1
   }
 
-  return amount
+  // Cap the yield to the space actually available so that callers only count
+  // crops the player received, not crops that addItemToInventory would
+  // silently drop because the inventory is nearly full.
+  return Math.min(amount, inventorySpaceRemaining(state))
 }
 
 function harvestCrops(
@@ -94,11 +98,6 @@ function harvestCrops(
 
   const { cropsHarvested } = state
 
-  // TODO: cropsHarvested is incremented by the full harvestedQuantity even
-  // when addItemToInventory silently caps how much is actually added because
-  // the inventory is nearly full, so this counter can over-count relative to
-  // what the player actually received. See the equivalent fix applied to
-  // treeFruitsHarvested in harvestForestPlot.ts for the pattern to follow.
   return {
     ...state,
     cropsHarvested: {
