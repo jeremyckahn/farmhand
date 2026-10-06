@@ -8,13 +8,27 @@
 export const colors = {
   itemBackground: '#f7b459',
   heart: '#ff4040',
-  error: '#ce0000',
-  success: '#2e7d32',
+  error: '#b23a22',
+  success: '#4f7a2e',
   cardBackground: '#ffe3a1',
-  cardOutline: '#8a5c00',
-  dialogOutline: '#1f4f78',
+  cardOutline: '#6b4423',
+  dialogOutline: '#4a2e17',
   neutralOutline: '#2b2118',
-  disabledOutline: 'rgba(0, 0, 0, 0.26)',
+  disabledOutline: 'rgba(60, 40, 20, 0.26)',
+  // Warm, earthy surfaces and text shared by the MUI palette and the
+  // components that style themselves directly.
+  pageBackground: '#f1e0bf',
+  surface: '#fff7e7',
+  surfaceMuted: '#f5ead3',
+  tabBackground: '#ffeec6',
+  tableBorder: '#d9b777',
+  textPrimary: '#3b2a1a',
+  textSecondary: '#6b5239',
+  textDisabled: '#a38c6f',
+  link: '#8b4a1c',
+  inputBackground: '#fffaf0',
+  inputText: '#3b2a1a',
+  inputPlaceholder: '#8f7a5e',
   // Matches the legacy Sass `color.adjust($card-background, $lightness: -10%)`
   // for cards nested inside other cards. MUI's `darken()` helper uses a
   // different (multiplicative) algorithm and produces a visibly duller color.

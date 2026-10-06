@@ -10,6 +10,7 @@ import { AssignmentLateIcon, BeenhereIcon } from '../PixelIcon/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { Div } from '../Elements/index.js'
 import ProgressBar from '../ProgressBar/index.js'
+import { colors } from '../../styles/tokens.js'
 
 const Achievement = ({
   achievement,
@@ -32,7 +33,9 @@ const Achievement = ({
         className: classNames('Achievement', { 'is-complete': isComplete }),
       }}
       sx={{
-        '& .MuiSvgIcon-root': { color: isComplete ? '#13b747' : '#666' },
+        '& .MuiSvgIcon-root': {
+          color: isComplete ? colors.success : colors.textSecondary,
+        },
       }}
     >
       <CardHeader

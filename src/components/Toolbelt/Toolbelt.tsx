@@ -16,7 +16,7 @@ import toolsData from '../../data/tools.js'
 import { tools as toolImages, craftedItems, pixel } from '../../img/index.js'
 import { Div, Img } from '../Elements/index.js'
 import { squareImgSx } from '../../styles/sx.js'
-import { breakpoints } from '../../styles/tokens.js'
+import { breakpoints, colors } from '../../styles/tokens.js'
 
 const getTools = memoize(
   (toolLevels: Record<toolType, toolLevel>, stageFocus?: stageFocusType) => {
@@ -115,9 +115,9 @@ export const Toolbelt = ({
                   sx={
                     isSelected
                       ? {
-                          border: '1px solid #000',
+                          border: `1px solid ${colors.neutralOutline}`,
                           backgroundColor: 'transparent',
-                          '&:hover': { backgroundColor: '#ffffb3' },
+                          '&:hover': { backgroundColor: '#ffeec6' },
                         }
                       : undefined
                   }

@@ -33,7 +33,7 @@ const SearchBar = ({
         justifyContent: 'center',
         alignItems: 'center',
         ...pixelFrameSx({ outline: colors.cardOutline, shadow: true }),
-        backgroundColor: '#fff',
+        backgroundColor: colors.inputBackground,
         boxShadow: pixelBevel({ highlight: 'rgba(0, 0, 0, 0.06)' }),
         '& .MuiOutlinedInput-root': {
           width: '100%',
@@ -50,13 +50,13 @@ const SearchBar = ({
             transition: 'border-color 0.3s ease',
           },
           '& input': {
-            color: '#333',
-            caretColor: '#333',
+            color: colors.inputText,
+            caretColor: colors.inputText,
             transition: 'background-color 0.3s ease',
-            '&:focus': { backgroundColor: '#fff' },
+            '&:focus': { backgroundColor: colors.inputBackground },
           },
           '& input::placeholder': {
-            color: '#999',
+            color: colors.inputPlaceholder,
             transition: 'color 0.3s ease',
           },
         },

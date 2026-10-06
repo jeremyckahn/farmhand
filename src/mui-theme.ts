@@ -13,8 +13,8 @@ import {
   SuccessIcon,
   WarningIcon,
 } from './components/PixelIcon/index.js'
-import blueStripeBg from './img/ui/blue-stripe-bg.png'
-import lightBlueStripeBg from './img/ui/light-blue-stripe-bg.png'
+import brownStripeBg from './img/ui/brown-stripe-bg.png'
+import lightBrownStripeBg from './img/ui/light-brown-stripe-bg.png'
 import {
   cardStyleSelectedSx,
   cardStyleSx,
@@ -97,6 +97,7 @@ const globalStyleOverrides = {
     '& strong': { fontWeight: 'bold' },
   },
   img: { imageRendering: 'pixelated' },
+  a: { color: colors.link },
   strong: { fontWeight: 'bold' },
   '.visually_hidden:not(:focus):not(:active)': {
     clip: 'rect(0 0 0 0)',
@@ -147,8 +148,56 @@ const globalStyleOverrides = {
 } as const
 
 export default createTheme({
+  // A warm, rural palette: saddle-leather browns, moss and sage greens, and
+  // parchment surfaces.
   palette: {
     mode: 'light',
+    primary: {
+      light: '#b07d4a',
+      main: '#8b5a2b',
+      dark: '#5e3a17',
+      contrastText: '#fff7e7',
+    },
+    secondary: {
+      light: '#8fa05c',
+      main: '#617a36',
+      dark: '#43571f',
+      contrastText: '#fff7e7',
+    },
+    error: {
+      light: '#d1705a',
+      main: colors.error,
+      dark: '#7f2412',
+      contrastText: '#fff7e7',
+    },
+    warning: {
+      light: '#e0a24a',
+      main: '#c9821c',
+      dark: '#8f5a0e',
+      contrastText: '#2b1a08',
+    },
+    info: {
+      light: '#7f9fa6',
+      main: '#5b7f8a',
+      dark: '#3d5860',
+      contrastText: '#fff7e7',
+    },
+    success: {
+      light: '#7fa356',
+      main: colors.success,
+      dark: '#355419',
+      contrastText: '#fff7e7',
+    },
+    background: {
+      default: colors.pageBackground,
+      paper: colors.surface,
+    },
+    text: {
+      primary: colors.textPrimary,
+      secondary: colors.textSecondary,
+      disabled: colors.textDisabled,
+    },
+    divider: 'rgba(107, 68, 35, 0.3)',
   },
   // Pixel art has no anti-aliased curves. Corners are notched by the 9-slice
   // frames instead.
@@ -189,7 +238,7 @@ export default createTheme({
       styleOverrides: {
         root: {
           ...pixelFrameSx({ outline: colors.cardOutline }),
-          backgroundColor: '#ffeec6',
+          backgroundColor: colors.tabBackground,
           boxShadow: pixelBevel(),
         },
         indicator: {
@@ -240,7 +289,7 @@ export default createTheme({
     },
     MuiTableCell: {
       styleOverrides: {
-        root: { borderColor: '#e9c777' },
+        root: { borderColor: colors.tableBorder },
       },
     },
     MuiButtonBase: {
@@ -300,7 +349,7 @@ export default createTheme({
     },
     MuiPaper: {
       styleOverrides: {
-        rounded: { backgroundColor: '#fff7e7' },
+        rounded: { backgroundColor: colors.surface },
       },
     },
     MuiPopover: {
@@ -368,7 +417,7 @@ export default createTheme({
       styleOverrides: {
         tooltip: {
           ...pixelFrameSx({ outline: colors.neutralOutline }),
-          backgroundColor: 'rgba(60, 50, 40, 0.94)',
+          backgroundColor: 'rgba(59, 42, 26, 0.95)',
           boxShadow: pixelBevel({
             highlight: 'rgba(255, 255, 255, 0.15)',
             lowlight: 'rgba(0, 0, 0, 0.25)',
@@ -382,7 +431,7 @@ export default createTheme({
         root: { display: 'block' },
         paper: {
           ...pixelFrameSx({ outline: colors.dialogOutline, shadow: true }),
-          backgroundImage: `url(${lightBlueStripeBg})`,
+          backgroundImage: `url(${lightBrownStripeBg})`,
           boxShadow: pixelBevel(),
         },
       },
@@ -434,4 +483,4 @@ export default createTheme({
 
 // Re-exported so Farmhand.tsx can reference the same sidebar background
 // asset without importing it a second time.
-export { blueStripeBg }
+export { brownStripeBg }

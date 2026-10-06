@@ -29,6 +29,6 @@ export const manifest = {
   ],
   start_url: './index.html',
   display: 'standalone',
-  theme_color: '#ffe3a1',
-  background_color: '#ffffff',
+  theme_color: '#8b5a2b',
+  background_color: '#f1e0bf',
 }

@@ -19,7 +19,7 @@ import {
 
 import { Z_INDEX } from '../../constants.js'
 import { stageFocusType } from '../../enums.js'
-import theme, { blueStripeBg } from '../../mui-theme.js'
+import theme, { brownStripeBg } from '../../mui-theme.js'
 import { Div } from '../Elements/index.js'
 import { fillSx } from '../../styles/sx.js'
 import { breakpoints, layout } from '../../styles/tokens.js'
@@ -215,7 +215,7 @@ const Farmhand = ({
                 PaperProps={{
                   className: 'sidebar',
                   sx: {
-                    backgroundImage: `url(${blueStripeBg})`,
+                    backgroundImage: `url(${brownStripeBg})`,
                     boxSizing: 'border-box',
                     overflow: 'auto',
                     padding: '1em 1em 0',

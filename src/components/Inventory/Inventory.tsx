@@ -13,6 +13,7 @@ import { itemsMap } from '../../data/maps.js'
 import { sortItems } from '../../utils/sortItems.js'
 import SearchBar from '../SearchBar/index.js'
 import { Div } from '../Elements/index.js'
+import { colors } from '../../styles/tokens.js'
 
 // Using Map for categories to preserve key order and enable Map methods
 export const categoryIds = new Map([
@@ -155,13 +156,13 @@ const Inventory = ({
               sx={{
                 marginBottom: '20px',
                 padding: '10px',
-                border: '1px solid #ccc',
+                border: `1px solid ${colors.tableBorder}`,
                 borderRadius: '5px',
-                backgroundColor: '#f7f7f7',
+                backgroundColor: colors.surfaceMuted,
                 '& h4': {
                   marginBottom: '10px',
                   fontSize: '16px',
-                  color: '#555',
+                  color: colors.textSecondary,
                 },
               }}
             >
