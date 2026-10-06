@@ -1,5 +1,6 @@
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 import { huggingMachine } from '../../data/items.js'
+import { generateCow } from '../../utils/generateCow.js'
 import { testItem, testState } from '../../test-utils/index.js'
 
 import { purchaseItem } from './purchaseItem.js'
@@ -173,6 +174,24 @@ describe('purchaseItem', () => {
 
         expect(purchaseItem(state, huggingMachine, 1)).toMatchObject({
           inventory: [{ id: huggingMachine.id, quantity: 11 }],
+          todaysPurchases: {},
+          money: 10_000,
+        })
+      })
+
+      test('does not purchase a Hugging Machine when all capacity is in use', () => {
+        state = testState({
+          cowInventory: Array.from({ length: 6 }, () =>
+            generateCow({ isUsingHuggingMachine: true })
+          ),
+          inventory: [{ id: huggingMachine.id, quantity: 4 }],
+          money: 10_000,
+          purchasedCowPen: 1,
+          valueAdjustments: { [huggingMachine.id]: 1 },
+        })
+
+        expect(purchaseItem(state, huggingMachine, 1)).toMatchObject({
+          inventory: [{ id: huggingMachine.id, quantity: 4 }],
           todaysPurchases: {},
           money: 10_000,
         })
