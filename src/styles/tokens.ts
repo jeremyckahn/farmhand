@@ -44,6 +44,18 @@ export const colors = {
   },
 } as const
 
+// MUI's stock palette colors. Buttons, Fabs and value indicators keep these
+// rather than following the brown theme palette, so those controls stay as
+// recognizable as they were before the palette was rethemed.
+export const legacyControlColors = {
+  primary: { main: '#1976d2', dark: '#1565c0', contrastText: '#fff' },
+  secondary: { main: '#9c27b0', dark: '#7b1fa2', contrastText: '#fff' },
+  error: { main: '#d32f2f', dark: '#c62828', contrastText: '#fff' },
+  warning: { main: '#ed6c02', dark: '#e65100', contrastText: '#fff' },
+  info: { main: '#0288d1', dark: '#01579b', contrastText: '#fff' },
+  success: { main: '#2e7d32', dark: '#1b5e20', contrastText: '#fff' },
+} as const
+
 // NOTE: These intentionally do not match the app's actual MUI theme
 // `breakpoints.values` (MUI v5 defaults: 600/900/1200/1536). They mirror
 // the MUI v4 breakpoints the legacy Sass was authored against, preserved

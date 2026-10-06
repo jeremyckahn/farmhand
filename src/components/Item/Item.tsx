@@ -20,6 +20,7 @@ import { items } from '../../img/index.js'
 import { itemsMap } from '../../data/maps.js'
 import { itemIds as shopItemIds } from '../../data/shop-inventory.js'
 import { noop } from '../../utils/noop.js'
+import { legacyControlColors } from '../../styles/tokens.js'
 import { moneyString } from '../../utils/moneyString.js'
 import { inventorySpaceRemaining } from '../../utils/inventorySpaceRemaining.js'
 import { isItemSoldInShop } from '../../utils/isItemSoldInShop.js'
@@ -50,9 +51,13 @@ const ValueIndicator = ({ poorValue }: ValueIndicatorProps) => (
     }}
   >
     {poorValue ? (
-      <KeyboardArrowDown color="error" sx={valueIndicatorSx} />
+      <KeyboardArrowDown
+        sx={{ ...valueIndicatorSx, color: legacyControlColors.error.main }}
+      />
     ) : (
-      <KeyboardArrowUp color="primary" sx={valueIndicatorSx} />
+      <KeyboardArrowUp
+        sx={{ ...valueIndicatorSx, color: legacyControlColors.primary.main }}
+      />
     )}
   </Tooltip>
 )

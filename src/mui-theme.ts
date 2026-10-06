@@ -1,4 +1,4 @@
-import { darken, Theme } from '@mui/material/styles/index.js'
+import { alpha, darken, Theme } from '@mui/material/styles/index.js'
 import { createElement } from 'react'
 import createTheme from '@mui/material/styles/createTheme.js'
 import type { Shadows } from '@mui/material/styles/shadows.js'
@@ -29,7 +29,13 @@ import {
   pixelShadowColor,
   px,
 } from './styles/pixel.js'
-import { breakpoints, colors, fonts, layout } from './styles/tokens.js'
+import {
+  breakpoints,
+  colors,
+  fonts,
+  layout,
+  legacyControlColors,
+} from './styles/tokens.js'
 
 type PaletteColorName =
   'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success'
@@ -52,6 +58,45 @@ const outlineFor = (theme: Theme, color: unknown) =>
   isPaletteColorName(color)
     ? darken(theme.palette[color].main, 0.5)
     : colors.neutralOutline
+
+// Buttons and Fabs keep MUI's stock palette colors (see
+// `legacyControlColors`) instead of the brown theme palette.
+const controlOutlineFor = (color: unknown) =>
+  isPaletteColorName(color)
+    ? darken(legacyControlColors[color].main, 0.5)
+    : colors.neutralOutline
+
+type SxWithHover = { '&:hover'?: Record<string, unknown> } & Record<
+  string,
+  unknown
+>
+
+const withControlColor = (
+  base: SxWithHover,
+  variant: 'contained' | 'outlined' | 'text',
+  color: unknown
+) => {
+  if (!isPaletteColorName(color)) return base
+
+  const { main, dark, contrastText } = legacyControlColors[color]
+  const colorSx: SxWithHover =
+    variant === 'contained'
+      ? {
+          backgroundColor: main,
+          color: contrastText,
+          '&:hover': { backgroundColor: dark },
+        }
+      : {
+          color: main,
+          '&:hover': { backgroundColor: alpha(main, 0.04) },
+        }
+
+  return {
+    ...base,
+    ...colorSx,
+    '&:hover': { ...base['&:hover'], ...colorSx['&:hover'] },
+  }
+}
 
 // Every elevation gets the same hard, unblurred pixel art drop shadow rather
 // than MUI's soft Material Design shadows.
@@ -307,40 +352,57 @@ export default createTheme({
         disableElevation: true,
       },
       styleOverrides: {
-        root: ({ ownerState, theme }) => {
-          const outline = outlineFor(theme, ownerState.color)
+        root: ({ ownerState }) => {
+          const { color } = ownerState
+          const outline = controlOutlineFor(color)
 
           switch (ownerState.variant) {
             case 'contained':
-              return raisedControlSx(outline)
+              return withControlColor(
+                raisedControlSx(outline),
+                'contained',
+                color
+              )
 
             case 'outlined':
-              return {
-                ...pixelFrameSx({ outline, shadow: true }),
-                '&:hover': pixelFrameSx({ outline, shadow: true }),
-                '&:active': {
-                  ...pixelPressedSx(outline),
-                  boxShadow: 'none',
+              return withControlColor(
+                {
+                  ...pixelFrameSx({ outline, shadow: true }),
+                  '&:hover': pixelFrameSx({ outline, shadow: true }),
+                  '&:active': {
+                    ...pixelPressedSx(outline),
+                    boxShadow: 'none',
+                  },
+                  '&.Mui-disabled': pixelFrameSx({
+                    outline: colors.disabledOutline,
+                    shadow: 'pressed',
+                  }),
                 },
-                '&.Mui-disabled': pixelFrameSx({
-                  outline: colors.disabledOutline,
-                  shadow: 'pressed',
-                }),
-              }
+                'outlined',
+                color
+              )
 
             default:
               // Text buttons get an invisible frame of the same size so
               // they don't shift the layout when toggled to another variant
               // (e.g. selected items in ItemList and Toolbelt).
-              return pixelFrameSx({ outline: 'transparent', shadow: 'pressed' })
+              return withControlColor(
+                pixelFrameSx({ outline: 'transparent', shadow: 'pressed' }),
+                'text',
+                color
+              )
           }
         },
       },
     },
     MuiFab: {
       styleOverrides: {
-        root: ({ ownerState, theme }) => ({
-          ...raisedControlSx(outlineFor(theme, ownerState.color)),
+        root: ({ ownerState }) => ({
+          ...withControlColor(
+            raisedControlSx(controlOutlineFor(ownerState.color)),
+            'contained',
+            ownerState.color
+          ),
           // Fabs are normally round. Keep them square (with notched
           // corners) to match the rest of the pixel art UI.
           borderRadius: 0,
