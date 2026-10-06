@@ -176,9 +176,13 @@ export const Cow = ({
 
     const scheduleNextBlink = () => {
       blinkAnimationTimeoutId = setTimeout(() => {
+        if (isMounted() === false) return
+
         setIsBlinking(true)
 
         blinkAnimationTimeoutId = setTimeout(() => {
+          if (isMounted() === false) return
+
           setIsBlinking(false)
           scheduleNextBlink()
         }, blinkAnimationDuration)
@@ -190,7 +194,7 @@ export const Cow = ({
     return () => {
       clearTimeout(blinkAnimationTimeoutId)
     }
-  }, [])
+  }, [isMounted])
 
   // Cancels any in-flight tween on unmount; `move` handles the resulting
   // rejection in its `catch` blocks.
