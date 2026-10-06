@@ -155,7 +155,7 @@ export const Cow = ({
     ;(async () => {
       const [loadedCowImage, loadedBlinkingCowImage] = await Promise.all([
         getCowImage(cow),
-        getCowImage(cow, true),
+        getCowImage(cow, { isBlinking: true }),
       ])
 
       if (isMounted() === false) return
