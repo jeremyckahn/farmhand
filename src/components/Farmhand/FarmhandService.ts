@@ -1,20 +1,11 @@
 import { itemsMap } from '../../data/maps.js'
 import { fieldMode, itemType } from '../../enums.js'
+import { getItemById } from '../../utils/getItemById.js'
 import { getItemCurrentValue } from '../../utils/getItemCurrentValue.js'
 import { memoize } from '../../utils/memoize.js'
 
 const { PLANT } = fieldMode
 const { MULCH } = itemType
-
-const getItemOrThrow = (id: string): farmhand.item => {
-  const item = itemsMap[id as keyof typeof itemsMap]
-
-  if (!item) {
-    throw new Error(`Inventory references unknown item id: ${id}`)
-  }
-
-  return item
-}
 
 export class FarmhandService {
   static computePlayerInventory = memoize(
@@ -23,7 +14,7 @@ export class FarmhandService {
       valueAdjustments: Record<string, number>
     ): farmhand.item[] =>
       inventory.map(({ quantity, id }: { quantity: number; id: string }) => {
-        const item = getItemOrThrow(id)
+        const item = getItemById(id)
 
         return {
           quantity,
@@ -37,7 +28,7 @@ export class FarmhandService {
     (inventory: farmhand.state['inventory']): farmhand.item[] =>
       inventory
         .filter(({ id }: { id: string }) => {
-          const item = getItemOrThrow(id)
+          const item = getItemById(id)
 
           return (
             typeof item.enablesFieldMode === 'string' &&
@@ -57,7 +48,7 @@ export class FarmhandService {
   static getPlantableCropInventory = memoize(
     (inventory: farmhand.state['inventory']): farmhand.item[] =>
       inventory
-        .filter(({ id }: { id: string }) => getItemOrThrow(id).isPlantableCrop)
+        .filter(({ id }: { id: string }) => getItemById(id).isPlantableCrop)
         .map(({ id, quantity }: { id: string; quantity: number }) => ({
           ...itemsMap[id as keyof typeof itemsMap],
           quantity,

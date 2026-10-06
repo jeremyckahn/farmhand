@@ -35,7 +35,7 @@ describe('FarmhandService', () => {
 
   describe('inventory containing an unknown item id', () => {
     const inventory = [{ quantity: 1, id: 'not-a-real-item' }]
-    const message = 'Inventory references unknown item id: not-a-real-item'
+    const message = 'Unknown item id: not-a-real-item'
 
     test('computePlayerInventory throws an informative error', () => {
       expect(() =>
