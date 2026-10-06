@@ -27,8 +27,6 @@ const defaultProps = {
   handleOnlineToggleChange: noop,
   handleRoomChange: noop,
   handleViewChange: noop,
-  inventory: [],
-  inventoryLimit: INFINITE_STORAGE_LIMIT,
   itemsSold: {},
   isChatAvailable: false,
   isDialogViewOpen: false,

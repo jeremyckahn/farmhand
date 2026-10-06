@@ -85,9 +85,10 @@ describe('ContextPane', () => {
       />
     )
 
-    expect(screen.getByText('Capacity: 8 / 10')).toBeInTheDocument()
-    expect(document.querySelector('.inventory-info')).toBeInTheDocument()
-    expect(document.querySelector('.is-inventory-full')).not.toBeInTheDocument()
+    const capacity = screen.getByText('Capacity: 8 / 10')
+
+    expect(capacity).toBeInTheDocument()
+    expect(capacity).not.toHaveClass('is-inventory-full')
   })
 
   test('marks inventory capacity as full when the limit is reached', () => {
@@ -104,10 +105,25 @@ describe('ContextPane', () => {
       />
     )
 
-    expect(screen.getByText('Capacity: 10 / 10')).toBeInTheDocument()
-    expect(
-      document.querySelector('.inventory-info.is-inventory-full')
-    ).toBeInTheDocument()
+    expect(screen.getByText('Capacity: 10 / 10')).toHaveClass(
+      'is-inventory-full'
+    )
+  })
+
+  test('does not display inventory capacity for unlimited storage', () => {
+    const inventory = [
+      testItem({ id: 'carrot', name: 'Carrot', quantity: 5 }),
+    ] as unknown as farmhand.state['inventory']
+
+    render(
+      <ContextPane
+        {...defaultProps}
+        inventory={inventory}
+        inventoryLimit={INFINITE_STORAGE_LIMIT}
+      />
+    )
+
+    expect(screen.queryByText(/Capacity:/)).not.toBeInTheDocument()
   })
 
   describe('conditional UI based on stageFocus', () => {

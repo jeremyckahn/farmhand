@@ -44,14 +44,20 @@ export const ContextPane = ({
   inventory: farmhand.state['inventory']
   inventoryLimit: number
 }) => {
+  const isInventoryFull = !doesInventorySpaceRemain({
+    inventory,
+    inventoryLimit,
+  })
+
   return (
     <Div
       className="ContextPane"
       sx={{
         ...centerTabsSx,
         margin: 0,
-        '& h2': { margin: '0.5em 0', textAlign: 'center' },
+        '& h2': { margin: '0.5em 0 1em', textAlign: 'center' },
         '& .inventory-info': { fontSize: '1em' },
+        '& .inventory-title': { marginBottom: '0.5em' },
       }}
     >
       {stageFocus === stageFocusType.COW_PEN ? (
@@ -60,22 +66,17 @@ export const ContextPane = ({
         <FarmhandShuffleContextMenu />
       ) : (
         <>
-          <h2>Inventory</h2>
+          <h2 className="inventory-title">Inventory</h2>
 
           {inventoryLimit > INFINITE_STORAGE_LIMIT && (
             <H3
               {...{
                 className: classNames('inventory-info', {
-                  'is-inventory-full': !doesInventorySpaceRemain({
-                    inventory,
-                    inventoryLimit,
-                  }),
+                  'is-inventory-full': isInventoryFull,
                 }),
               }}
               sx={{
-                color: !doesInventorySpaceRemain({ inventory, inventoryLimit })
-                  ? colors.error
-                  : undefined,
+                color: isInventoryFull ? colors.error : undefined,
                 textAlign: 'center',
               }}
             >
