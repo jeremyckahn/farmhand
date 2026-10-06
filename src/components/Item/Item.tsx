@@ -112,6 +112,7 @@ export interface ItemProps {
   adjustedValue?: number
   previousDayAdjustedValue?: number | null
   maxQuantityPlayerCanPurchase?: number
+  purchaseState?: farmhand.state
 }
 
 export const Item = ({
@@ -132,6 +133,7 @@ export const Item = ({
   playerInventoryQuantities,
   showQuantity,
   valueAdjustments,
+  purchaseState,
 
   item: {
     description,
@@ -158,7 +160,10 @@ export const Item = ({
     0,
     Math.min(
       Math.floor(money / adjustedValue),
-      inventorySpaceRemaining({ inventory, inventoryLimit })
+      inventorySpaceRemaining({ inventory, inventoryLimit }),
+      purchaseState && item?.getMaxPurchaseQuantity
+        ? item.getMaxPurchaseQuantity(purchaseState)
+        : Infinity
     )
   ),
 }: ItemProps) => {
@@ -479,7 +484,14 @@ export default function Consumer(props: Partial<ItemProps>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Item {...{ ...gameState, ...handlers, ...props }} />
+        <Item
+          {...{
+            ...gameState,
+            ...handlers,
+            ...props,
+            purchaseState: gameState,
+          }}
+        />
       )}
     </FarmhandContext.Consumer>
   )

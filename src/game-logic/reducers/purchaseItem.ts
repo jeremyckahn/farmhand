@@ -17,10 +17,9 @@ export const purchaseItem = (
   const getMaxPurchaseQuantity =
     item.getMaxPurchaseQuantity?.(state) ?? Infinity
 
-  const numberOfItemsToAdd = Math.min(
-    howMany,
-    inventorySpaceRemaining(state),
-    getMaxPurchaseQuantity
+  const numberOfItemsToAdd = Math.max(
+    0,
+    Math.min(howMany, inventorySpaceRemaining(state), getMaxPurchaseQuantity)
   )
 
   if (numberOfItemsToAdd === 0) {
@@ -36,7 +35,7 @@ export const purchaseItem = (
 
   state = prependPendingPeerMessage(
     state,
-    PURCHASED_ITEM_PEER_NOTIFICATION('', howMany, item)
+    PURCHASED_ITEM_PEER_NOTIFICATION('', numberOfItemsToAdd, item)
   )
 
   return addItemToInventory(

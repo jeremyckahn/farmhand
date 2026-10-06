@@ -203,7 +203,7 @@ export const huggingMachine: farmhand.item = freeze({
     const cowCapacity =
       PURCHASEABLE_COW_PENS.get(state.purchasedCowPen)?.cows ?? 0
 
-    return cowCapacity - huggingMachineQuantity
+    return Math.max(0, cowCapacity - huggingMachineQuantity)
   },
 })
 
