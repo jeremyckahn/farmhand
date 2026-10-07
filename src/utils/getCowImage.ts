@@ -48,7 +48,11 @@ const colorizeCowTemplate = (() => {
    * @param color
    * @returns Base64 representation of an image
    */
-  return async (cowTemplate: string, color: cowColors,{ isBlinking = false }: { isBlinking?: boolean } = {} ) => {
+  return async (
+    cowTemplate: string,
+    color: cowColors,
+    { isBlinking = false }: { isBlinking?: boolean } = {}
+  ) => {
     if (color === cowColors.RAINBOW)
       return isBlinking ? animals.cow.rainbowBlinking : animals.cow.rainbow
 
@@ -111,9 +115,7 @@ export const getCowImage = async (
 
   const cowTemplate = cowVariations[cowIdNumber % cowVariations.length]
 
-  return await colorizeCowTemplate(
-    cowTemplate,
-    cow.color as cowColors, {
+  return await colorizeCowTemplate(cowTemplate, cow.color as cowColors, {
     isBlinking,
   })
 }
