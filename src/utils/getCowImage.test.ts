@@ -13,10 +13,24 @@ describe('getCowImage', () => {
     expect(image).toMatchSnapshot()
   })
 
+  test('colors a blinking cow template image', async () => {
+    const cow = generateCow({ color: cowColors.GREEN, id: '1' })
+    const image = await getCowImage(cow, { isBlinking: true })
+
+    expect(image).toMatchSnapshot()
+  })
+
   test('does not modify rainbow cow image', async () => {
     const cow = generateCow({ color: cowColors.RAINBOW })
     const image = await getCowImage(cow)
 
     expect(image).toEqual(animals.cow.rainbow)
+  })
+
+  test('does not modify blinking rainbow cow image', async () => {
+    const cow = generateCow({ color: cowColors.RAINBOW })
+    const image = await getCowImage(cow, { isBlinking: true })
+
+    expect(image).toEqual(animals.cow.rainbowBlinking)
   })
 })
