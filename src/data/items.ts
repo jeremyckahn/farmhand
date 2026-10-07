@@ -3,6 +3,7 @@ import {
   COW_FEED_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
   INITIAL_SPRINKLER_RANGE,
+  PURCHASEABLE_COW_PENS,
 } from '../constants.js'
 
 const { freeze } = Object
@@ -197,6 +198,22 @@ export const huggingMachine: farmhand.item = freeze({
   name: 'Hugging Machine',
   type: HUGGING_MACHINE,
   value: 500,
+  getMaxPurchaseQuantity: (state: farmhand.state) => {
+    const huggingMachinesInInventory =
+      state.inventory.find(i => i.id === HUGGING_MACHINE_ITEM_ID)?.quantity ?? 0
+
+    const huggingMachinesInUse = state.cowInventory.filter(
+      cow => cow.isUsingHuggingMachine
+    ).length
+
+    const cowCapacity =
+      PURCHASEABLE_COW_PENS.get(state.purchasedCowPen)?.cows ?? 0
+
+    return Math.max(
+      0,
+      cowCapacity - huggingMachinesInInventory - huggingMachinesInUse
+    )
+  },
 })
 
 /**

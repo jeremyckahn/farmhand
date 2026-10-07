@@ -63,6 +63,7 @@ declare namespace farmhand {
     // ore - see applyDestructionYield in reducers/helpers.tsx for the
     // shared logic that applies it.
     destructionYield?: { itemId: string; quantity: number }
+    getMaxPurchaseQuantity?: (state: state) => number
   }
 
   interface seedItem extends item {

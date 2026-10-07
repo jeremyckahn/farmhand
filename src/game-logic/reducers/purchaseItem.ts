@@ -13,7 +13,14 @@ export const purchaseItem = (
   howMany: number = 1
 ): farmhand.state => {
   const { money, todaysPurchases, valueAdjustments } = state
-  const numberOfItemsToAdd = Math.min(howMany, inventorySpaceRemaining(state))
+
+  const getMaxPurchaseQuantity =
+    item.getMaxPurchaseQuantity?.(state) ?? Infinity
+
+  const numberOfItemsToAdd = Math.max(
+    0,
+    Math.min(howMany, inventorySpaceRemaining(state), getMaxPurchaseQuantity)
+  )
 
   if (numberOfItemsToAdd === 0) {
     return state
@@ -28,7 +35,7 @@ export const purchaseItem = (
 
   state = prependPendingPeerMessage(
     state,
-    PURCHASED_ITEM_PEER_NOTIFICATION('', howMany, item)
+    PURCHASED_ITEM_PEER_NOTIFICATION('', numberOfItemsToAdd, item)
   )
 
   return addItemToInventory(

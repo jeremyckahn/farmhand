@@ -3,8 +3,10 @@ import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { testItem } from '../../test-utils/index.js'
+import { testState } from '../../test-utils/index.js'
 import { season } from '../../enums.js'
 import { carrotSeed } from '../../data/crops/index.js'
+import { huggingMachine } from '../../data/items.js'
 
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
@@ -72,6 +74,33 @@ describe('Item', () => {
         test('disables purchase buttons', () => {
           expect(screen.getByRole('button', { name: 'Buy' })).toBeDisabled()
         })
+      })
+
+      test('limits the purchase quantity using the item maximum', async () => {
+        render(
+          <Item
+            {...{
+              ...props,
+              adjustedValue: 500,
+              item: huggingMachine,
+              money: 10_000,
+              purchaseState: testState({
+                inventory: [],
+                inventoryLimit: INFINITE_STORAGE_LIMIT,
+                purchasedCowPen: 1,
+              }),
+            }}
+          />
+        )
+
+        const quantity = screen.getByRole('textbox')
+        const increment = screen.getByRole('button', { name: 'Increment' })
+
+        for (let clickCount = 0; clickCount < 9; clickCount += 1) {
+          await userEvent.click(increment)
+        }
+
+        expect(quantity).toHaveValue('10')
       })
 
       describe('prices', () => {
