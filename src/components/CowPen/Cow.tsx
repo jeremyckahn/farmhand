@@ -48,8 +48,10 @@ export const Cow = ({
   playerId,
   isSelected,
 }: CowProps) => {
-  const [cowImage, setCowImage] = useState(pixel)
-  const [blinkingCowImage, setBlinkingCowImage] = useState(pixel)
+  const [cowImages, setCowImages] = useState({
+    normal: pixel,
+    blinking: pixel,
+  })
   const [isBlinking, setIsBlinking] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [moveDirection, setMoveDirection] = useState<CowMoveDirection>(RIGHT)
@@ -160,8 +162,10 @@ export const Cow = ({
 
       if (isMounted() === false) return
 
-      setCowImage(loadedCowImage)
-      setBlinkingCowImage(loadedBlinkingCowImage)
+      setCowImages({
+        normal: loadedCowImage,
+        blinking: loadedBlinkingCowImage,
+      })
     })()
     // Mount-only effect (the function-component equivalent of
     // `componentDidMount`): it must run exactly once, so `cow` is
@@ -273,7 +277,7 @@ export const Cow = ({
       className={classNames('cow', {
         'is-transitioning': isTransitioning,
         'is-selected': isSelected,
-        'is-loaded': cowImage !== pixel,
+        'is-loaded': cowImages.normal !== pixel,
       })}
       onClick={() => handleCowClick(cow)}
       style={{
@@ -299,9 +303,9 @@ export const Cow = ({
           <img
             {...{
               src:
-                isBlinking && blinkingCowImage !== pixel
-                  ? blinkingCowImage
-                  : cowImage,
+                isBlinking && cowImages.blinking !== pixel
+                  ? cowImages.blinking
+                  : cowImages.normal,
             }}
             alt={cowDisplayName}
           />
