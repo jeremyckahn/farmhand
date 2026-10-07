@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
 import { dialogView, stageFocusType } from '../../enums.js'
-import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 import { noop } from '../../utils/noop.js'
 import FarmhandContext, {
   createContextData,
@@ -27,8 +26,6 @@ const defaultProps = {
   handleOnlineToggleChange: noop,
   handleRoomChange: noop,
   handleViewChange: noop,
-  inventory: [],
-  inventoryLimit: INFINITE_STORAGE_LIMIT,
   itemsSold: {},
   isChatAvailable: false,
   isDialogViewOpen: false,
