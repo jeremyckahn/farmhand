@@ -18,6 +18,10 @@ const randomPosition = () => 10 + random() * 80
 const flipAnimationDuration = 1000
 const transitionAnimationDuration = 3000
 
+const blinkAnimationDuration = 200
+const minBlinkAnimationInterval = 2000
+const blinkAnimationIntervalVariance = 4000
+
 // This MUST be kept in sync with the `animationDuration` of the `.is-animating`
 // rule in CowPen.tsx.
 const hugAnimationDuration = 750
@@ -43,7 +47,11 @@ export const Cow = ({
   playerId,
   isSelected,
 }: CowProps) => {
-  const [cowImage, setCowImage] = useState(pixel)
+  const [cowImages, setCowImages] = useState({
+    normal: pixel,
+    blinking: pixel,
+  })
+  const [isBlinking, setIsBlinking] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [moveDirection, setMoveDirection] = useState<CowMoveDirection>(RIGHT)
   const [rotate, setRotate] = useState(0)
@@ -143,20 +151,53 @@ export const Cow = ({
     [tweenable]
   )
 
-  // Loads the cow's image on mount.
+  // Loads the cow's image and blinking image on mount.
   useEffect(() => {
     ;(async () => {
-      const loadedCowImage = await getCowImage(cow)
+      const [loadedCowImage, loadedBlinkingCowImage] = await Promise.all([
+        getCowImage(cow),
+        getCowImage(cow, { isBlinking: true }),
+      ])
 
       if (isMounted() === false) return
 
-      setCowImage(loadedCowImage)
+      setCowImages({
+        normal: loadedCowImage,
+        blinking: loadedBlinkingCowImage,
+      })
     })()
     // Mount-only effect (the function-component equivalent of
     // `componentDidMount`): it must run exactly once, so `cow` is
     // intentionally omitted from the dependency array.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Repeatedly blinks the cow: closes its eyes for `blinkAnimationDuration`, then
+  // waits a randomized interval before blinking again.
+  useEffect(() => {
+    let blinkAnimationTimeoutId: ReturnType<typeof setTimeout>
+
+    const scheduleNextBlink = () => {
+      blinkAnimationTimeoutId = setTimeout(() => {
+        if (isMounted() === false) return
+
+        setIsBlinking(true)
+
+        blinkAnimationTimeoutId = setTimeout(() => {
+          if (isMounted() === false) return
+
+          setIsBlinking(false)
+          scheduleNextBlink()
+        }, blinkAnimationDuration)
+      }, minBlinkAnimationInterval + random() * blinkAnimationIntervalVariance)
+    }
+
+    scheduleNextBlink()
+
+    return () => {
+      clearTimeout(blinkAnimationTimeoutId)
+    }
+  }, [isMounted])
 
   // Cancels any in-flight tween on unmount; `move` handles the resulting
   // rejection in its `catch` blocks.
@@ -235,7 +276,7 @@ export const Cow = ({
       className={classNames('cow', {
         'is-transitioning': isTransitioning,
         'is-selected': isSelected,
-        'is-loaded': cowImage !== pixel,
+        'is-loaded': cowImages.normal !== pixel,
       })}
       onClick={() => handleCowClick(cow)}
       style={{
@@ -259,7 +300,10 @@ export const Cow = ({
         <div {...{ style: { transform: `rotateY(${rotate}deg)` } }}>
           <img
             {...{
-              src: cowImage,
+              src:
+                isBlinking && cowImages.blinking !== pixel
+                  ? cowImages.blinking
+                  : cowImages.normal,
             }}
             alt={cowDisplayName}
           />
