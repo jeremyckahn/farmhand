@@ -70,4 +70,22 @@ describe('changeCowAutomaticHugState', () => {
       expect(inventory).toEqual([{ id: huggingMachine.id, quantity: 1 }])
     })
   })
+
+  describe('re-applying a hugging machine after removing it', () => {
+    test('applies the hugging machine again', () => {
+      const cow = generateCow()
+      let state = saveDataStubFactory({
+        cowInventory: [cow],
+        inventory: [{ id: huggingMachine.id, quantity: 2 }],
+        inventoryLimit: INFINITE_STORAGE_LIMIT,
+      })
+
+      state = changeCowAutomaticHugState(state, state.cowInventory[0], true)
+      state = changeCowAutomaticHugState(state, state.cowInventory[0], false)
+      state = changeCowAutomaticHugState(state, state.cowInventory[0], true)
+
+      expect(state.cowInventory[0].isUsingHuggingMachine).toEqual(true)
+      expect(state.inventory).toEqual([{ id: huggingMachine.id, quantity: 1 }])
+    })
+  })
 })
