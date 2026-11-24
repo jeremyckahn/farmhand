@@ -17,7 +17,7 @@ export const processMilkingCows = (state: farmhand.state): farmhand.state => {
     if (cow.daysSinceMilking > getCowMilkRate(cow)) {
       cowInventory[i] = { ...cow, daysSinceMilking: 0 }
 
-      const milk = getCowMilkItem(cow as any)
+      const milk = getCowMilkItem(cow)
       const { name } = milk
 
       if (!doesInventorySpaceRemain(state)) {

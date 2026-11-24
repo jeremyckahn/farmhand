@@ -57,7 +57,7 @@ export const applyCrows = (state: farmhand.state): farmhand.state => {
   }
 
   if (numCropsDestroyed > 0) {
-    notificationMessages.push(CROWS_DESTROYED('', numCropsDestroyed) as string)
+    notificationMessages.push(CROWS_DESTROYED('', numCropsDestroyed))
   }
 
   if (notificationMessages.length) {

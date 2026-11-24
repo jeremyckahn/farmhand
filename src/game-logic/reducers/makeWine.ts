@@ -47,7 +47,7 @@ export const makeWine = (
 
   state = decrementItemFromInventory(
     state,
-    (itemsMap as Record<string, farmhand.item>).yeast.id,
+    itemsMap.yeast.id,
     wineYield * yeastRequirements
   )
 

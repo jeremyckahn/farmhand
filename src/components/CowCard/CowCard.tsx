@@ -31,9 +31,9 @@ import { FemaleIcon, MaleIcon } from '../PixelIcon/index.js'
 import Subheader from './Subheader/index.js'
 
 const genderIcons = {
-  [genders.FEMALE as string]: FemaleIcon,
-  [genders.MALE as string]: MaleIcon,
-} as Record<string, typeof FemaleIcon>
+  [genders.FEMALE]: FemaleIcon,
+  [genders.MALE]: MaleIcon,
+}
 
 export interface CowCardProps {
   allowCustomPeerCowNames: farmhand.state['allowCustomPeerCowNames']
@@ -374,11 +374,11 @@ export default function Consumer(
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
         <CowCard
-          {...({
+          {...{
             ...gameState,
             ...handlers,
             ...props,
-          } as CowCardProps)}
+          }}
         />
       )}
     </FarmhandContext.Consumer>

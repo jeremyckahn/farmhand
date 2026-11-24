@@ -67,7 +67,7 @@ export const computeStateForNextDay = (
         ...state,
         cowForSale: generateCow(),
         dayCount: state.dayCount + 1,
-        todaysNotifications: [] as farmhand.notification[],
+        todaysNotifications: [],
       }
     )
 

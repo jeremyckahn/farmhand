@@ -527,5 +527,5 @@ export const achievementsMap = achievements.reduce(
 
     return acc
   },
-  {} as Record<string, farmhand.achievement>
+  {}
 )

@@ -12,9 +12,7 @@ export function spawnWeeds(
   let contents: farmhand.plotContent | null = null
 
   if (randomNumberService.isRandomNumberLessThan(WEEDS_SPAWN_CHANCE)) {
-    contents = getPlotContentFromItemId(
-      (weed as farmhand.item).id
-    ) as farmhand.plotContent
+    contents = getPlotContentFromItemId(weed.id)
   }
 
   return contents

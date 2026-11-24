@@ -146,7 +146,7 @@ export const unlockableItems = levels.reduce(
     }
     return acc
   },
-  {} as Record<string, number>
+  {}
 )
 
 export const itemUnlockLevels = Object.entries(unlockableItems).reduce(
@@ -154,5 +154,5 @@ export const itemUnlockLevels = Object.entries(unlockableItems).reduce(
     acc[String(level)] = itemId
     return acc
   },
-  {} as Record<string, string>
+  {}
 )

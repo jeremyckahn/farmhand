@@ -10,7 +10,7 @@ export const sellCow = (
   cow: farmhand.cow
 ): farmhand.state => {
   const { cowsSold } = state
-  const cowColorId = getCowColorId(cow as any)
+  const cowColorId = getCowColorId(cow)
   const cowValue = getCowValue(cow, true)
 
   state = removeCowFromInventory(state, cow)

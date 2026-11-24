@@ -33,14 +33,14 @@ export default class ResourceFactory {
 
   constructor() {
     this.resourceOptions = [
-      { weight: ORE_SPAWN_CHANCE, itemType: itemType.ORE as itemType },
+      { weight: ORE_SPAWN_CHANCE, itemType: itemType.ORE },
       {
         weight: COAL_SPAWN_CHANCE,
-        itemType: itemType.FUEL as itemType,
+        itemType: itemType.FUEL,
       },
       {
         weight: STONE_SPAWN_CHANCE,
-        itemType: itemType.STONE as itemType,
+        itemType: itemType.STONE,
       },
     ]
   }

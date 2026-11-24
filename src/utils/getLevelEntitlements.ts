@@ -30,19 +30,17 @@ export const getLevelEntitlements = memoize(
         }
 
         if (unlocksShopItem) {
-          acc.items[unlocksShopItem as keyof typeof acc.items] = true
+          acc.items[unlocksShopItem] = true
         }
 
         if (unlocksTool) {
           for (const tool of unlocksTool) {
-            acc.tools[tool as keyof typeof acc.tools] = true
+            acc.tools[tool] = true
           }
         }
 
         if (unlocksStageFocusType) {
-          acc.stageFocusType[
-            unlocksStageFocusType as keyof typeof acc.stageFocusType
-          ] = true
+          acc.stageFocusType[unlocksStageFocusType] = true
         }
 
         return id === levelNumber

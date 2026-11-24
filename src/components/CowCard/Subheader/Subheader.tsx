@@ -92,7 +92,7 @@ const Subheader = ({
           {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
         </p>
       )}
-      <p>Color: {COW_COLOR_NAMES[cow.color as keyof typeof COW_COLOR_NAMES]}</p>
+      <p>Color: {COW_COLOR_NAMES[cow.color]}</p>
       <p>
         {/* cow.originalOwnerId is only an empty string when it is for sale. */}
         {cow.originalOwnerId === '' ? 'Price' : 'Value'}:{' '}
@@ -182,7 +182,7 @@ const Subheader = ({
                       checked: isInBreedingPen,
                       inputProps: {
                         'aria-label': 'move cow to breeding pen',
-                      } as any,
+                      },
                       onChange: e =>
                         handleCowBreedChange && handleCowBreedChange(e, cow),
                     }}

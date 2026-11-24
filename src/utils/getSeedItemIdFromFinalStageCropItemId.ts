@@ -4,10 +4,8 @@ import { memoize } from './memoize.js'
 
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
   (cropItemId: string) => {
-    const seedItemId = Object.values(
-      itemsMap as Record<string, { id?: string; growsInto?: string | string[] }>
-    ).find(item => {
-      const { growsInto } = item as { growsInto?: string | string[] }
+    const seedItemId = Object.values(itemsMap).find(item => {
+      const { growsInto } = item
 
       if (Array.isArray(growsInto)) {
         return growsInto.includes(cropItemId)

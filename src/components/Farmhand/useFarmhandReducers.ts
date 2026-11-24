@@ -15,12 +15,12 @@ export const useFarmhandReducers = (setState: (updater: any) => void) => {
     ).filter(k => k !== 'constructor') as Array<keyof typeof FarmhandReducers>
 
     for (const reducerName of reducerNames) {
-      const reducer = (reducers as any)[reducerName] as Function
+      const reducer = (reducers as any)[reducerName]
 
       if (typeof reducer !== 'function') continue
 
       // Bound version triggers setState
-      boundReducers[reducerName as string] = (...args: any[]) => {
+      boundReducers[reducerName] = (...args: any[]) => {
         setState((prevState: any) => {
           const nextState = reducer(prevState, ...args)
 

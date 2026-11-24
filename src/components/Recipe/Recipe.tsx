@@ -102,7 +102,7 @@ const Recipe = ({
               <IngredientsList
                 {...{
                   playerInventoryQuantities,
-                  recipe: recipe as any,
+                  recipe: recipe,
                 }}
               />
             </>

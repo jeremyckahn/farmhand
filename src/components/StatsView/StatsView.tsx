@@ -263,11 +263,11 @@ export default function Consumer(props: Partial<StatsViewProps>) {
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
         <StatsView
-          {...({
+          {...{
             ...gameState,
             ...handlers,
             ...props,
-          } as StatsViewProps)}
+          }}
         />
       )}
     </FarmhandContext.Consumer>

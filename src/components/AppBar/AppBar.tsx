@@ -210,11 +210,11 @@ export default function Consumer(props: Partial<Parameters<typeof AppBar>[0]>) {
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
         <AppBar
-          {...({
+          {...{
             ...gameState,
             ...handlers,
             ...props,
-          } as Parameters<typeof AppBar>[0])}
+          }}
         />
       )}
     </FarmhandContext.Consumer>

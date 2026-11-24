@@ -40,7 +40,7 @@ export class FarmhandService {
           )
         })
         .map(({ id, quantity }: { id: string; quantity: number }) => ({
-          ...itemsMap[id as keyof typeof itemsMap],
+          ...itemsMap[id],
           quantity,
         }))
   )
@@ -50,7 +50,7 @@ export class FarmhandService {
       inventory
         .filter(({ id }: { id: string }) => getItemById(id).isPlantableCrop)
         .map(({ id, quantity }: { id: string; quantity: number }) => ({
-          ...itemsMap[id as keyof typeof itemsMap],
+          ...itemsMap[id],
           quantity,
         }))
   )
@@ -59,12 +59,12 @@ export class FarmhandService {
     (inventory: farmhand.state['inventory']): farmhand.item[] =>
       inventory
         .filter(({ id }: { id: string }) => {
-          const item = itemsMap[id as keyof typeof itemsMap]
+          const item = itemsMap[id]
 
           return item?.type === MULCH
         })
         .map(({ id, quantity }: { id: string; quantity: number }) => ({
-          ...itemsMap[id as keyof typeof itemsMap],
+          ...itemsMap[id],
           quantity,
         }))
   )
@@ -73,12 +73,12 @@ export class FarmhandService {
     (inventory: farmhand.state['inventory']): farmhand.item[] =>
       inventory
         .filter(({ id }: { id: string }) => {
-          const item = itemsMap[id as keyof typeof itemsMap]
+          const item = itemsMap[id]
 
           return item?.isPlantableTree
         })
         .map(({ id, quantity }: { id: string; quantity: number }) => ({
-          ...itemsMap[id as keyof typeof itemsMap],
+          ...itemsMap[id],
           quantity,
         }))
   )

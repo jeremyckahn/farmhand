@@ -265,7 +265,7 @@ const upgrades: any = {
 
 // add some defaults to each upgrade object
 for (let currentToolType in upgrades) {
-  const toolUpgrades = (upgrades as any)[currentToolType]
+  const toolUpgrades = upgrades[currentToolType]
 
   for (let i in toolUpgrades) {
     Object.assign(toolUpgrades[i], {
@@ -278,4 +278,4 @@ for (let currentToolType in upgrades) {
   }
 }
 
-export default upgrades as farmhand.upgradesMetadata
+export default upgrades

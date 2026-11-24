@@ -25,7 +25,7 @@ export const processCowFertilizerProduction = (
     ) {
       cowInventory[i] = { ...cow, daysSinceProducingFertilizer: 0 }
 
-      const fertilizer = getCowFertilizerItem(cow as any)
+      const fertilizer = getCowFertilizerItem(cow)
       const { name } = fertilizer
 
       if (!doesInventorySpaceRemain(state)) {
