@@ -67,11 +67,11 @@ export default function Consumer(
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
         <QuickSelect
-          {...({
+          {...{
             ...gameState,
             ...handlers,
             ...props,
-          } as Parameters<typeof QuickSelect>[0])}
+          }}
         />
       )}
     </FarmhandContext.Consumer>

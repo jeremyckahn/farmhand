@@ -53,4 +53,4 @@ export const memoize = <T extends (...args: never[]) => unknown>(
   fastMemoize(fn, {
     cache: { create: () => new MemoizeCache<ReturnType<T>>(config) },
     ...config,
-  }) as T
+  })

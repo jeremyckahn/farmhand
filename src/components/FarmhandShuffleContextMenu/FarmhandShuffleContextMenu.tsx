@@ -111,11 +111,7 @@ export default function Consumer() {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <FarmhandShuffleContextMenu
-          {...({ ...gameState, ...handlers } as Parameters<
-            typeof FarmhandShuffleContextMenu
-          >[0])}
-        />
+        <FarmhandShuffleContextMenu {...{ ...gameState, ...handlers }} />
       )}
     </FarmhandContext.Consumer>
   )

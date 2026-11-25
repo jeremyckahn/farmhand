@@ -110,7 +110,7 @@ export const getCowImage = async (
 
   const cowTemplate = cowVariations[cowIdNumber % cowVariations.length]
 
-  return await colorizeCowTemplate(cowTemplate, cow.color as cowColors, {
+  return await colorizeCowTemplate(cowTemplate, cow.color, {
     isBlinking,
   })
 }

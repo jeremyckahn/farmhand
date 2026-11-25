@@ -109,9 +109,7 @@ const Inventory = ({
     )
   }
 
-  const filteredCategories = (
-    Array.from(itemCategories.entries()) as [string, farmhand.item[]][]
-  ).reduce(
+  const filteredCategories = Array.from(itemCategories.entries()).reduce(
     (
       filtered: Map<string, farmhand.item[]>,
       [category, categoryItems]: [string, farmhand.item[]]
@@ -185,30 +183,29 @@ const Inventory = ({
           </AccordionDetails>
         </Accordion>
       )}
-      {Array.from(
-        (filteredCategories as Map<string, farmhand.item[]>).entries()
-      ).map(([category, categoryItems]: [string, farmhand.item[]]) =>
-        categoryItems.length ? (
-          <Fragment key={category}>
-            <section>
-              <h3>{formatCategoryName(category)}</h3>
-              <ul className="card-list">
-                {categoryItems.map(item => (
-                  <li key={item.id}>
-                    <Item
-                      {...{
-                        isPurchaseView,
-                        isSellView,
-                        item,
-                        showQuantity: isPurchaseView,
-                      }}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </Fragment>
-        ) : null
+      {Array.from(filteredCategories.entries()).map(
+        ([category, categoryItems]: [string, farmhand.item[]]) =>
+          categoryItems.length ? (
+            <Fragment key={category}>
+              <section>
+                <h3>{formatCategoryName(category)}</h3>
+                <ul className="card-list">
+                  {categoryItems.map(item => (
+                    <li key={item.id}>
+                      <Item
+                        {...{
+                          isPurchaseView,
+                          isSellView,
+                          item,
+                          showQuantity: isPurchaseView,
+                        }}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </Fragment>
+          ) : null
       )}
     </Div>
   )

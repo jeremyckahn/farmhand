@@ -131,7 +131,7 @@ export const handleCowTradeRequest = async (
             ...peerMetadata,
             cowOfferedForTrade: {
               ...cowToTradeAway,
-              ownerId: (peerMetadata as { playerId?: string }).playerId,
+              ownerId: peerMetadata.playerId,
             },
           },
         },

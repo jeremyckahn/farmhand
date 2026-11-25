@@ -24,4 +24,4 @@ export const reduceByPersistedKeys = (
     assignPersistedKey(acc, state, key)
 
     return acc
-  }, {} as Partial<farmhand.state>) as farmhand.state
+  }, {}) as farmhand.state

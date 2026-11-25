@@ -691,7 +691,7 @@ export default function Consumer(props: Partial<FieldProps>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Field {...({ ...gameState, ...handlers, ...props } as FieldProps)} />
+        <Field {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
   )

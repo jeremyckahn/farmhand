@@ -18,9 +18,9 @@ const grape = (
     ...grapeProps,
     ...cropVariety({
       ...grapeProps,
-      cropFamily: cropFamily.GRAPE as 'GRAPE',
+      cropFamily: cropFamily.GRAPE,
     }),
-  } as farmhand.grape
+  }
 }
 
 /**

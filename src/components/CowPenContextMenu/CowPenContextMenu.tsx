@@ -330,11 +330,7 @@ export default function Consumer() {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <CowPenContextMenu
-          {...({ ...gameState, ...handlers } as Parameters<
-            typeof CowPenContextMenu
-          >[0])}
-        />
+        <CowPenContextMenu {...{ ...gameState, ...handlers }} />
       )}
     </FarmhandContext.Consumer>
   )

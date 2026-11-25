@@ -210,10 +210,7 @@ export const POSITIONS_POSTED_NOTIFICATION = (
   const positionKeys = Object.keys(positions)
 
   positionKeys.forEach(itemId =>
-    (positions[itemId as keyof typeof positions] > 0
-      ? positivePositions
-      : negativePositions
-    ).push(itemId)
+    (positions[itemId] > 0 ? positivePositions : negativePositions).push(itemId)
   )
 
   const chunks = positionKeys.length ? [`${who} impacted the market!\n`] : []
@@ -221,7 +218,7 @@ export const POSITIONS_POSTED_NOTIFICATION = (
   if (positivePositions.length) {
     chunks.push('Values raised:')
     positivePositions.forEach(itemId =>
-      chunks.push(`  - ${(itemsMap[itemId] as farmhand.item).name}`)
+      chunks.push(`  - ${itemsMap[itemId].name}`)
     )
   }
 
@@ -232,7 +229,7 @@ export const POSITIONS_POSTED_NOTIFICATION = (
 
     chunks.push('Values lowered:')
     negativePositions.forEach(itemId =>
-      chunks.push(`  - ${(itemsMap[itemId] as farmhand.item).name}`)
+      chunks.push(`  - ${itemsMap[itemId].name}`)
     )
   }
 

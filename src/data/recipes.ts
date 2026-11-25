@@ -34,7 +34,7 @@ const convertToRecipe = (partialRecipe: PartialRecipe): farmhand.recipe => {
       0
     ),
     ...partialRecipe,
-  }) as farmhand.recipe
+  })
 
   itemsMap[partialRecipe.id] = recipe
 

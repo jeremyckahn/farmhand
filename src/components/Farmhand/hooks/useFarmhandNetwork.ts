@@ -155,7 +155,7 @@ export const useFarmhandNetwork = (
         money: moneyTotal(previous.money, previous.activePlayers ?? 0),
       }))
       scheduleHeartbeat()
-    }, HEARTBEAT_INTERVAL_PERIOD) as unknown as number
+    }, HEARTBEAT_INTERVAL_PERIOD)
 
     setState(previous => ({ ...previous, heartbeatTimeoutId: timeoutId }))
   }, [setState])

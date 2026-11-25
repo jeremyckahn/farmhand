@@ -51,7 +51,7 @@ export const Stage = ({
 
   useEffect(() => {
     if (ref.current) {
-      const current = ref.current as HTMLDivElement
+      const current: HTMLDivElement = ref.current
       const { style } = current
 
       // Set scroll position to the top

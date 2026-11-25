@@ -19,7 +19,7 @@ export const setWasWateredProperty = (
   }
 
   return getPlotContentType(plotContent) === itemType.CROP
-    ? { ...(plotContent as farmhand.crop), wasWateredToday }
+    ? { ...plotContent, wasWateredToday }
     : { ...plotContent }
 }
 

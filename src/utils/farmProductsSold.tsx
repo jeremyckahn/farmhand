@@ -7,10 +7,7 @@ export const farmProductsSold = memoize(
   (itemsSold: Partial<Record<string, number>>): number =>
     Object.entries(itemsSold).reduce(
       (sum, [itemId, numberSold]) =>
-        sum +
-        (isItemAFarmProduct(itemsMap[itemId] as farmhand.item)
-          ? numberSold || 0
-          : 0),
+        sum + (isItemAFarmProduct(itemsMap[itemId]) ? numberSold || 0 : 0),
       0
     )
 )

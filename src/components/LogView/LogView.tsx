@@ -80,11 +80,11 @@ export default function Consumer(
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
         <LogView
-          {...({
+          {...{
             ...gameState,
             ...handlers,
             ...props,
-          } as Parameters<typeof LogView>[0])}
+          }}
         />
       )}
     </FarmhandContext.Consumer>

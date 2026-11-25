@@ -21,7 +21,7 @@ export function getCropsAvailableToFerment(
       return acc
     },
 
-    [] as Array<farmhand.item>
+    []
   )
 
   return cropsAvailableToFerment
