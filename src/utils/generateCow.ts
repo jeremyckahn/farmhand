@@ -19,13 +19,9 @@ export const generateCow = (
     [key: string]: unknown
   } = {}
 ): farmhand.cow => {
-  const gender =
-    (options.gender as farmhand.cow['gender']) ||
-    chooseRandom(Object.values(genders))
-  const color =
-    (options.color as farmhand.cow['color']) ||
-    chooseRandom(Object.values(standardCowColors))
-  const id = (options.id as farmhand.cow['id']) || uuid()
+  const gender = options.gender || chooseRandom(Object.values(genders))
+  const color = options.color || chooseRandom(Object.values(standardCowColors))
+  const id = options.id || uuid()
 
   const baseWeight = Math.round(
     COW_STARTING_WEIGHT_BASE *
@@ -39,7 +35,7 @@ export const generateCow = (
     color,
     colorsInBloodline: {
       [color]: true,
-    } as Record<cowColors, boolean>,
+    },
     daysOld: 1,
     daysSinceMilking: 0,
     daysSinceProducingFertilizer: 0,

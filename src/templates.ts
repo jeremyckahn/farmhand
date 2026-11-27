@@ -149,11 +149,7 @@ export const LEVEL_GAINED_NOTIFICATION = (
 `,
   ]
 
-  const levelObject = levels[newLevel] as {
-    increasesSprinklerRange?: boolean
-    unlocksTool?: toolType[]
-    unlocksStageFocusType?: stageFocusType
-  }
+  const levelObject = levels[newLevel]
 
   // These scripted rewards aren't mutually exclusive - a single level (e.g.
   // the one that unlocks the Forest) can carry more than one of them at
