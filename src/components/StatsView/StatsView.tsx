@@ -246,7 +246,7 @@ export const StatsView = ({
                     {itemsMap[itemId].name}
                   </TableCell>
                   <TableCell align="right">
-                    {integerString((quantity as number) || 0)}
+                    {integerString(quantity || 0)}
                   </TableCell>
                 </TableRow>
               ))}

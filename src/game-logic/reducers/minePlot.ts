@@ -29,10 +29,8 @@ export const minePlot = (
   }
 
   const shovelLevel = state.toolLevels[toolType.SHOVEL]
-  const factory = ResourceFactory.instance() as unknown as {
-    generateResources: (l: number) => farmhand.item[]
-  }
-  const spawnedResources = factory.generateResources(shovelLevel as any)
+  const factory = ResourceFactory.instance()
+  const spawnedResources = factory.generateResources(shovelLevel)
   const [spawnedResource] = spawnedResources
   let daysUntilClear = chooseRandom(daysUntilClearPeriods)
 

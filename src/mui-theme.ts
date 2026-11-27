@@ -56,10 +56,7 @@ const outlineFor = (theme: Theme, color: unknown) =>
 // Every elevation gets the same hard, unblurred pixel art drop shadow rather
 // than MUI's soft Material Design shadows.
 const pixelShadow = `${px(1)} ${px(1)} 0 0 ${pixelShadowColor}`
-const shadows = [
-  'none',
-  ...Array<string>(24).fill(pixelShadow),
-] as unknown as Shadows
+const shadows = ['none', ...Array<string>(24).fill(pixelShadow)] as Shadows
 
 // Shared by Button and Fab: a raised 9-slice frame that gets pushed into its
 // shadow when pressed.
