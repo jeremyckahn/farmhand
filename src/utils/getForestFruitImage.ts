@@ -30,5 +30,5 @@ export const getForestFruitImage = (
       ? `${tree.itemId}-fruit-grown`
       : `${tree.itemId}-fruit-growing-${getFruitGrowingPhase(tree)}`
 
-  return (itemImages as Record<string, string>)[itemImageId] ?? null
+  return itemImages[itemImageId] ?? null
 }
