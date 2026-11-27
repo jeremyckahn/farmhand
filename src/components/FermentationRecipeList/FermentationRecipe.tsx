@@ -83,7 +83,7 @@ export const FermentationRecipe = ({ item }: { item: farmhand.item }) => {
         avatar={
           <img
             {...{
-              src: items[item.id as keyof typeof items],
+              src: items[item.id],
             }}
             alt={fermentationRecipeName}
           />

@@ -47,12 +47,8 @@ export const getForestPlotImage = (
         itemImageId = `${plotContents.itemId}-tree-sapling-planted`
     }
 
-    return (itemImages as Record<string, string>)[itemImageId] ?? null
+    return itemImages[itemImageId] ?? null
   }
 
-  return (
-    (itemImages as Record<string, string>)[
-      (plotContents as farmhand.forestForageable).forageableId
-    ] ?? null
-  )
+  return itemImages[plotContents.forageableId] ?? null
 }

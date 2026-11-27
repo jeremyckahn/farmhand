@@ -69,9 +69,7 @@ export const ItemList = ({
               className: 'square',
               src: pixel,
               style: {
-                backgroundImage: `url(${
-                  itemImages[item.id as keyof typeof itemImages]
-                })`,
+                backgroundImage: `url(${itemImages[item.id]})`,
               },
             }}
             sx={{ ...squareImgSx, ...spriteShadowSx }}

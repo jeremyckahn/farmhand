@@ -28,7 +28,7 @@ export function Keg({ keg }: { keg: farmhand.keg }) {
     throw new Error(`Keg references unknown item id: ${keg.itemId}`)
   }
 
-  let imageSrc = items[item.id as keyof typeof items]
+  let imageSrc = items[item.id]
 
   const recipeName = getKegDisplayName(item)
 

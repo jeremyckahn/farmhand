@@ -372,7 +372,7 @@ export const craftedItems = {
   ...smeltedItems,
 }
 
-export const items = {
+export const items: Record<string, string> = {
   // Trees
   apple,
   'apple-fruit-growing-1': appleFruitGrowing1,
