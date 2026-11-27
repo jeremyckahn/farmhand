@@ -85,7 +85,7 @@ export const handleCowTradeRequest = async (
       }
 
       const [, peerMetadata] =
-        Object.entries(peers as Record<string, { playerId?: string }>).find(
+        Object.entries(peers).find(
           ([, peer]) => peer?.playerId === updatedCowOffered.ownerId
         ) ?? []
 
